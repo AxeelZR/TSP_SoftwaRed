@@ -51,7 +51,7 @@ public class FrmAlta extends javax.swing.JFrame {
         setForeground(new java.awt.Color(0, 0, 204));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 0, 204), 3));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(112, 153, 255), 3));
 
         jLabel7.setFont(new java.awt.Font("Serif", 1, 48)); // NOI18N
         jLabel7.setText("Inscripción de Alumnos");
