@@ -24,7 +24,7 @@ public class FrmModificacion extends javax.swing.JFrame {
         Icon icono;
         icono = new ImageIcon(imagen.getImage().getScaledInstance(btnGuardarAlumno.getWidth(), btnGuardarAlumno.getHeight(), Image.SCALE_DEFAULT));
         btnGuardarAlumno.setIcon(icono);
-        ImageIcon imagen2 = new ImageIcon("src/imagenes/LogoSIGERAControlEscolarCuadrada.png");
+        ImageIcon imagen2 = new ImageIcon("src/imagenes/LogoSIGERAControlEscolar.png");
         Icon icono2;
         icono2 = new ImageIcon(imagen2.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_DEFAULT));
         lblLogo.setIcon(icono2);
@@ -65,7 +65,7 @@ public class FrmModificacion extends javax.swing.JFrame {
         setForeground(new java.awt.Color(0, 0, 204));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(0, 51, 255)));
+        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(9, 9, 9, 9, new java.awt.Color(0, 102, 255)));
 
         jLabel7.setFont(new java.awt.Font("Serif", 1, 48)); // NOI18N
         jLabel7.setText("Modificación de Datos");
@@ -113,8 +113,6 @@ public class FrmModificacion extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel6.setText("Carrera:");
 
-        lblLogo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 51, 255), 3, true));
-
         lblNumeroControl.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         lblNumeroControl.setText("__________________");
 
@@ -123,7 +121,7 @@ public class FrmModificacion extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(139, Short.MAX_VALUE)
+                .addContainerGap(127, Short.MAX_VALUE)
                 .addComponent(jLabel7)
                 .addGap(41, 41, 41)
                 .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -179,7 +177,7 @@ public class FrmModificacion extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(139, 139, 139)
                         .addComponent(btnGuardarAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(45, Short.MAX_VALUE))
+                        .addContainerGap(33, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
