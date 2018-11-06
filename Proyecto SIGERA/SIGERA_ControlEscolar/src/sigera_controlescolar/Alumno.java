@@ -21,7 +21,7 @@ public class Alumno {
     private String Direccion;
 
 
-   /* public Alumno(int NC, String Nombre, String ApellidoPaterno, String ApellidoMaterno, String CURP, String Carrera) {
+    /*public Alumno(int NC, String Nombre, String ApellidoPaterno, String ApellidoMaterno, String CURP, String Carrera) {
         this.NC = NC;
         this.Nombre = Nombre;
         this.ApellidoPaterno = ApellidoPaterno;
