@@ -16,16 +16,20 @@ public class Alumno {
     private String ApellidoMaterno;
     private String CURP;
     private String Carrera;
+    private String Estado;
+    private int Semestre;
+    private String Direccion;
 
 
-    public Alumno(int NC, String Nombre, String ApellidoPaterno, String ApellidoMaterno, String CURP, String Carrera) {
+   /* public Alumno(int NC, String Nombre, String ApellidoPaterno, String ApellidoMaterno, String CURP, String Carrera) {
         this.NC = NC;
         this.Nombre = Nombre;
         this.ApellidoPaterno = ApellidoPaterno;
         this.ApellidoMaterno = ApellidoMaterno;
         this.CURP = CURP;
         this.Carrera = Carrera;
-    }
+    }*/
+
     
     public int getNC() {
         return NC;
@@ -74,4 +78,29 @@ public class Alumno {
     public void setCarrera(String Carrera) {
         this.Carrera = Carrera;
     }
+
+    public String getEstado() {
+        return Estado;
+    }
+
+    public void setEstado(String Estado) {
+        this.Estado = Estado;
+    }
+
+    public int getSemestre() {
+        return Semestre;
+    }
+
+    public void setSemestre(int Semestre) {
+        this.Semestre = Semestre;
+    }
+
+    public String getDireccion() {
+        return Direccion;
+    }
+
+    public void setDireccion(String Direccion) {
+        this.Direccion = Direccion;
+    }
+    
 }
