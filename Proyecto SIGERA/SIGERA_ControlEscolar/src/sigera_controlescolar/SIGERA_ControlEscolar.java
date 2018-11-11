@@ -27,7 +27,7 @@ public class SIGERA_ControlEscolar {
         mAlumno.setApellidoPaterno("Esparza");
         mAlumno.setApellidoMaterno("Ramirez");
         mAlumno.setCURP("ERTTAADSD");
-        mAlumno.setNC(14010180);
+        mAlumno.setNC("14010180");
         mAlumno.setCarrera("ISC");
         mAlumno.setSemestre(9);
         mAlumno.setEstado("Inacivo");

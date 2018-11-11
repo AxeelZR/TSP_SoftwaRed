@@ -5,11 +5,8 @@
  */
 package BaseDatos;
 
-import java.beans.Statement;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+//import java.beans.Statement;
+import java.sql.*;
 import sigera_controlescolar.Alumno;
 
 /**
@@ -18,12 +15,15 @@ import sigera_controlescolar.Alumno;
  */
 public class BD {
 
-    private java.sql.Statement Comando;
+    //private java.sql.Statement Comando;
     Connection Conexion;
+    Statement Comando;
     String Host;
     String BD;
     String User;
     String Password;
+
+    @SuppressWarnings("empity-statement")
 
     public BD() {
         this.Host = "";
@@ -56,7 +56,7 @@ public class BD {
         String Nombre = "";
         String ApellidoMaterno = "";
         String ApellidoPaterno = "";
-        int NC = 0;
+        String NC = "";
         String Carrera = "";
         String CURP = "";
         int Semestre = 0;
@@ -119,8 +119,14 @@ public class BD {
     }
 
     public ResultSet ConsultarAlumnoE(String NC) throws SQLException {
-        String consulta = "select * from Alumno where NoControl = '" + NC + "';";
+        String consulta = "select * from Alumno where NoControl ='"+NC+"';";
         ResultSet resultado = this.Comando.executeQuery(consulta);
+        if (resultado.getRow() == 0) {
+            System.out.println("vacio");
+        } else {
+            System.out.println("lleno");
+
+        }
         return resultado;
     }
 
@@ -135,12 +141,12 @@ public class BD {
     }
 
     public Boolean ModificacionAlumno(String NCR, Alumno mAlumno) throws SQLException {
-        int i;
+        int i = 0;
         String Instruccion = "";
         String Nombre = "";
         String ApellidoMaterno = "";
         String ApellidoPaterno = "";
-        int NC = 0;
+        String NC = "";
         String Carrera = "";
         String CURP = "";
         int Semestre = 0;

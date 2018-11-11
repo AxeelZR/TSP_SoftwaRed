@@ -10,7 +10,7 @@ package sigera_controlescolar;
  * @author Alejandro
  */
 public class Alumno {
-    private int NC;
+    private String NC;
     private String Nombre;
     private String ApellidoPaterno;
     private String ApellidoMaterno;
@@ -31,11 +31,11 @@ public class Alumno {
     }*/
 
     
-    public int getNC() {
+    public String getNC() {
         return NC;
     }
 
-    public void setNC(int NC) {
+    public void setNC(String NC) {
         this.NC = NC;
     }
 
