@@ -22,6 +22,17 @@ public class BD {
     String BD;
     String User;
     String Password;
+    String Instruccion;
+    String Nombre;
+    String ApellidoMaterno;
+    String ApellidoPaterno;
+    String NC;
+    String Carrera;
+    String CURP;
+    int Semestre;
+    String Estado;
+    String Direccion;
+    String Consulta;
 
     @SuppressWarnings("empity-statement")
 
@@ -30,6 +41,17 @@ public class BD {
         this.BD = "";
         this.User = "";
         this.Password = "";
+        Instruccion = "";
+        Nombre = "";
+        ApellidoMaterno = "";
+        ApellidoPaterno = "";
+        NC = "";
+        Carrera = "";
+        CURP = "";
+        Semestre = 0;
+        Estado = "";
+        Direccion = "";
+        Consulta = "";
     }
 
     public boolean Conectar() throws Exception {
@@ -51,17 +73,6 @@ public class BD {
 
     public boolean AltaAlumno(Alumno mAlumno) throws SQLException {
         int i;
-
-        String Instruccion = "";
-        String Nombre = "";
-        String ApellidoMaterno = "";
-        String ApellidoPaterno = "";
-        String NC = "";
-        String Carrera = "";
-        String CURP = "";
-        int Semestre = 0;
-        String Estado = "";
-        String Direccion = "";
 
         Nombre = mAlumno.getNombre();
         ApellidoPaterno = mAlumno.getApellidoPaterno();
@@ -88,15 +99,25 @@ public class BD {
             Conectar();
             i = this.Comando.executeUpdate(Instruccion);
             System.out.print(Instruccion + "Ejecutado");
+            Instruccion = "";
+            Nombre = "";
+            ApellidoMaterno = "";
+            ApellidoPaterno = "";
+            NC = "";
+            Carrera = "";
+            CURP = "";
+            Semestre = 0;
+            Estado = "";
+            Direccion = "";
             return true;
         } catch (Exception ex) {
             System.out.print("Error" + ex);
             return false;
         }
+
     }
 
     public Boolean BajaAlumno(String NC) throws SQLException {
-        String Instruccion = "";
         String Estado;
         int i;
         Estado = "Inactivo";
@@ -113,26 +134,29 @@ public class BD {
     }
 
     public ResultSet ConsultarAlumnoC(String Carrera) throws SQLException {
-        String consulta = "select * from Alumno where Carrera_Clave = '" + Carrera + "';";
-        ResultSet resultado = this.Comando.executeQuery(consulta);
+        Consulta = "select * from Alumno where Carrera_Clave = '" + Carrera + "';";
+        ResultSet resultado = this.Comando.executeQuery(Consulta);
+        Consulta = "";
         return resultado;
     }
 
     public ResultSet ConsultarAlumnoE(String NC) throws SQLException {
-        String consulta = "select * from Alumno where NoControl ='"+NC+"';";
-        ResultSet resultado = this.Comando.executeQuery(consulta);
+        Consulta = "select * from Alumno where NoControl ='" + NC + "';";
+        ResultSet resultado = this.Comando.executeQuery(Consulta);
         if (resultado.getRow() == 0) {
             System.out.println("vacio");
         } else {
             System.out.println("lleno");
 
         }
+        Consulta = "";
         return resultado;
     }
 
     public ResultSet ConsultarAlumnoG() throws SQLException {
-        String consulta = "select * from Alumno";
-        ResultSet resultado = this.Comando.executeQuery(consulta);
+        Consulta = "select * from Alumno";
+        ResultSet resultado = this.Comando.executeQuery(Consulta);
+        Consulta = "";
         return resultado;
     }
 
@@ -142,16 +166,6 @@ public class BD {
 
     public Boolean ModificacionAlumno(String NCR, Alumno mAlumno) throws SQLException {
         int i = 0;
-        String Instruccion = "";
-        String Nombre = "";
-        String ApellidoMaterno = "";
-        String ApellidoPaterno = "";
-        String NC = "";
-        String Carrera = "";
-        String CURP = "";
-        int Semestre = 0;
-        String Estado = "";
-        String Direccion = "";
 
         Nombre = mAlumno.getNombre();
         ApellidoPaterno = mAlumno.getApellidoPaterno();
@@ -174,9 +188,18 @@ public class BD {
             Instruccion = Instruccion.replace("?7", String.valueOf(Semestre));
             Instruccion = Instruccion.replace("?8", Estado);
             Instruccion = Instruccion.replace("?9", Direccion);
-
             i = this.Comando.executeUpdate(Instruccion);
             System.out.println(Instruccion + "Ejecutado");
+            Instruccion = "";
+            Nombre = "";
+            ApellidoMaterno = "";
+            ApellidoPaterno = "";
+            NC = "";
+            Carrera = "";
+            CURP = "";
+            Semestre = 0;
+            Estado = "";
+            Direccion = "";
             return true;
         } catch (Exception ex) {
             System.out.print("Error" + ex);
