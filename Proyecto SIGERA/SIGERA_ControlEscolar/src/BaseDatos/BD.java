@@ -166,7 +166,7 @@ public class BD {
 
     public Boolean ModificacionAlumno(String NCR, Alumno mAlumno) throws SQLException {
         int i = 0;
-
+        
         Nombre = mAlumno.getNombre();
         ApellidoPaterno = mAlumno.getApellidoPaterno();
         ApellidoMaterno = mAlumno.getApellidoMaterno();

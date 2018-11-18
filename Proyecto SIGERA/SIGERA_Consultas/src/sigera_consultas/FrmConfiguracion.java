@@ -65,7 +65,7 @@ public class FrmConfiguracion extends javax.swing.JFrame {
         txtNuevaContrasena.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         cmbPeriodo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        cmbPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3" }));
 
         jPanel3.setBackground(new java.awt.Color(0, 0, 0));
 

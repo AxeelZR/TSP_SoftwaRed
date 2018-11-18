@@ -8,6 +8,7 @@ package sigera_controlescolar;
 import BaseDatos.BD;
 import java.awt.Image;
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
@@ -276,15 +277,16 @@ public class FrmAlta extends javax.swing.JFrame {
         String Carrera = txtCarrera.getText();
         String Direccion = txtDireccion.getText();
         String Semestre = (String) cmbSemestre.getSelectedItem();
+        
 
         mAlumno.setApellidoMaterno(ApellidoMaterno);
         mAlumno.setApellidoPaterno(ApellidoPaterno);
-        mAlumno.setCURP(CURP);
+        mAlumno.setCURP(CURP.toUpperCase());
         mAlumno.setNombre(Nombre);
         mAlumno.setCarrera(Carrera);
         mAlumno.setNC(NumControl);
         mAlumno.setDireccion(Direccion);
-        mAlumno.setEstado("Activo");
+        mAlumno.setEstado("1");
         mAlumno.setSemestre(Integer.parseInt(Semestre));
 
         try {
