@@ -112,6 +112,11 @@ public class FrmModificacion extends javax.swing.JFrame {
         txtApellidoMaterno.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         txtCURP.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtCURP.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCURPKeyPressed(evt);
+            }
+        });
 
         txtCarrera.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
@@ -333,29 +338,46 @@ public class FrmModificacion extends javax.swing.JFrame {
         } else if ("Inactivo".equals(Estado)) {
             Estado = "0";
         }
+        if ((!"".equals(ApellidoMaterno))
+                && (!"".equals(ApellidoPaterno)) && (!"".equals(CURP))
+                && (!"".equals(Nombre)) && (!"".equals(Direccion))) {
 
-        mAlumno.setApellidoMaterno(ApellidoMaterno);
-        mAlumno.setApellidoPaterno(ApellidoPaterno);
-        mAlumno.setCURP(CURP.toUpperCase());
-        mAlumno.setNombre(Nombre);
-        mAlumno.setCarrera(Carrera);
-        mAlumno.setNC(NC);
-        mAlumno.setEstado(Estado);
-        mAlumno.setSemestre(Integer.parseInt(Semestre));
-        mAlumno.setDireccion(Direccion);
+            mAlumno.setApellidoMaterno(ApellidoMaterno);
+            mAlumno.setApellidoPaterno(ApellidoPaterno);
+            mAlumno.setCURP(CURP.toUpperCase());
+            mAlumno.setNombre(Nombre);
+            mAlumno.setCarrera(Carrera);
+            mAlumno.setNC(NC);
+            mAlumno.setEstado(Estado);
+            mAlumno.setSemestre(Integer.parseInt(Semestre));
+            mAlumno.setDireccion(Direccion);
 
-        try {
-            mBD.ModificacionAlumno(NC, mAlumno);
-            JOptionPane.showMessageDialog(null, "Se Modifico Correctamente el Registro \n"
-                    + "Con Numero de Control " + this.lblNumeroControl.getText());
-        } catch (SQLException ex) {
-            Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                mBD.ModificacionAlumno(NC, mAlumno);
+                JOptionPane.showMessageDialog(null, "Se Modifico Correctamente el Registro \n"
+                        + "Con Numero de Control " + this.lblNumeroControl.getText());
+            } catch (SQLException ex) {
+                Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No dejar cajas de tecto en blanco"
+                    + "\n Proporcionar toda la informacion "
+                    + "\n Solicitada");
         }
     }//GEN-LAST:event_btnGuardarAlumnoActionPerformed
 
     private void txtDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDireccionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDireccionActionPerformed
+
+    private void txtCURPKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCURPKeyPressed
+        // TODO add your handling code here:
+        int limite = 8;
+        if (this.txtCURP.getText().length() == limite) {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo " + limite + " Caracteres");
+        }
+    }//GEN-LAST:event_txtCURPKeyPressed
 
     /**
      * @param args the command line arguments

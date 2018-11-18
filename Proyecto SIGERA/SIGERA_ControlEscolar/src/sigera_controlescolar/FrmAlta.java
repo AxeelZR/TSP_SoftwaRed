@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -90,12 +91,25 @@ public class FrmAlta extends javax.swing.JFrame {
                 txtNombreActionPerformed(evt);
             }
         });
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNombreKeyPressed(evt);
+            }
+        });
 
         txtApellidoPaterno.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         txtApellidoMaterno.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         txtCURP.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtCURP.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCURPKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCURPKeyReleased(evt);
+            }
+        });
 
         txtCarrera.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
@@ -278,6 +292,9 @@ public class FrmAlta extends javax.swing.JFrame {
         String Direccion = txtDireccion.getText();
         String Semestre = (String) cmbSemestre.getSelectedItem();
         
+        if((!"".equals(NumControl)) && (!"".equals(ApellidoMaterno)) 
+                && (!"".equals(ApellidoPaterno)) && (!"".equals(CURP)) 
+                && (!"".equals(Nombre)) && (!"".equals(Direccion))){
 
         mAlumno.setApellidoMaterno(ApellidoMaterno);
         mAlumno.setApellidoPaterno(ApellidoPaterno);
@@ -303,12 +320,34 @@ public class FrmAlta extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
             System.out.print(ex);
+        }}else{
+            JOptionPane.showMessageDialog(null, "No dejar cajas de tecto en blanco"
+                    + "\n Proporcionar toda la informacion "
+                    + "\n Solicitada");
         }
     }//GEN-LAST:event_btnGuardarAlumnoActionPerformed
 
     private void txtNumControlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumControlActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNumControlActionPerformed
+
+    private void txtCURPKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCURPKeyPressed
+        // TODO add your handling code here:
+        int limite = 8;
+        if (this.txtCURP.getText().length() == limite) {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo " + limite + " Caracteres");
+        }
+    }//GEN-LAST:event_txtCURPKeyPressed
+
+    private void txtCURPKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCURPKeyReleased
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_txtCURPKeyReleased
+
+    private void txtNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreKeyPressed
 
     /**
      * @param args the command line arguments
