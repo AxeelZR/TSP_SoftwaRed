@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -50,8 +51,8 @@ public class FrmModificacion extends javax.swing.JFrame {
             this.txtCURP.setText(ListaAlumno.getString("CURP"));
             this.txtDireccion.setText(ListaAlumno.getString("Direccion"));
             this.txtCarrera.setText(ListaAlumno.getString("Carrera_Clave"));
-            this.cmbEstado.addItem("Estado");
-            this.cmbSemestre.addItem("Semestre");
+            this.cmbEstado.setSelectedItem(ListaAlumno.getString("Estado"));
+            this.cmbSemestre.setSelectedItem(ListaAlumno.getString("Semestre"));
         }
 
     }
@@ -345,6 +346,8 @@ public class FrmModificacion extends javax.swing.JFrame {
 
         try {
             mBD.ModificacionAlumno(NC, mAlumno);
+            JOptionPane.showMessageDialog(null, "Se Modifico Correctamente el Registro \n"
+                    + "Con Numero de Control " + this.lblNumeroControl.getText());
         } catch (SQLException ex) {
             Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
         }
