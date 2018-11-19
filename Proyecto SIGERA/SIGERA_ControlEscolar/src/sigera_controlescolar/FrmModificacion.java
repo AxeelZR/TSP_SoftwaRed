@@ -78,6 +78,21 @@ public class FrmModificacion extends javax.swing.JFrame {
         }
     }
 
+    public String toUpperCammelCase(String cadena) {
+        cadena = cadena.toLowerCase();
+        char[] caracteres = cadena.toCharArray();
+        caracteres[0] = Character.toUpperCase(caracteres[0]);
+        for (int i = 0; i < cadena.length() - 2; i++) {
+            // Es 'palabra'
+            if (caracteres[i] == ' ' || caracteres[i] == '.' || caracteres[i] == ',') {
+                // Reemplazamos
+                caracteres[i + 1] = Character.toUpperCase(caracteres[i + 1]);
+            }
+        }
+        String CadenaNueva = String.valueOf(caracteres);
+        return CadenaNueva;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -387,6 +402,11 @@ public class FrmModificacion extends javax.swing.JFrame {
         if ((!"".equals(ApellidoMaterno))
                 && (!"".equals(ApellidoPaterno)) && (!"".equals(CURP))
                 && (!"".equals(Nombre)) && (!"".equals(Direccion))) {
+
+            ApellidoMaterno = toUpperCammelCase(ApellidoMaterno);
+            ApellidoPaterno = toUpperCammelCase(ApellidoPaterno);
+            Nombre = toUpperCammelCase(Nombre);
+            Direccion = toUpperCammelCase(Direccion);
 
             mAlumno.setApellidoMaterno(ApellidoMaterno);
             mAlumno.setApellidoPaterno(ApellidoPaterno);

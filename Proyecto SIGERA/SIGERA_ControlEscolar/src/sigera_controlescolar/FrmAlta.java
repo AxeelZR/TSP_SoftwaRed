@@ -319,6 +319,21 @@ public class FrmAlta extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
 
+    public String toUpperCammelCase(String cadena) {
+        cadena = cadena.toLowerCase();
+        char[] caracteres = cadena.toCharArray();
+        caracteres[0] = Character.toUpperCase(caracteres[0]);
+        for (int i = 0; i < cadena.length() - 2; i++) {
+            // Es 'palabra'
+            if (caracteres[i] == ' ' || caracteres[i] == '.' || caracteres[i] == ',') {
+                // Reemplazamos
+                caracteres[i + 1] = Character.toUpperCase(caracteres[i + 1]);
+            }
+        }
+        String CadenaNueva = String.valueOf(caracteres);
+        return CadenaNueva;
+    }
+
     private void btnGuardarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarAlumnoActionPerformed
         // TODO add your handling code here:
         // TODO adthis.txt
@@ -350,6 +365,11 @@ public class FrmAlta extends javax.swing.JFrame {
         if ((!"".equals(NumControl)) && (!"".equals(ApellidoMaterno))
                 && (!"".equals(ApellidoPaterno)) && (!"".equals(CURP))
                 && (!"".equals(Nombre)) && (!"".equals(Direccion))) {
+
+            ApellidoMaterno = toUpperCammelCase(ApellidoMaterno);
+            ApellidoPaterno = toUpperCammelCase(ApellidoPaterno);
+            Nombre = toUpperCammelCase(Nombre);
+            Direccion = toUpperCammelCase(Direccion);
 
             mAlumno.setApellidoMaterno(ApellidoMaterno);
             mAlumno.setApellidoPaterno(ApellidoPaterno);
