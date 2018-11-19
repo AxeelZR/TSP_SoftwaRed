@@ -7,6 +7,7 @@ package sigera_controlescolar;
 
 import BaseDatos.BD;
 import java.awt.Image;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -21,6 +22,11 @@ import javax.swing.JOptionPane;
  */
 public class FrmAlta extends javax.swing.JFrame {
 
+    BD mBD = new BD();
+    ResultSet ListaCarreras;
+    ResultSet ClaveCarrera;
+    String Clave;
+
     /**
      * Creates new form
      */
@@ -34,6 +40,19 @@ public class FrmAlta extends javax.swing.JFrame {
         Icon icono2;
         icono2 = new ImageIcon(imagen2.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_DEFAULT));
         lblLogo.setIcon(icono2);
+        try {
+            mBD.Conectar();
+        } catch (Exception ex) {
+            Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            ListaCarreras = mBD.ConsultarCarreras();
+            while (ListaCarreras.next()) {
+                this.cmbCarreras.addItem(ListaCarreras.getString("Nombre"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
@@ -53,7 +72,6 @@ public class FrmAlta extends javax.swing.JFrame {
         txtApellidoPaterno = new javax.swing.JTextField();
         txtApellidoMaterno = new javax.swing.JTextField();
         txtCURP = new javax.swing.JTextField();
-        txtCarrera = new javax.swing.JTextField();
         btnGuardarAlumno = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -66,6 +84,7 @@ public class FrmAlta extends javax.swing.JFrame {
         cmbSemestre = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JTextField();
+        cmbCarreras = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 204));
@@ -84,6 +103,17 @@ public class FrmAlta extends javax.swing.JFrame {
                 txtNumControlActionPerformed(evt);
             }
         });
+        txtNumControl.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNumControlKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNumControlKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumControlKeyTyped(evt);
+            }
+        });
 
         txtNombre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -95,11 +125,24 @@ public class FrmAlta extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtNombreKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
         });
 
         txtApellidoPaterno.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtApellidoPaterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidoPaternoKeyTyped(evt);
+            }
+        });
 
         txtApellidoMaterno.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtApellidoMaterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidoMaternoKeyTyped(evt);
+            }
+        });
 
         txtCURP.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtCURP.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -110,8 +153,6 @@ public class FrmAlta extends javax.swing.JFrame {
                 txtCURPKeyReleased(evt);
             }
         });
-
-        txtCarrera.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         btnGuardarAlumno.setBackground(new java.awt.Color(255, 255, 255));
         btnGuardarAlumno.setBorder(null);
@@ -143,10 +184,13 @@ public class FrmAlta extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel8.setText("Semestre: ");
 
+        cmbSemestre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         cmbSemestre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
 
         jLabel9.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel9.setText("Direccion:");
+
+        cmbCarreras.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -195,8 +239,8 @@ public class FrmAlta extends javax.swing.JFrame {
                                         .addComponent(txtCURP, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtCarrera)))))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(cmbCarreras, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                         .addGap(56, 56, 56)
                         .addComponent(btnGuardarAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(100, 100, 100))))
@@ -217,10 +261,8 @@ public class FrmAlta extends javax.swing.JFrame {
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtNombre)
-                                .addGap(1, 1, 1)))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtApellidoPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -235,8 +277,8 @@ public class FrmAlta extends javax.swing.JFrame {
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))))
+                            .addComponent(jLabel6)
+                            .addComponent(cmbCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnGuardarAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -282,45 +324,57 @@ public class FrmAlta extends javax.swing.JFrame {
         // TODO adthis.txt
         BD mBD = new BD();
         Alumno mAlumno = new Alumno();
-
+        try {
+            mBD.Conectar();
+        } catch (Exception ex) {
+            Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String NumControl = txtNumControl.getText();
         String ApellidoMaterno = txtApellidoMaterno.getText();
         String ApellidoPaterno = txtApellidoPaterno.getText();
         String CURP = txtCURP.getText();
         String Nombre = txtNombre.getText();
-        String Carrera = txtCarrera.getText();
+        String Carrera = (String) cmbCarreras.getSelectedItem();
         String Direccion = txtDireccion.getText();
         String Semestre = (String) cmbSemestre.getSelectedItem();
-        
-        if((!"".equals(NumControl)) && (!"".equals(ApellidoMaterno)) 
-                && (!"".equals(ApellidoPaterno)) && (!"".equals(CURP)) 
-                && (!"".equals(Nombre)) && (!"".equals(Direccion))){
-
-        mAlumno.setApellidoMaterno(ApellidoMaterno);
-        mAlumno.setApellidoPaterno(ApellidoPaterno);
-        mAlumno.setCURP(CURP.toUpperCase());
-        mAlumno.setNombre(Nombre);
-        mAlumno.setCarrera(Carrera);
-        mAlumno.setNC(NumControl);
-        mAlumno.setDireccion(Direccion);
-        mAlumno.setEstado("1");
-        mAlumno.setSemestre(Integer.parseInt(Semestre));
-
         try {
-            mBD.AltaAlumno(mAlumno);
-            txtNumControl.setText("");
-            txtApellidoMaterno.setText("");
-            txtApellidoPaterno.setText("");
-            txtCURP.setText("");
-            txtNombre.setText("");
-            txtCarrera.setText("");
-            txtDireccion.setText("");
-            cmbSemestre.setSelectedItem("");
-
+            this.ClaveCarrera = mBD.ConsultarClaveCarreras(Carrera);
+            while (ClaveCarrera.next()) {
+                Clave = "";
+                Clave = ClaveCarrera.getString("Clave");
+            }
         } catch (SQLException ex) {
-            Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.print(ex);
-        }}else{
+            Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if ((!"".equals(NumControl)) && (!"".equals(ApellidoMaterno))
+                && (!"".equals(ApellidoPaterno)) && (!"".equals(CURP))
+                && (!"".equals(Nombre)) && (!"".equals(Direccion))) {
+
+            mAlumno.setApellidoMaterno(ApellidoMaterno);
+            mAlumno.setApellidoPaterno(ApellidoPaterno);
+            mAlumno.setCURP(CURP.toUpperCase());
+            mAlumno.setNombre(Nombre);
+            mAlumno.setCarrera(Clave);
+            mAlumno.setNC(NumControl);
+            mAlumno.setDireccion(Direccion);
+            mAlumno.setEstado("1");
+            mAlumno.setSemestre(Integer.parseInt(Semestre));
+
+            try {
+                mBD.AltaAlumno(mAlumno);
+                txtNumControl.setText("");
+                txtApellidoMaterno.setText("");
+                txtApellidoPaterno.setText("");
+                txtCURP.setText("");
+                txtNombre.setText("");
+                txtDireccion.setText("");
+                cmbSemestre.setSelectedItem("");
+            } catch (SQLException ex) {
+                Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.print(ex);
+            }
+        } else {
             JOptionPane.showMessageDialog(null, "No dejar cajas de tecto en blanco"
                     + "\n Proporcionar toda la informacion "
                     + "\n Solicitada");
@@ -342,12 +396,63 @@ public class FrmAlta extends javax.swing.JFrame {
 
     private void txtCURPKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCURPKeyReleased
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_txtCURPKeyReleased
 
     private void txtNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreKeyPressed
+
+    private void txtNumControlKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumControlKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumControlKeyPressed
+
+    private void txtNumControlKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumControlKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumControlKeyReleased
+
+    private void txtNumControlKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumControlKeyTyped
+        // TODO add your handling code here:
+        char caracter = evt.getKeyChar();
+
+        // Verificar si la tecla pulsada no es un digito
+        if (((caracter < '0')
+                || (caracter > '9'))
+                && (caracter != '\b' /*corresponde a BACK_SPACE*/)) {
+            evt.consume();  // ignorar el evento de teclado
+            JOptionPane.showMessageDialog(null, "No se admiten letras");
+        }
+    }//GEN-LAST:event_txtNumControlKeyTyped
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (Character.isDigit(c)) {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "No se admiten Numeros");
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtApellidoPaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoPaternoKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (Character.isDigit(c)) {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "No se admiten Numeros");
+        }
+    }//GEN-LAST:event_txtApellidoPaternoKeyTyped
+
+    private void txtApellidoMaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoMaternoKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (Character.isDigit(c)) {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "No se admiten Numeros");
+        }
+    }//GEN-LAST:event_txtApellidoMaternoKeyTyped
 
     /**
      * @param args the command line arguments
@@ -389,6 +494,7 @@ public class FrmAlta extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardarAlumno;
+    private javax.swing.JComboBox<String> cmbCarreras;
     private javax.swing.JComboBox<String> cmbSemestre;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -404,7 +510,6 @@ public class FrmAlta extends javax.swing.JFrame {
     private javax.swing.JTextField txtApellidoMaterno;
     private javax.swing.JTextField txtApellidoPaterno;
     private javax.swing.JTextField txtCURP;
-    private javax.swing.JTextField txtCarrera;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtNumControl;

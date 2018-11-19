@@ -21,6 +21,13 @@ import javax.swing.JOptionPane;
  */
 public class FrmModificacion extends javax.swing.JFrame {
 
+    BD mBD = new BD();
+    ResultSet ListaCarreras;
+    ResultSet NombreCarrera;
+    ResultSet ClaveCarrera;
+    String Clave;
+    String Nombre;
+
     /**
      * Creates new form
      */
@@ -40,8 +47,18 @@ public class FrmModificacion extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        try {
+            ListaCarreras = mBD.ConsultarCarreras();
+            while (ListaCarreras.next()) {
+                this.cmbCarreras.addItem(ListaCarreras.getString("Nombre"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String NC = this.lblNumeroControl.getText();
         ResultSet ListaAlumno = mBD.ConsultarAlumnoE(NC);
+
         System.out.print("tiene" + ListaAlumno.getRow());
         while (ListaAlumno.next()) {
             ListaAlumno.getString("NoControl");
@@ -50,11 +67,15 @@ public class FrmModificacion extends javax.swing.JFrame {
             this.txtApellidoMaterno.setText(ListaAlumno.getString("Apellido_Materno"));
             this.txtCURP.setText(ListaAlumno.getString("CURP"));
             this.txtDireccion.setText(ListaAlumno.getString("Direccion"));
-            this.txtCarrera.setText(ListaAlumno.getString("Carrera_Clave"));
+            Clave = ListaAlumno.getString("Carrera_Clave");
             this.cmbEstado.setSelectedItem(ListaAlumno.getString("Estado"));
             this.cmbSemestre.setSelectedItem(ListaAlumno.getString("Semestre"));
         }
 
+        this.NombreCarrera = mBD.ConsultarNombreCarreras(Clave);
+        while (NombreCarrera.next()) {
+            this.cmbCarreras.setSelectedItem(NombreCarrera.getString("Nombre"));
+        }
     }
 
     /**
@@ -72,7 +93,6 @@ public class FrmModificacion extends javax.swing.JFrame {
         txtApellidoPaterno = new javax.swing.JTextField();
         txtApellidoMaterno = new javax.swing.JTextField();
         txtCURP = new javax.swing.JTextField();
-        txtCarrera = new javax.swing.JTextField();
         btnGuardarAlumno = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -88,6 +108,7 @@ public class FrmModificacion extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         cmbEstado = new javax.swing.JComboBox<>();
+        cmbCarreras = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 204));
@@ -106,10 +127,25 @@ public class FrmModificacion extends javax.swing.JFrame {
                 txtNombreActionPerformed(evt);
             }
         });
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
 
         txtApellidoPaterno.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtApellidoPaterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidoPaternoKeyTyped(evt);
+            }
+        });
 
         txtApellidoMaterno.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtApellidoMaterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidoMaternoKeyTyped(evt);
+            }
+        });
 
         txtCURP.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtCURP.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -117,8 +153,6 @@ public class FrmModificacion extends javax.swing.JFrame {
                 txtCURPKeyPressed(evt);
             }
         });
-
-        txtCarrera.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         btnGuardarAlumno.setBackground(new java.awt.Color(255, 255, 255));
         btnGuardarAlumno.setBorder(null);
@@ -170,6 +204,8 @@ public class FrmModificacion extends javax.swing.JFrame {
 
         cmbEstado.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         cmbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Inactivo", " ", " " }));
+
+        cmbCarreras.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -230,8 +266,8 @@ public class FrmModificacion extends javax.swing.JFrame {
                                         .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(18, 18, 18)
+                                        .addComponent(cmbCarreras, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(100, 100, 100))
         );
@@ -269,7 +305,7 @@ public class FrmModificacion extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -285,7 +321,7 @@ public class FrmModificacion extends javax.swing.JFrame {
                             .addComponent(jLabel10)
                             .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(btnGuardarAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -329,10 +365,20 @@ public class FrmModificacion extends javax.swing.JFrame {
         String ApellidoPaterno = txtApellidoPaterno.getText();
         String CURP = txtCURP.getText();
         String Nombre = txtNombre.getText();
-        String Carrera = txtCarrera.getText();
+        String Carrera = (String) cmbCarreras.getSelectedItem();
         String Direccion = txtDireccion.getText();
         String Estado = (String) cmbEstado.getSelectedItem();
         String Semestre = (String) cmbSemestre.getSelectedItem();
+        try {
+            this.ClaveCarrera = mBD.ConsultarClaveCarreras(Carrera);
+            while (ClaveCarrera.next()) {
+                Clave = "";
+                Clave = ClaveCarrera.getString("Clave");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         if ("Activo".equals(Estado)) {
             Estado = "1";
         } else if ("Inactivo".equals(Estado)) {
@@ -346,7 +392,7 @@ public class FrmModificacion extends javax.swing.JFrame {
             mAlumno.setApellidoPaterno(ApellidoPaterno);
             mAlumno.setCURP(CURP.toUpperCase());
             mAlumno.setNombre(Nombre);
-            mAlumno.setCarrera(Carrera);
+            mAlumno.setCarrera(Clave);
             mAlumno.setNC(NC);
             mAlumno.setEstado(Estado);
             mAlumno.setSemestre(Integer.parseInt(Semestre));
@@ -378,6 +424,36 @@ public class FrmModificacion extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Solo " + limite + " Caracteres");
         }
     }//GEN-LAST:event_txtCURPKeyPressed
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (Character.isDigit(c)) {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "No se admiten Numeros");
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtApellidoPaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoPaternoKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (Character.isDigit(c)) {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "No se admiten Numeros");
+        }
+    }//GEN-LAST:event_txtApellidoPaternoKeyTyped
+
+    private void txtApellidoMaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoMaternoKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (Character.isDigit(c)) {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "No se admiten Numeros");
+        }
+    }//GEN-LAST:event_txtApellidoMaternoKeyTyped
 
     /**
      * @param args the command line arguments
@@ -428,6 +504,7 @@ public class FrmModificacion extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardarAlumno;
+    private javax.swing.JComboBox<String> cmbCarreras;
     private javax.swing.JComboBox<String> cmbEstado;
     private javax.swing.JComboBox<String> cmbSemestre;
     private javax.swing.JLabel jLabel1;
@@ -446,7 +523,6 @@ public class FrmModificacion extends javax.swing.JFrame {
     private javax.swing.JTextField txtApellidoMaterno;
     private javax.swing.JTextField txtApellidoPaterno;
     private javax.swing.JTextField txtCURP;
-    private javax.swing.JTextField txtCarrera;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables

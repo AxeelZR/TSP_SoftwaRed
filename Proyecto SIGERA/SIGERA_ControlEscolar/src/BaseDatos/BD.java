@@ -139,7 +139,29 @@ public class BD {
         Consulta = "";
         return resultado;
     }
+    
+    public ResultSet ConsultarCarreras() throws SQLException {
+        Consulta = "SELECT Nombre FROM carrera;";
+        ResultSet resultado = this.Comando.executeQuery(Consulta);
+        Consulta = "";
+        return resultado;
+    }
 
+    public ResultSet ConsultarClaveCarreras(String NombreCarrera) throws SQLException {
+        Consulta = "SELECT Clave FROM carrera where Nombre = '?1';";
+        Consulta = Consulta.replace("?1", NombreCarrera);
+        ResultSet resultado = this.Comando.executeQuery(Consulta);
+        Consulta = "";
+        return resultado;
+    }
+    
+    public ResultSet ConsultarNombreCarreras(String Clave) throws SQLException {
+        Consulta = "SELECT Nombre FROM carrera where Clave = '?1';";
+        Consulta = Consulta.replace("?1", Clave);
+        ResultSet resultado = this.Comando.executeQuery(Consulta);
+        Consulta = "";
+        return resultado;
+    }
     public ResultSet ConsultarAlumnoE(String NC) throws SQLException {
         Consulta = "select * from Alumno where NoControl ='" + NC + "';";
         ResultSet resultado = this.Comando.executeQuery(Consulta);
