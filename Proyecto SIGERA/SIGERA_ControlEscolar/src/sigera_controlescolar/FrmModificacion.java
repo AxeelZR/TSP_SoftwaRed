@@ -9,6 +9,9 @@ import BaseDatos.BD;
 import java.awt.Image;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
@@ -27,12 +30,35 @@ public class FrmModificacion extends javax.swing.JFrame {
     ResultSet ClaveCarrera;
     String Clave;
     String Nombre;
+     Date fechaactual = new Date();
+    DateFormat Formato = new SimpleDateFormat("MM");
+    String FechaActual;
+    String NC;
 
     /**
      * Creates new form
      */
     public FrmModificacion() throws SQLException {
         initComponents();
+        FechaActual = "";
+        FechaActual = Formato.format(fechaactual);     
+        if (FechaActual.compareTo("08") > 0 && FechaActual.compareTo("12") < 0) {
+            this.cmbSemestre.addItem("1");
+            this.cmbSemestre.addItem("3");
+            this.cmbSemestre.addItem("5");
+            this.cmbSemestre.addItem("7");
+            this.cmbSemestre.addItem("9");
+            this.cmbSemestre.addItem("11");
+
+        } else {
+            this.cmbSemestre.addItem("2");
+            this.cmbSemestre.addItem("4");
+            this.cmbSemestre.addItem("6");
+            this.cmbSemestre.addItem("8");
+            this.cmbSemestre.addItem("10");
+            this.cmbSemestre.addItem("12");
+
+        }
         ImageIcon imagen = new ImageIcon("src/imagenes/diskette_save_saveas_1514.png");
         Icon icono;
         icono = new ImageIcon(imagen.getImage().getScaledInstance(btnGuardarAlumno.getWidth(), btnGuardarAlumno.getHeight(), Image.SCALE_DEFAULT));
@@ -56,10 +82,9 @@ public class FrmModificacion extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String NC = this.lblNumeroControl.getText();
+        NC = this.lblNumeroControl.getText();
         ResultSet ListaAlumno = mBD.ConsultarAlumnoE(NC);
-
-        System.out.print("tiene" + ListaAlumno.getRow());
+        
         while (ListaAlumno.next()) {
             ListaAlumno.getString("NoControl");
             this.txtNombre.setText(ListaAlumno.getString("Nombre"));
@@ -167,6 +192,9 @@ public class FrmModificacion extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtCURPKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCURPKeyTyped(evt);
+            }
         });
 
         btnGuardarAlumno.setBackground(new java.awt.Color(255, 255, 255));
@@ -200,7 +228,6 @@ public class FrmModificacion extends javax.swing.JFrame {
         lblNumeroControl.setText("14010174");
 
         cmbSemestre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        cmbSemestre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
 
         jLabel8.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel8.setText("Semestre: ");
@@ -438,11 +465,6 @@ public class FrmModificacion extends javax.swing.JFrame {
 
     private void txtCURPKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCURPKeyPressed
         // TODO add your handling code here:
-        int limite = 8;
-        if (this.txtCURP.getText().length() == limite) {
-            evt.consume();
-            JOptionPane.showMessageDialog(null, "Solo " + limite + " Caracteres");
-        }
     }//GEN-LAST:event_txtCURPKeyPressed
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
@@ -474,6 +496,15 @@ public class FrmModificacion extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No se admiten Numeros");
         }
     }//GEN-LAST:event_txtApellidoMaternoKeyTyped
+
+    private void txtCURPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCURPKeyTyped
+        // TODO add your handling code here:
+        int limite = 18 ;
+        if (this.txtCURP.getText().length() == limite) {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Solo " + limite + " Caracteres");
+        }
+    }//GEN-LAST:event_txtCURPKeyTyped
 
     /**
      * @param args the command line arguments

@@ -165,12 +165,6 @@ public class BD {
     public ResultSet ConsultarAlumnoE(String NC) throws SQLException {
         Consulta = "select * from Alumno where NoControl ='" + NC + "';";
         ResultSet resultado = this.Comando.executeQuery(Consulta);
-        if (resultado.getRow() == 0) {
-            System.out.println("vacio");
-        } else {
-            System.out.println("lleno");
-
-        }
         Consulta = "";
         return resultado;
     }
