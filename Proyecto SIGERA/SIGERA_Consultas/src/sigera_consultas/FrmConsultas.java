@@ -16,6 +16,7 @@ public class FrmConsultas extends javax.swing.JFrame {
      */
     public FrmConsultas() {
         initComponents();
+        String Data;
     }
 
     /**
