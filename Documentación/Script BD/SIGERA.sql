@@ -9,7 +9,7 @@ CREATE TABLE Usuario (
   Carrera_Clave VARCHAR(25) NOT NULL,
   Nombre VARCHAR(25) NULL,
   Contrasenia VARCHAR(50) NULL,
-  Semestre INT NULL,
+  Nombre_Cola VARCHAR(150) NOT NULL,
   PRIMARY KEY(idUsuario),
   INDEX Usuario_FKIndex1(Carrera_Clave),
   FOREIGN KEY(Carrera_Clave)
