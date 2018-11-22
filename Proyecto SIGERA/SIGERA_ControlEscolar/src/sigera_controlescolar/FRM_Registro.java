@@ -3,10 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sigera_consultas;
+package sigera_controlescolar;
 
+import BaseDatos.BD_Usuario;
 import java.awt.Image;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
@@ -18,20 +24,16 @@ import javax.swing.JOptionPane;
  * @author Alejandro
  */
 public class FRM_Registro extends javax.swing.JFrame {
-    BD mBD = new BD();
-
-    /**
-     * Creates new form FRM_Registro
-     */
+    //BD mBD = new BD();
     public FRM_Registro() {
         initComponents();
-        ImageIcon imagen = new ImageIcon("src/imagenes/Guardar.png");
+        /*ImageIcon imagen = new ImageIcon("src/imagenes/Agregar.png");
         Icon icono;
         icono = new ImageIcon(imagen.getImage().getScaledInstance(btnGuardar.getWidth(), btnGuardar.getHeight(), Image.SCALE_DEFAULT));
-        btnGuardar.setIcon(icono);
+        btnGuardar.setIcon(icono);*/
     
      try {
-            mBD.Conectar();
+            //mBD.Conectar();
         } catch (Exception ex) {
             Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -57,7 +59,7 @@ public class FRM_Registro extends javax.swing.JFrame {
         txtPassword = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
-        cmbCarreras = new javax.swing.JComboBox<>();
+        cmbCarreras = new javax.swing.JComboBox<String>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -103,7 +105,7 @@ public class FRM_Registro extends javax.swing.JFrame {
         });
 
         cmbCarreras.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        cmbCarreras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ingeniería en Administración", "Ingeniería en Gestión Empresarial", "Ingeniería en Industrias Alimentarias", "Ingeniería en Electromecánica", "Ingeniería en Informática", "Ingeniería en Tecnologías de Información y Comunicación", "Ingeniería en Sistemas Computacionales ", "Contador Público", " " }));
+        cmbCarreras.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CP", "IA", "IEM", "IGE", "IIA", "ISC", "ITIC'S", " " }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -111,7 +113,7 @@ public class FRM_Registro extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(38, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -125,9 +127,9 @@ public class FRM_Registro extends javax.swing.JFrame {
                         .addComponent(lblUsuario)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(25, 25, 25)
+                .addGap(18, 18, 18)
                 .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addGap(30, 30, 30))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,17 +144,15 @@ public class FRM_Registro extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
                         .addGap(2, 2, 2)))
+                .addGap(14, 14, 14)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblCarrera)
-                            .addComponent(cmbCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(42, 42, 42)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cmbCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(72, 72, 72)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -186,7 +186,7 @@ public class FRM_Registro extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,34 +197,59 @@ public class FRM_Registro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
-         BD mBD = new BD();
-        Usuario mUsuario = new Usuario();
-        try {
-            mBD.Conectar();
-        } catch (Exception ex) {
-            Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        String Nombre_Usuario = txtUsuario.getText();
-        String Password = txtPassword.getText();
-        String Carrera = (String) cmbCarreras.getSelectedItem();
-       
-
-        if ((!"".equals(Nombre_Usuario)) && (!"".equals(Password))) {
-
-            Nombre_Usuario = Nombre_Usuario;
-            Password = Password;
+        try {                                           
+            // TODO add your handling code here:
+            /*BD_Usuario mBD = new BD_Usuario();
+            Usuario mUsuario = new Usuario();
             
-
+            String Nombre_Usuario = txtUsuario.getText();
+            String Password = txtPassword.getText();
+            String Carrera = (String) cmbCarreras.getSelectedItem();
+            if ((!Nombre_Usuario.equals("")) && (!Password.equals(""))) {
+            
+            try {
             mUsuario.setNombre_Usuario(Nombre_Usuario);
             mUsuario.setContraseña(Password);
-
-            mBD.RegistroUsuario(mUsuario);
+            mUsuario.setCarrera(Carrera);
+            mUsuario.setNomCola(Nombre_Usuario);
+            
+            mBD.getConnection();
+            mBD.Registrar(mUsuario);
+            mBD.Desconectar();
+            
             txtUsuario.setText("");
             txtPassword.setText("");
             cmbCarreras.setSelectedItem("");
-        } else {
+            } catch (SQLException ex) {
+            Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            } else {
             JOptionPane.showMessageDialog(null, "Proporcionar toda la información Solicitada");
+            }*/
+            SC_Escritura sc = new SC_Escritura();
+            try {
+                sc.CrearCola(txtUsuario.getText());
+                txtUsuario.setText("");
+                txtPassword.setText("");
+            } catch (URISyntaxException ex) {
+                Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyManagementException ex) {
+                Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (TimeoutException ex) {
+                Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (KeyManagementException ex) {
+            Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (TimeoutException ex) {
+            Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 

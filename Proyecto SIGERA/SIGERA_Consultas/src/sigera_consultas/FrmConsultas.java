@@ -5,6 +5,11 @@
  */
 package sigera_consultas;
 
+import java.io.IOException;
+import java.util.concurrent.TimeoutException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Yosse
@@ -14,9 +19,11 @@ public class FrmConsultas extends javax.swing.JFrame {
     /**
      * Creates new form FrmConsultas
      */
-    public FrmConsultas() {
+    SC_Lectura sc = new SC_Lectura();
+    public FrmConsultas() throws IOException, TimeoutException {
         initComponents();
         String Data;
+        sc.RecibirMensaje("tania");
     }
 
     /**
@@ -194,7 +201,13 @@ public class FrmConsultas extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmConsultas().setVisible(true);
+                try {
+                    new FrmConsultas().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(FrmConsultas.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (TimeoutException ex) {
+                    Logger.getLogger(FrmConsultas.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

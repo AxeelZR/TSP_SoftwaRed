@@ -5,6 +5,7 @@
  */
 package sigera_consultas;
 
+import BD.BD_Usuario;
 import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -189,7 +190,7 @@ public class FrmLogin extends javax.swing.JFrame {
 
     private void BtnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIngresarActionPerformed
         // TODO add your handling code here:
-        BD mBD = new BD();
+        BD_Usuario mBD = new BD_Usuario();
 
         if(mBD.Login()==1){
 

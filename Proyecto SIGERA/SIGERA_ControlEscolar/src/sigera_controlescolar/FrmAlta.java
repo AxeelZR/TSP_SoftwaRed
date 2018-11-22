@@ -7,6 +7,10 @@ package sigera_controlescolar;
 
 import BaseDatos.BD;
 import java.awt.Image;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -14,6 +18,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
@@ -68,18 +73,19 @@ public class FrmAlta extends javax.swing.JFrame {
         icono2 = new ImageIcon(imagen2.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_DEFAULT));
         lblLogo.setIcon(icono2);
         try {
-            mBD.Conectar();
+            //mBD.Conectar();
         } catch (Exception ex) {
             Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {
+        
+        /*try {
             ListaCarreras = mBD.ConsultarCarreras();
             while (ListaCarreras.next()) {
                 this.cmbCarreras.addItem(ListaCarreras.getString("Nombre"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
 
     }
 
@@ -108,10 +114,10 @@ public class FrmAlta extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         lblLogo = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        cmbSemestre = new javax.swing.JComboBox<>();
+        cmbSemestre = new javax.swing.JComboBox<String>();
         jLabel9 = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JTextField();
-        cmbCarreras = new javax.swing.JComboBox<>();
+        cmbCarreras = new javax.swing.JComboBox<String>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 204));
@@ -220,6 +226,7 @@ public class FrmAlta extends javax.swing.JFrame {
         jLabel9.setText("Direccion:");
 
         cmbCarreras.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        cmbCarreras.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CP" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -366,7 +373,7 @@ public class FrmAlta extends javax.swing.JFrame {
         BD mBD = new BD();
         Alumno mAlumno = new Alumno();
         try {
-            mBD.Conectar();
+            //mBD.Conectar();
         } catch (Exception ex) {
             Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -378,7 +385,7 @@ public class FrmAlta extends javax.swing.JFrame {
         String Carrera = (String) cmbCarreras.getSelectedItem();
         String Direccion = txtDireccion.getText();
         String Semestre = (String) cmbSemestre.getSelectedItem();
-        try {
+       /* try {
             this.ClaveCarrera = mBD.ConsultarClaveCarreras(Carrera);
             while (ClaveCarrera.next()) {
                 Clave = "";
@@ -386,29 +393,33 @@ public class FrmAlta extends javax.swing.JFrame {
             }
         } catch (SQLException ex) {
             Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
 
         if ((!"".equals(NumControl)) && (!"".equals(ApellidoMaterno))
                 && (!"".equals(ApellidoPaterno)) && (!"".equals(CURP))
                 && (!"".equals(Nombre)) && (!"".equals(Direccion))) {
 
-            ApellidoMaterno = toUpperCammelCase(ApellidoMaterno);
-            ApellidoPaterno = toUpperCammelCase(ApellidoPaterno);
-            Nombre = toUpperCammelCase(Nombre);
-            Direccion = toUpperCammelCase(Direccion);
-
-            mAlumno.setApellidoMaterno(ApellidoMaterno);
-            mAlumno.setApellidoPaterno(ApellidoPaterno);
-            mAlumno.setCURP(CURP.toUpperCase());
-            mAlumno.setNombre(Nombre);
-            mAlumno.setCarrera(Clave);
-            mAlumno.setNC(NumControl);
-            mAlumno.setDireccion(Direccion);
-            mAlumno.setEstado("1");
-            mAlumno.setSemestre(Integer.parseInt(Semestre));
-
             try {
-                mBD.AltaAlumno(mAlumno);
+                ApellidoMaterno = toUpperCammelCase(ApellidoMaterno);
+                ApellidoPaterno = toUpperCammelCase(ApellidoPaterno);
+                Nombre = toUpperCammelCase(Nombre);
+                Direccion = toUpperCammelCase(Direccion);
+                
+                mAlumno.setApellidoMaterno(ApellidoMaterno);
+                mAlumno.setApellidoPaterno(ApellidoPaterno);
+                mAlumno.setCURP(CURP.toUpperCase());
+                mAlumno.setNombre(Nombre);
+                mAlumno.setCarrera(Clave);
+                mAlumno.setNC(NumControl);
+                mAlumno.setDireccion(Direccion);
+                mAlumno.setEstado("1");
+                mAlumno.setSemestre(Integer.parseInt(Semestre));
+                //mBD.AltaAlumno(mAlumno);
+                //sc
+                SC_Escritura sc = new SC_Escritura();
+                sc.enviarmsj("juan", mAlumno);
+                
+                
                 txtNumControl.setText("");
                 txtApellidoMaterno.setText("");
                 txtApellidoPaterno.setText("");
@@ -416,9 +427,16 @@ public class FrmAlta extends javax.swing.JFrame {
                 txtNombre.setText("");
                 txtDireccion.setText("");
                 cmbSemestre.setSelectedItem("");
-            } catch (SQLException ex) {
+            } catch (IOException ex) {
                 Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.print(ex);
+            } catch (TimeoutException ex) {
+                Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (URISyntaxException ex) {
+                Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyManagementException ex) {
+                Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             JOptionPane.showMessageDialog(null, "No dejar cajas de tecto en blanco"
