@@ -8,6 +8,7 @@ package sigera_consultas;
 import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -27,8 +28,8 @@ public class FrmLogin extends javax.swing.JFrame {
         
         ImageIcon imagen2 = new ImageIcon("src/Imagenes/registro.png");
         Icon icono2;
-        icono2 = new ImageIcon(imagen2.getImage().getScaledInstance(BtnRegistro.getWidth(), BtnRegistro.getHeight(), Image.SCALE_DEFAULT));
-        BtnRegistro.setIcon(icono2);
+        //icono2 = new ImageIcon(imagen2.getImage().getScaledInstance(BtnRegistro.getWidth(), BtnRegistro.getHeight(), Image.SCALE_DEFAULT));
+        //BtnRegistro.setIcon(icono2);
     }
 
     /**
@@ -46,9 +47,8 @@ public class FrmLogin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         TxtUsuario = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         BtnIngresar = new javax.swing.JToggleButton();
-        BtnRegistro = new javax.swing.JToggleButton();
+        pswPassword = new javax.swing.JPasswordField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
@@ -85,6 +85,15 @@ public class FrmLogin extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel4.setText("Contraseña:");
 
+        BtnIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnIngresarActionPerformed(evt);
+            }
+        });
+
+        pswPassword.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        pswPassword.setText("jPasswordField1");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -99,13 +108,11 @@ public class FrmLogin extends javax.swing.JFrame {
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(TxtUsuario)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE))
+                            .addComponent(TxtUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+                            .addComponent(pswPassword))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(BtnRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(142, 142, 142)
                         .addComponent(BtnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(179, 179, 179))))
         );
@@ -117,13 +124,11 @@ public class FrmLogin extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(TxtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pswPassword))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BtnRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BtnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(BtnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -182,6 +187,31 @@ public class FrmLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TxtUsuarioActionPerformed
 
+    private void BtnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIngresarActionPerformed
+        // TODO add your handling code here:
+        BD mBD = new BD();
+
+        if(mBD.Login()==1){
+
+                this.dispose();
+
+                JOptionPane.showMessageDialog(null, "Bienvenido\n Has ingresado "
+                + "satisfactoriamente al sistema", "\n",
+                JOptionPane.INFORMATION_MESSAGE);
+
+                FrmConfiguracion mFrmConfiguracion = new FrmConfiguracion();          
+                mFrmConfiguracion.setVisible(true);
+
+        }else {
+
+                JOptionPane.showMessageDialog(null, "Acceso denegado:\n"
+                + "Por favor ingrese un usuario y/o contraseña correctos", "\n",
+                JOptionPane.ERROR_MESSAGE);
+
+        }
+
+    }//GEN-LAST:event_BtnIngresarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -219,7 +249,6 @@ public class FrmLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton BtnIngresar;
-    private javax.swing.JToggleButton BtnRegistro;
     private javax.swing.JTextField TxtUsuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -228,6 +257,6 @@ public class FrmLogin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField jTextField1;
+    public javax.swing.JPasswordField pswPassword;
     // End of variables declaration//GEN-END:variables
 }
