@@ -60,7 +60,7 @@ public class BD {
         User = "root";
         Password = "";
         try {
-            DriverManager.registerDriver(new org.gjt.mm.mysql.Driver());
+//            DriverManager.registerDriver(new org.gjt.mm.mysql.Driver());
             this.Conexion = DriverManager.getConnection("jdbc:mysql://" + Host + "/" + BD, User, Password);
             this.Comando = Conexion.createStatement();
             return true;
