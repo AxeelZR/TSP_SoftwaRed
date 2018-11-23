@@ -52,12 +52,14 @@ public class BD_Usuario {
     }
     public boolean Registrar(Usuario mUsuario) throws SQLException{
        try{
-        Consulta = "insert into Usuario(idUsuario,Carrera_Clave,Nombre,Contrasenia,Nombre_Cola) values(null,'?1','?2','?3','?4');";
-        Consulta = Consulta.replace("?1", mUsuario.getCarrera());
-        Consulta = Consulta.replace("?2", mUsuario.getNombre_Usuario());
-        Consulta = Consulta.replace("?3", mUsuario.getContraseña());
-        Consulta = Consulta.replace("?4", mUsuario.getNomCola());
-        Consulta = "";
+        Instruccion = "insert into Usuario(idUsuario,Carrera_Clave,Nombre,Contrasenia,Nombre_Cola) values(null,'?1','?2','?3','?4');";
+        Instruccion = Instruccion.replace("?1", mUsuario.getCarrera());
+        Instruccion = Instruccion.replace("?2", mUsuario.getNombre_Usuario());
+        Instruccion = Instruccion.replace("?3", mUsuario.getContraseña());
+        Instruccion = Instruccion.replace("?4", mUsuario.getNomCola());
+        Comando.executeUpdate(Instruccion);
+        System.out.print("Guarde");
+        Instruccion = "";
         Estado= true;
        }
        catch(Exception e){

@@ -5,17 +5,16 @@
  */
 package BD;
 
-
-
 import java.sql.*;
 import javax.swing.JOptionPane;
 import sigera_consultas.Usuario;
+
 /**
  *
  * @author Yosse
  */
 public class BD_Usuario {
-    
+
     private static Connection Conexion = null;
     static Statement Comando;
     String Consulta;
@@ -24,49 +23,67 @@ public class BD_Usuario {
     String Contraseña;
     String Carrera;
     boolean Estado;
-    
-    public BD_Usuario(){
+    int idUsuario;
+    String Contrasenia;
+
+    public BD_Usuario() {
         Nombre_Usuario = "";
         Contraseña = "";
         Carrera = "";
         Consulta = "";
         Instruccion = "";
-       
+
     }
-    public static Connection getConnection() {
-      try {
-          if(Conexion == null){
-              String URL = "jdbc:mysql://www.db4free.net:3306/sigerabd?autoReconnect=true";
-              String Pwd = "sigeraisc9";
-              String User = "sigeraisc";
-              Conexion = DriverManager.getConnection(URL,User,Pwd);
-              Comando = Conexion.createStatement();
-              System.out.println("Conectionesfull");
-              JOptionPane.showMessageDialog(null,"Si conecta");
-          }
-      } 
-      catch(SQLException ex){
-          ex.printStackTrace();
+
+    public Boolean Conectar() {
+        boolean Conect = false;
+        try {
+            if (Conexion == null) {
+                String URL = "jdbc:mysql://www.db4free.net:3306/sigerabd?autoReconnect=true";
+                String Pwd = "sigeraisc9";
+                String User = "sigeraisc";
+                Conexion = DriverManager.getConnection(URL, User, Pwd);
+                Comando = Conexion.createStatement();
+                System.out.println("Conectionesfull");
+                JOptionPane.showMessageDialog(null, "Si conecta");
+                Conect = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            Conect = false;
         }
-      return Conexion;
+        return Conect;
     }
-     public boolean Autentificar (String Usuario, String ContraseñaU) throws SQLException{
-       try{
-        Consulta = "SELECT id_Usuario FROM Usuario where Nombre = '?1' and Contrasenia = '?2';";
-        Consulta = Consulta.replace("?1", Usuario);
-        Consulta = Consulta.replace("?2", ContraseñaU);
-        Consulta = "";
-        Estado= true;
-       }
-       catch(Exception e){
-           System.out.println(e);
-           Estado = false; 
-       }
-       
-           return Estado;
-   }
-     public void Desconectar() throws SQLException {
+
+    public boolean Autentificar(String Usuario, String ContraseñaU) throws SQLException {
+        try {
+            Consulta = "SELECT id_Usuario FROM Usuario where Nombre = '?1' and Contrasenia = '?2';";
+            Consulta = Consulta.replace("?1", Usuario);
+            Consulta = Consulta.replace("?2", ContraseñaU);
+            Consulta = "";
+            Estado = true;
+        } catch (Exception e) {
+            System.out.println(e);
+            Estado = false;
+        }
+
+        return Estado;
+    }
+
+    public void Desconectar() throws SQLException {
         Conexion.close();
     }
-    
+
+    public Boolean ModificacionUsuario(String Contrasena, Usuario mUsuario) throws SQLException {
+        try {
+            String SQL = "UPDATE usuario set Contrasenia= '" + Contrasena
+                    + "', Semestre = '" + mUsuario.getSemestre() + "' where idUsuario='" + mUsuario.getNombre_Usuario() + "';";
+            Comando.executeUpdate(SQL);
+            System.out.println(SQL + " Ejecutado");
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }

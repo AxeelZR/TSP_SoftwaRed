@@ -24,6 +24,7 @@ import javax.swing.JOptionPane;
  * @author Alejandro
  */
 public class FRM_Registro extends javax.swing.JFrame {
+
     //BD mBD = new BD();
     public FRM_Registro() {
         initComponents();
@@ -31,8 +32,8 @@ public class FRM_Registro extends javax.swing.JFrame {
         Icon icono;
         icono = new ImageIcon(imagen.getImage().getScaledInstance(btnGuardar.getWidth(), btnGuardar.getHeight(), Image.SCALE_DEFAULT));
         btnGuardar.setIcon(icono);*/
-    
-     try {
+
+        try {
             //mBD.Conectar();
         } catch (Exception ex) {
             Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
@@ -59,7 +60,7 @@ public class FRM_Registro extends javax.swing.JFrame {
         txtPassword = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
-        cmbCarreras = new javax.swing.JComboBox<String>();
+        cmbCarreras = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -84,6 +85,7 @@ public class FRM_Registro extends javax.swing.JFrame {
         txtUsuario.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         txtPassword.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtPassword.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         jPanel3.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -105,7 +107,7 @@ public class FRM_Registro extends javax.swing.JFrame {
         });
 
         cmbCarreras.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        cmbCarreras.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CP", "IA", "IEM", "IGE", "IIA", "ISC", "ITIC'S", " " }));
+        cmbCarreras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CP", "IA", "IEM", "IGE", "IIA", "ISC", "ITIC'S", " " }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -113,7 +115,7 @@ public class FRM_Registro extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(38, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -197,36 +199,36 @@ public class FRM_Registro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        try {                                           
-            // TODO add your handling code here:
-            /*BD_Usuario mBD = new BD_Usuario();
-            Usuario mUsuario = new Usuario();
-            
-            String Nombre_Usuario = txtUsuario.getText();
-            String Password = txtPassword.getText();
-            String Carrera = (String) cmbCarreras.getSelectedItem();
-            if ((!Nombre_Usuario.equals("")) && (!Password.equals(""))) {
-            
+        // try {                                           
+        // TODO add your handling code here:
+        BD_Usuario mBD = new BD_Usuario();
+        Usuario mUsuario = new Usuario();
+
+        String Nombre_Usuario = txtUsuario.getText();
+        String Password = txtPassword.getText();
+        String Carrera = (String) cmbCarreras.getSelectedItem();
+        if ((!Nombre_Usuario.equals("")) && (!Password.equals(""))) {
+
             try {
-            mUsuario.setNombre_Usuario(Nombre_Usuario);
-            mUsuario.setContraseña(Password);
-            mUsuario.setCarrera(Carrera);
-            mUsuario.setNomCola(Nombre_Usuario);
-            
-            mBD.getConnection();
-            mBD.Registrar(mUsuario);
-            mBD.Desconectar();
-            
-            txtUsuario.setText("");
-            txtPassword.setText("");
-            cmbCarreras.setSelectedItem("");
-            } catch (SQLException ex) {
-            Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+                mUsuario.setNombre_Usuario(Nombre_Usuario);
+                mUsuario.setContraseña(Password);
+                mUsuario.setCarrera(Carrera);
+                mUsuario.setNomCola(Nombre_Usuario);
+
+                mBD.getConnection();
+                mBD.Registrar(mUsuario);
+                mBD.Desconectar();
+
+                txtUsuario.setText("");
+                txtPassword.setText("");
+                cmbCarreras.setSelectedItem("");
+            } catch (Exception ex) {
+                Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
             }
-            } else {
+        } else {
             JOptionPane.showMessageDialog(null, "Proporcionar toda la información Solicitada");
-            }*/
-            SC_Escritura sc = new SC_Escritura();
+        }
+        /*SC_Escritura sc = new SC_Escritura();
             try {
                 sc.CrearCola(txtUsuario.getText());
                 txtUsuario.setText("");
@@ -250,7 +252,7 @@ public class FRM_Registro extends javax.swing.JFrame {
             Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
         } catch (TimeoutException ex) {
             Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**

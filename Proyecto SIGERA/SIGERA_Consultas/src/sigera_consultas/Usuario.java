@@ -14,19 +14,27 @@ public class Usuario {
     String Nombre_Usuario;
     String Contraseña;
     String Carrera;
+    int Semestre;
     
     public Usuario(){
         Nombre_Usuario = "";
         Contraseña = "";
         Carrera = "";
+        Semestre = 0;
+    }
+
+    public int getSemestre() {
+        return Semestre;
+    }
+
+    public void setSemestre(int Semestre) {
+        this.Semestre = Semestre;
     }
 
     
     public void setNombre_Usuario(String Nombre_Usuario) {
         this.Nombre_Usuario = Nombre_Usuario;
-    }
-
-   
+    }   
 
     public void setContraseña(String Contraseña) {
         this.Contraseña = Contraseña;

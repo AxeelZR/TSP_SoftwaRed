@@ -5,9 +5,15 @@
  */
 package sigera_consultas;
 
+import BD.*;
 import java.awt.Image;
+import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,6 +30,7 @@ public class FrmConfiguracion extends javax.swing.JFrame {
         Icon icono;
         icono = new ImageIcon(imagen.getImage().getScaledInstance(btnOk.getWidth(), btnOk.getHeight(), Image.SCALE_DEFAULT));
         btnOk.setIcon(icono);
+        this.LlenarPeriodo();
     }
 
     /**
@@ -65,7 +72,6 @@ public class FrmConfiguracion extends javax.swing.JFrame {
         txtNuevaContrasena.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         cmbPeriodo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        cmbPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3" }));
 
         jPanel3.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -177,8 +183,47 @@ public class FrmConfiguracion extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void LlenarPeriodo() {
+        Calendar now = Calendar.getInstance();
+        int mes = now.get(Calendar.MONTH);
+        if (mes >= 1 && mes <= 7) {
+            this.cmbPeriodo.addItem("2");
+            this.cmbPeriodo.addItem("4");
+            this.cmbPeriodo.addItem("6");
+            this.cmbPeriodo.addItem("8");
+            this.cmbPeriodo.addItem("10");
+        } else if (mes > 8 && mes <= 12) {
+            this.cmbPeriodo.addItem("1");
+            this.cmbPeriodo.addItem("3");
+            this.cmbPeriodo.addItem("5");
+            this.cmbPeriodo.addItem("7");
+            this.cmbPeriodo.addItem("9");
+        }
+    }
     private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
         // TODO add your handling code here:
+        Configuracion mConfiguracion = new Configuracion();
+        Usuario mUsuario = new Usuario();
+        String Contrasena = this.txtNuevaContrasena.getText();
+        String Select = this.cmbPeriodo.getSelectedItem().toString();
+
+        if (!"".equals(Contrasena)) {
+            String NombreUsuario = "Lachona";
+            mUsuario.setNombre_Usuario(NombreUsuario);
+            mUsuario.setContraseña(Contrasena);
+            mUsuario.setSemestre(Integer.parseInt(Select));
+            try {
+                mConfiguracion.CambiarContrasena(Contrasena, mUsuario);
+                JOptionPane.showMessageDialog(null, "Se Modifico Correctamente la contraseña");
+            } catch (Exception ex) {
+                Logger.getLogger(FrmConfiguracion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "La contraseña no puede estar vacia"
+                    + "\n Proporcionar toda la informacion "
+                    + "\n Solicitada");
+        }
     }//GEN-LAST:event_btnOkActionPerformed
 
     /**
@@ -206,6 +251,7 @@ public class FrmConfiguracion extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(FrmConfiguracion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
