@@ -28,11 +28,10 @@ public class FRM_Registro extends javax.swing.JFrame {
     //BD mBD = new BD();
     public FRM_Registro() {
         initComponents();
-        /*ImageIcon imagen = new ImageIcon("src/imagenes/Agregar.png");
+        ImageIcon imagen = new ImageIcon("src/imagenes/Agregar.png");
         Icon icono;
         icono = new ImageIcon(imagen.getImage().getScaledInstance(btnGuardar.getWidth(), btnGuardar.getHeight(), Image.SCALE_DEFAULT));
-        btnGuardar.setIcon(icono);*/
-
+        btnGuardar.setIcon(icono);
         try {
             //mBD.Conectar();
         } catch (Exception ex) {
@@ -107,7 +106,7 @@ public class FRM_Registro extends javax.swing.JFrame {
         });
 
         cmbCarreras.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        cmbCarreras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CP", "IA", "IEM", "IGE", "IIA", "ISC", "ITIC'S", " " }));
+        cmbCarreras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CP", "IA", "IEM", "IGE", "IIA", "ISC", "ITIC'S" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);

@@ -114,10 +114,10 @@ public class FrmAlta extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         lblLogo = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        cmbSemestre = new javax.swing.JComboBox<String>();
+        cmbSemestre = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JTextField();
-        cmbCarreras = new javax.swing.JComboBox<String>();
+        cmbCarreras = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 204));
@@ -226,7 +226,11 @@ public class FrmAlta extends javax.swing.JFrame {
         jLabel9.setText("Direccion:");
 
         cmbCarreras.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        cmbCarreras.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CP" }));
+        cmbCarreras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbCarrerasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -521,6 +525,10 @@ public class FrmAlta extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Solo " + limite + " Caracteres");
         }
     }//GEN-LAST:event_txtCURPKeyTyped
+
+    private void cmbCarrerasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCarrerasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbCarrerasActionPerformed
 
     /**
      * @param args the command line arguments

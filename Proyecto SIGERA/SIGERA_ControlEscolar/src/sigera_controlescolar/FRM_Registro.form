@@ -231,7 +231,7 @@
                   <Font name="Arial" size="12" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="8">
+                  <StringArray count="7">
                     <StringItem index="0" value="CP"/>
                     <StringItem index="1" value="IA"/>
                     <StringItem index="2" value="IEM"/>
@@ -239,7 +239,6 @@
                     <StringItem index="4" value="IIA"/>
                     <StringItem index="5" value="ISC"/>
                     <StringItem index="6" value="ITIC&apos;S"/>
-                    <StringItem index="7" value=" "/>
                   </StringArray>
                 </Property>
               </Properties>

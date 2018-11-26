@@ -30,18 +30,20 @@ public class FrmModificacion extends javax.swing.JFrame {
     ResultSet ClaveCarrera;
     String Clave;
     String Nombre;
-     Date fechaactual = new Date();
+    Date fechaactual = new Date();
     DateFormat Formato = new SimpleDateFormat("MM");
     String FechaActual;
     String NC;
+    String EstadoAI;
 
     /**
      * Creates new form
      */
-    public FrmModificacion() throws SQLException {
+    public FrmModificacion(String NoControl) throws SQLException {
         initComponents();
+        this.lblNumeroControl.setText(NoControl);
         FechaActual = "";
-        FechaActual = Formato.format(fechaactual);     
+        FechaActual = Formato.format(fechaactual);
         if (FechaActual.compareTo("08") > 0 && FechaActual.compareTo("12") < 0) {
             this.cmbSemestre.addItem("1");
             this.cmbSemestre.addItem("3");
@@ -84,8 +86,12 @@ public class FrmModificacion extends javax.swing.JFrame {
         }
         NC = this.lblNumeroControl.getText();
         ResultSet ListaAlumno = mBD.ConsultarAlumnoE(NC);
-        
         while (ListaAlumno.next()) {
+            if ("1".equals(ListaAlumno.getString("Estado"))) {
+                EstadoAI = "Activo";
+            } else {
+                EstadoAI = "Inactivo";
+            }
             ListaAlumno.getString("NoControl");
             this.txtNombre.setText(ListaAlumno.getString("Nombre"));
             this.txtApellidoPaterno.setText(ListaAlumno.getString("Apellido_Paterno"));
@@ -93,7 +99,7 @@ public class FrmModificacion extends javax.swing.JFrame {
             this.txtCURP.setText(ListaAlumno.getString("CURP"));
             this.txtDireccion.setText(ListaAlumno.getString("Direccion"));
             Clave = ListaAlumno.getString("Carrera_Clave");
-            this.cmbEstado.setSelectedItem(ListaAlumno.getString("Estado"));
+            this.cmbEstado.setSelectedItem(EstadoAI);
             this.cmbSemestre.setSelectedItem(ListaAlumno.getString("Semestre"));
         }
 
@@ -225,7 +231,7 @@ public class FrmModificacion extends javax.swing.JFrame {
         jLabel6.setText("Carrera:");
 
         lblNumeroControl.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        lblNumeroControl.setText("14010174");
+        lblNumeroControl.setText("_____________");
 
         cmbSemestre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
@@ -245,7 +251,7 @@ public class FrmModificacion extends javax.swing.JFrame {
         jLabel10.setText("Estado:");
 
         cmbEstado.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        cmbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Inactivo", " ", " " }));
+        cmbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Inactivo" }));
 
         cmbCarreras.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
@@ -499,7 +505,7 @@ public class FrmModificacion extends javax.swing.JFrame {
 
     private void txtCURPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCURPKeyTyped
         // TODO add your handling code here:
-        int limite = 18 ;
+        int limite = 18;
         if (this.txtCURP.getText().length() == limite) {
             evt.consume();
             JOptionPane.showMessageDialog(null, "Solo " + limite + " Caracteres");
@@ -544,10 +550,9 @@ public class FrmModificacion extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new FrmModificacion().setVisible(true);
+                    new FrmModificacion("").setVisible(true);
                 } catch (SQLException ex) {
                     Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
-                    System.out.print(ex);
                 }
             }
         });

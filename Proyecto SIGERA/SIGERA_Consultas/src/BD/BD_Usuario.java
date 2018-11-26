@@ -57,11 +57,14 @@ public class BD_Usuario {
 
     public boolean Autentificar(String Usuario, String ContraseñaU) throws SQLException {
         try {
-            Consulta = "SELECT id_Usuario FROM Usuario where Nombre = '?1' and Contrasenia = '?2';";
+            Consulta = "SELECT idUsuario FROM Usuario where Nombre = '?1' and Contrasenia = '?2';";
             Consulta = Consulta.replace("?1", Usuario);
             Consulta = Consulta.replace("?2", ContraseñaU);
+            ResultSet Resultado = Comando.executeQuery(Consulta);
+            if (Resultado != null && Resultado.next()) {
+                Estado = true;
+            }
             Consulta = "";
-            Estado = true;
         } catch (Exception e) {
             System.out.println(e);
             Estado = false;
@@ -84,6 +87,14 @@ public class BD_Usuario {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public ResultSet ConsultarCola(String NombreUsuario) throws SQLException {
+        Consulta = "Select Nombre_Cola from Usuario where Nombre = '?1'";
+        Consulta = Consulta.replace("?1", NombreUsuario);
+        ResultSet resultado = this.Comando.executeQuery(Consulta);
+        Consulta = "";
+        return resultado;
     }
 
 }

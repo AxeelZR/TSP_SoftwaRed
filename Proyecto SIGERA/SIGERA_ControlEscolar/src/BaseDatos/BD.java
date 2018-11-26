@@ -6,6 +6,7 @@
 package BaseDatos;
 
 //import java.beans.Statement;
+import com.mysql.cj.util.TimeUtil;
 import java.sql.*;
 import sigera_controlescolar.Alumno;
 
@@ -60,8 +61,7 @@ public class BD {
         User = "root";
         Password = "";
         try {
-//            DriverManager.registerDriver(new org.gjt.mm.mysql.Driver());
-            this.Conexion = DriverManager.getConnection("jdbc:mysql://" + Host + "/" + BD, User, Password);
+            this.Conexion = DriverManager.getConnection("jdbc:mysql://" + Host + "/" + BD +"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC" , User, Password);
             this.Comando = Conexion.createStatement();
             return true;
         } catch (SQLException exc) {
@@ -120,15 +120,14 @@ public class BD {
     public Boolean BajaAlumno(String NC) throws SQLException {
         String Estado;
         int i;
-        Estado = "Inactivo";
+        Estado = "0";
         try {
-            Instruccion = "update Alumno set Estado ='" + Estado + "'  where NoControl='" + NC + "'  ;";
-
+            Instruccion = "update Alumno set Estado ='" + Estado + "'  where NoControl='" + NC + "';";
             i = this.Comando.executeUpdate(Instruccion);
             System.out.println(Instruccion + "Ejecutado");
             return true;
         } catch (Exception ex) {
-            System.out.print("Error");
+            System.out.print("Error" + ex);
             return false;
         }
     }
@@ -141,7 +140,7 @@ public class BD {
     }
     
     public ResultSet ConsultarCarreras() throws SQLException {
-        Consulta = "SELECT Nombre FROM carrera;";
+        Consulta = "SELECT Nombre, Clave FROM carrera;";
         ResultSet resultado = this.Comando.executeQuery(Consulta);
         Consulta = "";
         return resultado;
@@ -176,6 +175,12 @@ public class BD {
         return resultado;
     }
 
+    public ResultSet ConsultarNumeroControlG() throws SQLException {
+        Consulta = "SELECT NoControl from Alumno";
+        ResultSet resultado = this.Comando.executeQuery(Consulta);
+        Consulta = "";
+        return resultado;
+    }
     public void Desconectar() throws SQLException {
         Conexion.close();
     }
