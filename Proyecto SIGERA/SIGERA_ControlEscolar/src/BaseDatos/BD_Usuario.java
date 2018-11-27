@@ -9,6 +9,7 @@ package BaseDatos;
 
 import java.sql.*;
 import javax.swing.JOptionPane;
+import sigera_controlescolar.Alumno;
 import sigera_controlescolar.Usuario;
 /**
  *
@@ -69,6 +70,32 @@ public class BD_Usuario {
        
            return Estado;
    } 
+    
+    public ResultSet ConsultarUsuarios() throws SQLException {
+        Consulta = "select * from Usuario";
+        ResultSet resultado = this.Comando.executeQuery(Consulta);
+        Consulta = "";
+        return resultado;
+    }
+    
+     public boolean EliminarUsuario(String Nombre) throws SQLException {
+        try{
+        Instruccion = "Delete from usuario where Nombre = '?1';";
+        Instruccion = Instruccion.replace("?1", Nombre);
+        Comando.executeUpdate(Instruccion);
+        JOptionPane.showMessageDialog(null, "Se elimino el usuairio "+ Nombre);
+        Instruccion = "";
+        Estado= true;
+       }
+       catch(Exception e){
+           System.out.println(e);
+           Estado = false; 
+       }
+       
+           return Estado; 
+     }
+     
+    
    public void Desconectar() throws SQLException {
         Conexion.close();
     }

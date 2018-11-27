@@ -5,12 +5,14 @@
  */
 package sigera_controlescolar;
 
+import BaseDatos.BD;
 import BaseDatos.BD_Usuario;
 import java.awt.Image;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
@@ -24,6 +26,7 @@ import javax.swing.JOptionPane;
  * @author Alejandro
  */
 public class FRM_Registro extends javax.swing.JFrame {
+    ResultSet ListaCarreras;
 
     //BD mBD = new BD();
     public FRM_Registro() {
@@ -36,6 +39,22 @@ public class FRM_Registro extends javax.swing.JFrame {
             //mBD.Conectar();
         } catch (Exception ex) {
             Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        BD mBD = new BD();
+        try {
+            mBD.Conectar();
+        } catch (Exception ex) {
+            Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            ListaCarreras = mBD.ConsultarCarreras();
+            while (ListaCarreras.next()) {
+                this.cmbCarreras.addItem(ListaCarreras.getString("Clave"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -106,7 +125,6 @@ public class FRM_Registro extends javax.swing.JFrame {
         });
 
         cmbCarreras.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        cmbCarreras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CP", "IA", "IEM", "IGE", "IIA", "ISC", "ITIC'S" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
