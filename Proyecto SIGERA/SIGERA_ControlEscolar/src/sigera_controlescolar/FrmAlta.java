@@ -115,10 +115,10 @@ public class FrmAlta extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         lblLogo = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        cmbSemestre = new javax.swing.JComboBox<String>();
+        cmbSemestre = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JTextField();
-        cmbCarreras = new javax.swing.JComboBox<String>();
+        cmbCarreras = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 204));
@@ -227,7 +227,7 @@ public class FrmAlta extends javax.swing.JFrame {
         jLabel9.setText("Direccion:");
 
         cmbCarreras.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        cmbCarreras.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CP", "ISC", "IEM", "IGE", "IIA", "IA", "ITICS" }));
+        cmbCarreras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CP", "ISC", "IEM", "IGE", "IIA", "IA", "ITICS" }));
         cmbCarreras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbCarrerasActionPerformed(evt);
