@@ -230,6 +230,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial" size="12" style="0"/>
                 </Property>
+<<<<<<< HEAD
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="7">
                     <StringItem index="0" value="CP"/>
@@ -241,6 +242,8 @@
                     <StringItem index="6" value="ITICS"/>
                   </StringArray>
                 </Property>
+=======
+>>>>>>> 9eaf17d331bd2426842a2028607f223b18d06111
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
