@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sigera_controlescolar;
 
 import BaseDatos.BD;
@@ -20,6 +15,7 @@ import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import sigera_controlescolar.*;
 
 /**
  *
@@ -124,11 +120,8 @@ public class FRM_Registro extends javax.swing.JFrame {
             }
         });
 
-        cmbCarreras.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-<<<<<<< HEAD
+        cmbCarreras.setFont(new java.awt.Font("Arial", 0, 12)); 
         cmbCarreras.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CP", "IA", "IEM", "IGE", "IIA", "ISC", "ITICS" }));
-=======
->>>>>>> 9eaf17d331bd2426842a2028607f223b18d06111
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
