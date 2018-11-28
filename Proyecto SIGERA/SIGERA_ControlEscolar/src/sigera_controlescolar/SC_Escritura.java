@@ -35,8 +35,7 @@ public class SC_Escritura {
     public String CrearCola(String NomCola) throws URISyntaxException, NoSuchAlgorithmException, KeyManagementException, TimeoutException{
         String msj="";
         try {
-    channel.queueDeclare(NomCola, false, false, false, null);
-            msj = "cola " + NomCola + " creada";
+            channel.queueDeclare(NomCola, false, false, false, null);
             channel.close();
             connection.close();
         } catch (IOException ex) {
@@ -46,13 +45,25 @@ public class SC_Escritura {
         return msj;
     }
     
-    public Boolean enviarmsj(String NomCola, Alumno mAlumno) throws IOException, TimeoutException{
+    public Boolean enviarmsj(String NomCola, String Msj) throws IOException, TimeoutException, URISyntaxException{
         Boolean envio = false;
-        String Msj= "El Alumno " + mAlumno.getNombre() + "ha sido inscrito";
-        channel.basicPublish("", NomCola, null, Msj.getBytes("UTF-8"));
-        channel.close();
-        connection.close();
+        try {
+            
+            factory = new ConnectionFactory();
+            factory.setUri("amqp://gmlwmzpm:v3Xz7-Mv7chUuduRsg0mqG-XO4yeCyE7@chimpanzee.rmq.cloudamqp.com/gmlwmzpm");
+            connection = factory.newConnection();
+            channel = connection.createChannel();
+            channel.basicPublish("", NomCola, null, Msj.getBytes("UTF-8"));
+            channel.close();
+            connection.close();
+            envio= true;
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(SC_Escritura.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (KeyManagementException ex) {
+            Logger.getLogger(SC_Escritura.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return envio;
     }
+     
     
 }

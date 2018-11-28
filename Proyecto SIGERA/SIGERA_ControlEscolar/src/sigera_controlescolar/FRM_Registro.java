@@ -59,7 +59,7 @@ public class FRM_Registro extends javax.swing.JFrame {
         txtPassword = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
-        cmbCarreras = new javax.swing.JComboBox<>();
+        cmbCarreras = new javax.swing.JComboBox<String>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -84,7 +84,7 @@ public class FRM_Registro extends javax.swing.JFrame {
         txtUsuario.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         txtPassword.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtPassword.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtPassword.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jPanel3.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -106,7 +106,7 @@ public class FRM_Registro extends javax.swing.JFrame {
         });
 
         cmbCarreras.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        cmbCarreras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CP", "IA", "IEM", "IGE", "IIA", "ISC", "ITIC'S" }));
+        cmbCarreras.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CP", "IA", "IEM", "IGE", "IIA", "ISC", "ITICS" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -198,48 +198,37 @@ public class FRM_Registro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // try {                                           
-        // TODO add your handling code here:
-        BD_Usuario mBD = new BD_Usuario();
-        Usuario mUsuario = new Usuario();
-
-        String Nombre_Usuario = txtUsuario.getText();
-        String Password = txtPassword.getText();
-        String Carrera = (String) cmbCarreras.getSelectedItem();
-        if ((!Nombre_Usuario.equals("")) && (!Password.equals(""))) {
-
-            try {
-                mUsuario.setNombre_Usuario(Nombre_Usuario);
-                mUsuario.setContraseña(Password);
-                mUsuario.setCarrera(Carrera);
-                mUsuario.setNomCola(Nombre_Usuario);
-
-                mBD.getConnection();
-                mBD.Registrar(mUsuario);
-                mBD.Desconectar();
-
-                txtUsuario.setText("");
-                txtPassword.setText("");
-                cmbCarreras.setSelectedItem("");
-            } catch (Exception ex) {
-                Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Proporcionar toda la información Solicitada");
-        }
-        /*SC_Escritura sc = new SC_Escritura();
-            try {
-                sc.CrearCola(txtUsuario.getText());
-                txtUsuario.setText("");
-                txtPassword.setText("");
-            } catch (URISyntaxException ex) {
-                Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NoSuchAlgorithmException ex) {
-                Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (KeyManagementException ex) {
-                Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (TimeoutException ex) {
-                Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            // try {
+            // TODO add your handling code here:
+            BD_Usuario mBD = new BD_Usuario();
+            Usuario mUsuario = new Usuario();
+            SC_Escritura sc = new SC_Escritura();
+            
+            String Nombre_Usuario = txtUsuario.getText();
+            String Password = txtPassword.getText();
+            String Carrera = (String) cmbCarreras.getSelectedItem();
+            if ((!Nombre_Usuario.equals("")) && (!Password.equals(""))) {
+                
+                try {
+                    mUsuario.setNombre_Usuario(Nombre_Usuario);
+                    mUsuario.setContraseña(Password);
+                    mUsuario.setCarrera(Carrera);
+                    mUsuario.setNomCola(Nombre_Usuario);
+                    
+                    mBD.getConnection();
+                    if(mBD.Registrar(mUsuario)){
+                        sc.CrearCola(Nombre_Usuario);
+                    }
+                    //mBD.Desconectar();
+                    
+                    txtUsuario.setText("");
+                    txtPassword.setText("");
+                } catch (Exception ex) {
+                    Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Proporcionar toda la información Solicitada");
             }
         } catch (URISyntaxException ex) {
             Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
@@ -251,7 +240,7 @@ public class FRM_Registro extends javax.swing.JFrame {
             Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
         } catch (TimeoutException ex) {
             Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**

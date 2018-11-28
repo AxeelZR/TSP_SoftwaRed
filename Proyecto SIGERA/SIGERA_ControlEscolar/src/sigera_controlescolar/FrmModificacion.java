@@ -6,12 +6,18 @@
 package sigera_controlescolar;
 
 import BaseDatos.BD;
+import BaseDatos.BD_Usuario;
 import java.awt.Image;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
@@ -35,6 +41,7 @@ public class FrmModificacion extends javax.swing.JFrame {
     String FechaActual;
     String NC;
     String EstadoAI;
+    String CarreraAnt;
 
     /**
      * Creates new form
@@ -50,7 +57,6 @@ public class FrmModificacion extends javax.swing.JFrame {
             this.cmbSemestre.addItem("5");
             this.cmbSemestre.addItem("7");
             this.cmbSemestre.addItem("9");
-            this.cmbSemestre.addItem("11");
 
         } else {
             this.cmbSemestre.addItem("2");
@@ -58,7 +64,6 @@ public class FrmModificacion extends javax.swing.JFrame {
             this.cmbSemestre.addItem("6");
             this.cmbSemestre.addItem("8");
             this.cmbSemestre.addItem("10");
-            this.cmbSemestre.addItem("12");
 
         }
         ImageIcon imagen = new ImageIcon("src/imagenes/diskette_save_saveas_1514.png");
@@ -76,10 +81,10 @@ public class FrmModificacion extends javax.swing.JFrame {
             Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        try {
+        try{
             ListaCarreras = mBD.ConsultarCarreras();
             while (ListaCarreras.next()) {
-                this.cmbCarreras.addItem(ListaCarreras.getString("Nombre"));
+                this.cmbCarreras.addItem(ListaCarreras.getString("Clave"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
@@ -98,14 +103,10 @@ public class FrmModificacion extends javax.swing.JFrame {
             this.txtApellidoMaterno.setText(ListaAlumno.getString("Apellido_Materno"));
             this.txtCURP.setText(ListaAlumno.getString("CURP"));
             this.txtDireccion.setText(ListaAlumno.getString("Direccion"));
-            Clave = ListaAlumno.getString("Carrera_Clave");
+            CarreraAnt = ListaAlumno.getString("Carrera_Clave");
+            this.cmbCarreras.setSelectedItem(ListaAlumno.getString("Carrera_Clave"));
             this.cmbEstado.setSelectedItem(EstadoAI);
             this.cmbSemestre.setSelectedItem(ListaAlumno.getString("Semestre"));
-        }
-
-        this.NombreCarrera = mBD.ConsultarNombreCarreras(Clave);
-        while (NombreCarrera.next()) {
-            this.cmbCarreras.setSelectedItem(NombreCarrera.getString("Nombre"));
         }
     }
 
@@ -417,15 +418,6 @@ public class FrmModificacion extends javax.swing.JFrame {
         String Direccion = txtDireccion.getText();
         String Estado = (String) cmbEstado.getSelectedItem();
         String Semestre = (String) cmbSemestre.getSelectedItem();
-        try {
-            this.ClaveCarrera = mBD.ConsultarClaveCarreras(Carrera);
-            while (ClaveCarrera.next()) {
-                Clave = "";
-                Clave = ClaveCarrera.getString("Clave");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
         if ("Activo".equals(Estado)) {
             Estado = "1";
@@ -445,17 +437,66 @@ public class FrmModificacion extends javax.swing.JFrame {
             mAlumno.setApellidoPaterno(ApellidoPaterno);
             mAlumno.setCURP(CURP.toUpperCase());
             mAlumno.setNombre(Nombre);
-            mAlumno.setCarrera(Clave);
+            mAlumno.setCarrera(Carrera);
             mAlumno.setNC(NC);
             mAlumno.setEstado(Estado);
             mAlumno.setSemestre(Integer.parseInt(Semestre));
             mAlumno.setDireccion(Direccion);
 
             try {
-                mBD.ModificacionAlumno(NC, mAlumno);
-                JOptionPane.showMessageDialog(null, "Se Modifico Correctamente el Registro \n"
-                        + "Con Numero de Control " + this.lblNumeroControl.getText());
+                if(mBD.ModificacionAlumno(NC, mAlumno)){
+                    JOptionPane.showMessageDialog(null, "Se Modifico Correctamente el alumno Con Numero de Control " 
+                            + this.lblNumeroControl.getText());
+                    //Escribir en la cola
+                    SC_Escritura sc  = new SC_Escritura();
+                    BD_Usuario mBDU = new BD_Usuario();
+                    mBDU.getConnection();
+                    
+                    if(!CarreraAnt.equals(Carrera)){
+                        DateFormat formato = new  SimpleDateFormat("dd/MM/YYYY");
+                        Date fechaactual = new Date();
+                        String FechaActual = formato.format(fechaactual);
+                        String Msj1= "El alumno: " + Nombre +" con NC: " + NC 
+                                + " ha cambiado de carrera de: " + CarreraAnt + " a " + Carrera+ " el " + FechaActual;
+                        //Enviar msj a las colas de las nueva carrera
+                        ResultSet Colas = mBDU.ConsultarCola(Carrera);
+                        while(Colas.next()){
+                            String NomCola = Colas.getString(1);
+                            //System.out.println(Carrera + " "+NomCola);
+                            sc.enviarmsj(NomCola, Msj1);
+                        }
+                        //Enviar msj a las colas de la nueva carrera
+                        Colas = mBDU.ConsultarCola(CarreraAnt);
+                        while(Colas.next()){
+                            String NomCola = Colas.getString(1);
+                            //System.out.println(CarreraAnt + " "+NomCola);
+                            //System.out.println(NomCola);
+                            sc.enviarmsj(NomCola, Msj1);
+                        }
+                    }else{
+                        String Msj1= "El alumno: " + Nombre +" con NC: " + NC 
+                                + "ha sido modificado";
+                        ResultSet Colas = mBDU.ConsultarCola(Carrera);
+                        while(Colas.next()){
+                            String NomCola = Colas.getString(1);
+                            sc.enviarmsj(NomCola, Msj1);
+                        }
+                    }
+                    
+                    
+                }
+                
             } catch (SQLException ex) {
+                Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (URISyntaxException ex) {
+                Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyManagementException ex) {
+                Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (TimeoutException ex) {
                 Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {

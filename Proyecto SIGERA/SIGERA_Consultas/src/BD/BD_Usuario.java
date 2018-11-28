@@ -6,6 +6,8 @@
 package BD;
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import sigera_consultas.Usuario;
 
@@ -44,8 +46,6 @@ public class BD_Usuario {
                 String User = "sigeraisc";
                 Conexion = DriverManager.getConnection(URL, User, Pwd);
                 Comando = Conexion.createStatement();
-                System.out.println("Conectionesfull");
-                JOptionPane.showMessageDialog(null, "Si conecta");
                 Conect = true;
             }
         } catch (SQLException ex) {
@@ -92,6 +92,44 @@ public class BD_Usuario {
     public ResultSet ConsultarCola(String NombreUsuario) throws SQLException {
         Consulta = "Select Nombre_Cola from Usuario where Nombre = '?1'";
         Consulta = Consulta.replace("?1", NombreUsuario);
+        ResultSet resultado = this.Comando.executeQuery(Consulta);
+        Consulta = "";
+        return resultado;
+    }
+    public int Consultarid(String NombreUsuario) throws SQLException {
+        Consulta = "Select idUsuario from Usuario where Nombre = '?1'";
+        Consulta = Consulta.replace("?1", NombreUsuario);
+        ResultSet resultado = this.Comando.executeQuery(Consulta);
+        int id=0;
+        while(resultado.next()){
+            id = Integer.parseInt(resultado.getString(1));
+        }
+        Consulta = "";
+        return id;
+    }
+    
+    public boolean InsertarMsj(int id, String Msj, String Fecha){
+        boolean hecho = false;
+        String Id = id+"";
+        try {
+            
+            Instruccion = "insert into Historial values(null, '?1', '?2', '?3');";
+            Instruccion = Instruccion.replace("?1", Id);
+            Instruccion = Instruccion.replace("?2", Msj);
+            Instruccion = Instruccion.replace("?3", Fecha);
+            this.Comando.executeUpdate(Instruccion);
+            hecho = true;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(BD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return hecho;
+    }
+    
+    public ResultSet ConsultarMsj(int id) throws SQLException {
+        String IdUsuario= id+"";
+        Consulta = "Select Msj from Historial where idUsuario = '?1'";
+        Consulta = Consulta.replace("?1", IdUsuario);
         ResultSet resultado = this.Comando.executeQuery(Consulta);
         Consulta = "";
         return resultado;

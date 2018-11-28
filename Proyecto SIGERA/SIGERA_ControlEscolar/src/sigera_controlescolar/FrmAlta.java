@@ -6,6 +6,7 @@
 package sigera_controlescolar;
 
 import BaseDatos.BD;
+import BaseDatos.BD_Usuario;
 import java.awt.Image;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -114,10 +115,10 @@ public class FrmAlta extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         lblLogo = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        cmbSemestre = new javax.swing.JComboBox<>();
+        cmbSemestre = new javax.swing.JComboBox<String>();
         jLabel9 = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JTextField();
-        cmbCarreras = new javax.swing.JComboBox<>();
+        cmbCarreras = new javax.swing.JComboBox<String>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 204));
@@ -226,6 +227,7 @@ public class FrmAlta extends javax.swing.JFrame {
         jLabel9.setText("Direccion:");
 
         cmbCarreras.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        cmbCarreras.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CP", "ISC", "IEM", "IGE", "IIA", "IA", "ITICS" }));
         cmbCarreras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbCarrerasActionPerformed(evt);
@@ -375,7 +377,9 @@ public class FrmAlta extends javax.swing.JFrame {
         // TODO add your handling code here:
         // TODO adthis.txt
         BD mBD = new BD();
+        BD_Usuario mBDU = new BD_Usuario();
         Alumno mAlumno = new Alumno();
+       
         try {
             //mBD.Conectar();
         } catch (Exception ex) {
@@ -389,15 +393,7 @@ public class FrmAlta extends javax.swing.JFrame {
         String Carrera = (String) cmbCarreras.getSelectedItem();
         String Direccion = txtDireccion.getText();
         String Semestre = (String) cmbSemestre.getSelectedItem();
-       /* try {
-            this.ClaveCarrera = mBD.ConsultarClaveCarreras(Carrera);
-            while (ClaveCarrera.next()) {
-                Clave = "";
-                Clave = ClaveCarrera.getString("Clave");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+       
 
         if ((!"".equals(NumControl)) && (!"".equals(ApellidoMaterno))
                 && (!"".equals(ApellidoPaterno)) && (!"".equals(CURP))
@@ -408,22 +404,32 @@ public class FrmAlta extends javax.swing.JFrame {
                 ApellidoPaterno = toUpperCammelCase(ApellidoPaterno);
                 Nombre = toUpperCammelCase(Nombre);
                 Direccion = toUpperCammelCase(Direccion);
-                
                 mAlumno.setApellidoMaterno(ApellidoMaterno);
                 mAlumno.setApellidoPaterno(ApellidoPaterno);
                 mAlumno.setCURP(CURP.toUpperCase());
                 mAlumno.setNombre(Nombre);
-                mAlumno.setCarrera(Clave);
+                mAlumno.setCarrera(Carrera);
                 mAlumno.setNC(NumControl);
                 mAlumno.setDireccion(Direccion);
                 mAlumno.setEstado("1");
                 mAlumno.setSemestre(Integer.parseInt(Semestre));
-                //mBD.AltaAlumno(mAlumno);
-                //sc
-                SC_Escritura sc = new SC_Escritura();
-                sc.enviarmsj("juan", mAlumno);
-                
-                
+                mBD.Conectar();
+                //Guardar Alumno
+                if(mBD.AltaAlumno(mAlumno)){
+                    DateFormat Formato = new SimpleDateFormat("dd/MM/YYYY");
+                    FechaActual = Formato.format(fechaactual);  
+                    String Msj = "El Alumno " + Nombre + " " + ApellidoPaterno + " ha sido inscrito a la carrera "
+                            + " " + Carrera + " en el semestre " + Semestre + " el " + FechaActual ;
+                    mBDU.getConnection();
+                    SC_Escritura sc = new SC_Escritura();
+                    ResultSet Colas = mBDU.ConsultarCola(Carrera);
+                    while (Colas.next()) {
+                        String NomCola = Colas.getString(1);
+                        sc.enviarmsj(NomCola, Msj);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Error al guardar alumno");
+                }
                 txtNumControl.setText("");
                 txtApellidoMaterno.setText("");
                 txtApellidoPaterno.setText("");
@@ -431,9 +437,7 @@ public class FrmAlta extends javax.swing.JFrame {
                 txtNombre.setText("");
                 txtDireccion.setText("");
                 cmbSemestre.setSelectedItem("");
-            } catch (IOException ex) {
-                Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (TimeoutException ex) {
+            } catch (SQLException ex) {
                 Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
             } catch (URISyntaxException ex) {
                 Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
@@ -441,11 +445,16 @@ public class FrmAlta extends javax.swing.JFrame {
                 Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
             } catch (KeyManagementException ex) {
                 Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (TimeoutException ex) {
+                Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             JOptionPane.showMessageDialog(null, "No dejar cajas de tecto en blanco"
-                    + "\n Proporcionar toda la informacion "
-                    + "\n Solicitada");
+                    + "\n Proporcionar toda la informacion Solicitada");
         }
     }//GEN-LAST:event_btnGuardarAlumnoActionPerformed
 

@@ -14,6 +14,14 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 import BaseDatos.*;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.TimeoutException;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.TableRowSorter;
@@ -29,6 +37,9 @@ public class FrmCatalogo extends javax.swing.JFrame {
      * Creates new form FrmCatalogo
      */
     String NC;
+    String Nombre;
+    String Carrera;
+    Date Fecha = new Date();
     ResultSet ListaCarreras;
     ResultSet ListaNumControl;
     BD mBD = new BD();
@@ -368,26 +379,59 @@ public class FrmCatalogo extends javax.swing.JFrame {
         int filaseleccionada = this.tblConsultaAlumnos.getSelectedRow();
         if (filaseleccionada >= 0) {
             NC = (String) tblConsultaAlumnos.getValueAt(filaseleccionada, 0);
-            JOptionPane.showMessageDialog(null, NC);
+            Carrera = (String) tblConsultaAlumnos.getValueAt(filaseleccionada, 1);
+            Nombre = (String) tblConsultaAlumnos.getValueAt(filaseleccionada, 2);
+            Estado = (String) tblConsultaAlumnos.getValueAt(filaseleccionada, 7);
+            //JOptionPane.showMessageDialog(null, NC);
         }
     }//GEN-LAST:event_tblConsultaAlumnosMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
         if (!"".equals(NC)) {
-            mBD = new BD();
-            try {
-                mBD.Conectar();
-            } catch (Exception ex) {
-                Logger.getLogger(FrmCatalogo.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
-                mBD.BajaAlumno(NC);
-                mBD.Desconectar();
-                this.LlenarTablaAlumnos();
-                NC = "";
-            } catch (SQLException ex) {
-                Logger.getLogger(FrmCatalogo.class.getName()).log(Level.SEVERE, null, ex);
+            if(!Estado.equals("Inactivo")){
+                mBD = new BD();
+                try {
+                    mBD.Conectar();
+                } catch (Exception ex) {
+                    Logger.getLogger(FrmCatalogo.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                try {
+                    //Servidor de colas
+                    if (mBD.BajaAlumno(NC)) {
+                        SC_Escritura sc = new SC_Escritura();
+                        BD_Usuario mBDU = new BD_Usuario();
+                        DateFormat formato = new  SimpleDateFormat("dd/MM/YYYY");
+                        Date fechaactual = new Date();
+                        String FechaActual = formato.format(fechaactual);
+                        String Msj = "El Alumno " + Nombre + " con NC: " + NC + " ha sido dado de baja el "
+                                + FechaActual;
+                        mBDU.getConnection();
+                        ResultSet Colas = mBDU.ConsultarCola(Carrera);
+                        while (Colas.next()) {
+                            String NomCola = Colas.getString(1);
+                            System.out.println(NomCola);
+                            sc.enviarmsj(NomCola, Msj);
+                        }
+                    }
+                    mBD.Desconectar();
+                    this.LlenarTablaAlumnos();
+                    NC = "";
+                } catch (SQLException ex) {
+                    Logger.getLogger(FrmCatalogo.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (URISyntaxException ex) {
+                    Logger.getLogger(FrmCatalogo.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NoSuchAlgorithmException ex) {
+                    Logger.getLogger(FrmCatalogo.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (KeyManagementException ex) {
+                    Logger.getLogger(FrmCatalogo.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(FrmCatalogo.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (TimeoutException ex) {
+                    Logger.getLogger(FrmCatalogo.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "El alumno ya esta dado de baja");
             }
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione un registro por favor");
