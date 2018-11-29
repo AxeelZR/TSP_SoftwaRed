@@ -120,7 +120,7 @@ public class FrmAlta extends javax.swing.JFrame {
         txtDireccion = new javax.swing.JTextField();
         cmbCarreras = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 204));
         setForeground(new java.awt.Color(0, 0, 204));
 

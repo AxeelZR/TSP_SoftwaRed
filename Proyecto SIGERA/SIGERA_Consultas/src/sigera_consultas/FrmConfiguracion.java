@@ -24,13 +24,15 @@ public class FrmConfiguracion extends javax.swing.JFrame {
     /**
      * Creates new form FrmConfiguracion
      */
-    public FrmConfiguracion() {
+    String Usuario;
+
+    public FrmConfiguracion(String NombUsuario) {
         initComponents();
         ImageIcon imagen = new ImageIcon("src/imagenes/Guardar.png");
         Icon icono;
         icono = new ImageIcon(imagen.getImage().getScaledInstance(btnOk.getWidth(), btnOk.getHeight(), Image.SCALE_DEFAULT));
         btnOk.setIcon(icono);
-        this.LlenarPeriodo();
+        Usuario = NombUsuario;
     }
 
     /**
@@ -46,14 +48,12 @@ public class FrmConfiguracion extends javax.swing.JFrame {
         lblConfiguracion = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         lblNuevaContrasena = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         txtNuevaContrasena = new javax.swing.JTextField();
-        cmbPeriodo = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         btnOk = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setToolTipText("");
@@ -66,12 +66,7 @@ public class FrmConfiguracion extends javax.swing.JFrame {
         lblNuevaContrasena.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         lblNuevaContrasena.setText("Nueva Contraseña:");
 
-        jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jLabel1.setText("Período:");
-
         txtNuevaContrasena.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-
-        cmbPeriodo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jPanel3.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -97,41 +92,27 @@ public class FrmConfiguracion extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addComponent(lblNuevaContrasena))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNuevaContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(cmbPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
-                        .addComponent(btnOk, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addGap(45, 45, 45)
+                .addComponent(lblNuevaContrasena)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtNuevaContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnOk, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(53, 53, 53))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(63, 63, 63)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNuevaContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNuevaContrasena))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(cmbPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(btnOk, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)))
+                .addGap(77, 77, 77)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblNuevaContrasena, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtNuevaContrasena))
+                .addGap(18, 18, 18)
+                .addComponent(btnOk, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -183,38 +164,19 @@ public class FrmConfiguracion extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void LlenarPeriodo() {
-        Calendar now = Calendar.getInstance();
-        int mes = now.get(Calendar.MONTH);
-        if (mes >= 1 && mes <= 7) {
-            this.cmbPeriodo.addItem("2");
-            this.cmbPeriodo.addItem("4");
-            this.cmbPeriodo.addItem("6");
-            this.cmbPeriodo.addItem("8");
-            this.cmbPeriodo.addItem("10");
-        } else if (mes > 8 && mes <= 12) {
-            this.cmbPeriodo.addItem("1");
-            this.cmbPeriodo.addItem("3");
-            this.cmbPeriodo.addItem("5");
-            this.cmbPeriodo.addItem("7");
-            this.cmbPeriodo.addItem("9");
-        }
-    }
     private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
         // TODO add your handling code here:
         Configuracion mConfiguracion = new Configuracion();
         Usuario mUsuario = new Usuario();
         String Contrasena = this.txtNuevaContrasena.getText();
-        String Select = this.cmbPeriodo.getSelectedItem().toString();
 
         if (!"".equals(Contrasena)) {
-            String NombreUsuario = "Lachona";
-            mUsuario.setNombre_Usuario(NombreUsuario);
+            mUsuario.setNombre_Usuario(Usuario);
             mUsuario.setContraseña(Contrasena);
-            mUsuario.setSemestre(Integer.parseInt(Select));
             try {
                 mConfiguracion.CambiarContrasena(Contrasena, mUsuario);
                 JOptionPane.showMessageDialog(null, "Se Modifico Correctamente la contraseña");
+                this.txtNuevaContrasena.setText("");
             } catch (Exception ex) {
                 Logger.getLogger(FrmConfiguracion.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -257,15 +219,13 @@ public class FrmConfiguracion extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmConfiguracion().setVisible(true);
+                new FrmConfiguracion("").setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnOk;
-    private javax.swing.JComboBox<String> cmbPeriodo;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

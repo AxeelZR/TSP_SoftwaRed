@@ -23,7 +23,9 @@ import javax.swing.JOptionPane;
  * @author juanj
  */
 public class SC_Lectura {
+
     int aux = 0;
+
     public void RecibirMensaje(String NomCola, int id) throws IOException, TimeoutException {
         try {
             ConnectionFactory factory = new ConnectionFactory();
@@ -42,14 +44,14 @@ public class SC_Lectura {
                     System.out.println(" [x] Received '" + message + "'");
                     String[] Fecha = message.split(" ");
                     String fecha = "";
-                    for(int i=0; i<Fecha.length; i++){
+                    for (int i = 0; i < Fecha.length; i++) {
                         fecha = Fecha[i];
                     }
                     BD_Usuario mBD = new BD_Usuario();
                     try {
                         mBD.Conectar();
-                        if(!mBD.InsertarMsj(id,message, fecha)){
-                            JOptionPane.showMessageDialog(null,"Error");
+                        if (!mBD.InsertarMsj(id, message, fecha)) {
+                            JOptionPane.showMessageDialog(null, "Error");
                         }
                     } catch (Exception ex) {
                         Logger.getLogger(SC_Lectura.class.getName()).log(Level.SEVERE, null, ex);
@@ -64,6 +66,6 @@ public class SC_Lectura {
         } catch (KeyManagementException ex) {
             Logger.getLogger(SC_Lectura.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 }

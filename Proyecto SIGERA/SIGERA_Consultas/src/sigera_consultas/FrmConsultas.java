@@ -40,11 +40,11 @@ public class FrmConsultas extends javax.swing.JFrame {
     }
     public void LlenarTabla() throws SQLException {
         try {
+            mBD.Conectar();
             ResultSet Mensajes = mBD.ConsultarMsj(id);
             if (Mensajes != null) {
-                Object[] Encabezado = {"Mensajes"};
+                Object[] Encabezado = {"Historial de Mensajes"};
                 modelo = new DefaultTableModel(null, Encabezado);
-
                 while (Mensajes.next()) {
                     Object[] actual = {
                         Mensajes.getString(1)
@@ -85,15 +85,17 @@ public class FrmConsultas extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+
         jLabel1.setFont(new java.awt.Font("Serif", 1, 48)); // NOI18N
         jLabel1.setText("Consulta de Alumnos por Carrera");
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/SIGERA_Consultas.jpg"))); // NOI18N
 
-        jLabel6.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Serif", 1, 24)); // NOI18N
         jLabel6.setText("Usuario:");
 
-        LblUsuario.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
+        LblUsuario.setFont(new java.awt.Font("Serif", 1, 24)); // NOI18N
         LblUsuario.setText("jLabel7");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -104,14 +106,13 @@ public class FrmConsultas extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(77, 77, 77)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(LblUsuario)
-                        .addGap(140, 140, 140)))
+                        .addComponent(LblUsuario)))
+                .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addContainerGap(11, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,6 +177,12 @@ public class FrmConsultas extends javax.swing.JFrame {
         tblConsultasUsuario.setName("tblConsultas"); // NOI18N
         jScrollPane1.setViewportView(tblConsultasUsuario);
 
+        btnConfiguracion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfiguracionActionPerformed(evt);
+            }
+        });
+
         BtnActualizar.setText("Actualizar");
         BtnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,7 +212,7 @@ public class FrmConsultas extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(BtnActualizar)
-                        .addGap(38, 38, 38)
+                        .addGap(30, 30, 30)
                         .addComponent(btnConfiguracion, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -240,6 +247,13 @@ public class FrmConsultas extends javax.swing.JFrame {
             Logger.getLogger(FrmConsultas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_BtnActualizarActionPerformed
+
+    private void btnConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracionActionPerformed
+
+        FrmConfiguracion mFrmConfiguracion = new FrmConfiguracion(LblUsuario.getText());
+                mFrmConfiguracion.setVisible(true);
+        
+    }//GEN-LAST:event_btnConfiguracionActionPerformed
 
     /**
      * @param args the command line arguments

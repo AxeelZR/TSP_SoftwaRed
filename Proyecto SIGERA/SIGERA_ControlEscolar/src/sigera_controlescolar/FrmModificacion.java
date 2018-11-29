@@ -157,7 +157,7 @@ public class FrmModificacion extends javax.swing.JFrame {
         cmbEstado = new javax.swing.JComboBox<>();
         cmbCarreras = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 204));
         setForeground(new java.awt.Color(0, 0, 204));
 

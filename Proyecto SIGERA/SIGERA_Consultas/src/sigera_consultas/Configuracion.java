@@ -26,11 +26,11 @@ public class Configuracion {
     
     public void CambiarContrasena(String Contrasena,Usuario mUsuario) throws SQLException, Exception{
         BD_Usuario mBD = new BD_Usuario();
-        if (mBD.Conectar()){
+        //if (mBD.Conectar()){
             mBD.ModificacionUsuario(Contrasena, mUsuario);
-        }else{
-            JOptionPane.showMessageDialog(null, "Error no se puede conectar con la BD");
-        }
+        //}else{
+            //JOptionPane.showMessageDialog(null, "Error no se puede conectar con la BD");
+        //}
         
     }
     

@@ -79,8 +79,8 @@ public class BD_Usuario {
 
     public Boolean ModificacionUsuario(String Contrasena, Usuario mUsuario) throws SQLException {
         try {
-            String SQL = "UPDATE usuario set Contrasenia= '" + Contrasena
-                    + "', Semestre = '" + mUsuario.getSemestre() + "' where idUsuario='" + mUsuario.getNombre_Usuario() + "';";
+            String SQL = "UPDATE Usuario set Contrasenia= '" + Contrasena
+                    + "'where Nombre='" + mUsuario.getNombre_Usuario() + "';";
             Comando.executeUpdate(SQL);
             System.out.println(SQL + " Ejecutado");
             return true;
