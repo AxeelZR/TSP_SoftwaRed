@@ -475,7 +475,7 @@ public class FrmModificacion extends javax.swing.JFrame {
                         }
                     }else{
                         String Msj1= "El alumno: " + Nombre +" con NC: " + NC 
-                                + "ha sido modificado";
+                                + "ha sido modificado en alguno de sus datos personales el " + FechaActual;
                         ResultSet Colas = mBDU.ConsultarCola(Carrera);
                         while(Colas.next()){
                             String NomCola = Colas.getString(1);
@@ -504,6 +504,7 @@ public class FrmModificacion extends javax.swing.JFrame {
                     + "\n Proporcionar toda la informacion "
                     + "\n Solicitada");
         }
+        this.setVisible(false);
     }//GEN-LAST:event_btnGuardarAlumnoActionPerformed
 
     private void txtDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDireccionActionPerformed

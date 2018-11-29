@@ -8,6 +8,7 @@ package BaseDatos;
 //import java.beans.Statement;
 import com.mysql.cj.util.TimeUtil;
 import java.sql.*;
+import javax.swing.JOptionPane;
 import sigera_controlescolar.Alumno;
 
 /**
@@ -98,7 +99,9 @@ public class BD {
             Instruccion = Instruccion.replace("?9", Direccion);
             Conectar();
             i = this.Comando.executeUpdate(Instruccion);
-            System.out.print(Instruccion + "Ejecutado");
+            //System.out.print(Instruccion + "Ejecutado");
+            JOptionPane.showMessageDialog(null, "El alumno " + Nombre + "/n con numero de control "
+                    + NC +" /n ah sido inscrito satisfactoriamente");
             Instruccion = "";
             Nombre = "";
             ApellidoMaterno = "";
@@ -124,7 +127,9 @@ public class BD {
         try {
             Instruccion = "update Alumno set Estado ='" + Estado + "'  where NoControl='" + NC + "';";
             i = this.Comando.executeUpdate(Instruccion);
-            System.out.println(Instruccion + "Ejecutado");
+            //System.out.println(Instruccion + "Ejecutado");
+            JOptionPane.showMessageDialog(null, "El alumno /n con numero de control "
+                    + NC +" /n ah sido dado de Baja");
             return true;
         } catch (Exception ex) {
             System.out.print("Error" + ex);
@@ -210,7 +215,7 @@ public class BD {
             Instruccion = Instruccion.replace("?8", Estado);
             Instruccion = Instruccion.replace("?9", Direccion);
             i = this.Comando.executeUpdate(Instruccion);
-            System.out.println(Instruccion + "Ejecutado");
+            //System.out.println(Instruccion + "Ejecutado");
             Instruccion = "";
             Nombre = "";
             ApellidoMaterno = "";

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package sigera_consultas;
 
 import BD.*;
@@ -12,29 +11,25 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
- * 
+ *
  * @author Axel
  */
 public class Configuracion {
+
     Date Fecha_periodo;
     String Nueva_contrasena;
-    
-    public Configuracion(){
+
+    public Configuracion() {
         Fecha_periodo = null;
         Nueva_contrasena = "";
     }
-    
-    public void CambiarContrasena(String Contrasena,Usuario mUsuario) throws SQLException, Exception{
+
+    public void CambiarContrasena(String Contrasena, Usuario mUsuario) throws SQLException, Exception {
         BD_Usuario mBD = new BD_Usuario();
-        //if (mBD.Conectar()){
-            mBD.ModificacionUsuario(Contrasena, mUsuario);
-        //}else{
-            //JOptionPane.showMessageDialog(null, "Error no se puede conectar con la BD");
-        //}
-        
+        mBD.ModificacionUsuario(Contrasena, mUsuario);
     }
-    
-    public void ConfigurarPeriodo(Date Periodo){
-        
+
+    public void ConfigurarPeriodo(Date Periodo) {
+
     }
 }

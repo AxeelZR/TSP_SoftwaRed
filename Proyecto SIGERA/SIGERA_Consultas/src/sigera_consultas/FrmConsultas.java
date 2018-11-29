@@ -36,7 +36,7 @@ public class FrmConsultas extends javax.swing.JFrame {
         id = mBD.Consultarid(Usuario);
         //JOptionPane.showMessageDialog(null, id);
         sc.RecibirMensaje(Usuario, id);
-        LlenarTabla();
+        //this.LlenarTabla();
     }
     public void LlenarTabla() throws SQLException {
         try {

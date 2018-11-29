@@ -39,14 +39,14 @@ public class FrmAlta extends javax.swing.JFrame {
     Date fechaactual = new Date();
     DateFormat Formato = new SimpleDateFormat("MM");
     String FechaActual;
-    
+
     /**
      * Creates new form
      */
     public FrmAlta() {
         initComponents();
         FechaActual = "";
-        FechaActual = Formato.format(fechaactual);        
+        FechaActual = Formato.format(fechaactual);
         if (FechaActual.compareTo("08") > 0 && FechaActual.compareTo("12") < 0) {
             this.cmbSemestre.addItem("1");
             this.cmbSemestre.addItem("3");
@@ -78,7 +78,7 @@ public class FrmAlta extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         /*try {
             ListaCarreras = mBD.ConsultarCarreras();
             while (ListaCarreras.next()) {
@@ -87,7 +87,6 @@ public class FrmAlta extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
         }*/
-
     }
 
     /**
@@ -222,6 +221,16 @@ public class FrmAlta extends javax.swing.JFrame {
         jLabel8.setText("Semestre: ");
 
         cmbSemestre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        cmbSemestre.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cmbSemestreMouseClicked(evt);
+            }
+        });
+        cmbSemestre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbSemestreActionPerformed(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel9.setText("Direccion:");
@@ -239,24 +248,19 @@ public class FrmAlta extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(104, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(28, 28, 28)
-                        .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(23, 23, 23))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(116, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtNumControl, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel8)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -284,14 +288,19 @@ public class FrmAlta extends javax.swing.JFrame {
                                         .addComponent(txtApellidoMaterno)))))
                         .addGap(56, 56, 56)
                         .addComponent(btnGuardarAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(100, 100, 100))))
+                        .addGap(100, 100, 100))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(33, 33, 33)
+                        .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addGap(24, 24, 24)
                 .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnGuardarAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(51, 51, 51))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -379,7 +388,7 @@ public class FrmAlta extends javax.swing.JFrame {
         BD mBD = new BD();
         BD_Usuario mBDU = new BD_Usuario();
         Alumno mAlumno = new Alumno();
-       
+
         try {
             //mBD.Conectar();
         } catch (Exception ex) {
@@ -393,7 +402,6 @@ public class FrmAlta extends javax.swing.JFrame {
         String Carrera = (String) cmbCarreras.getSelectedItem();
         String Direccion = txtDireccion.getText();
         String Semestre = (String) cmbSemestre.getSelectedItem();
-       
 
         if ((!"".equals(NumControl)) && (!"".equals(ApellidoMaterno))
                 && (!"".equals(ApellidoPaterno)) && (!"".equals(CURP))
@@ -415,11 +423,11 @@ public class FrmAlta extends javax.swing.JFrame {
                 mAlumno.setSemestre(Integer.parseInt(Semestre));
                 mBD.Conectar();
                 //Guardar Alumno
-                if(mBD.AltaAlumno(mAlumno)){
+                if (mBD.AltaAlumno(mAlumno)) {
                     DateFormat Formato = new SimpleDateFormat("dd/MM/YYYY");
-                    FechaActual = Formato.format(fechaactual);  
+                    FechaActual = Formato.format(fechaactual);
                     String Msj = "El Alumno " + Nombre + " " + ApellidoPaterno + " ha sido inscrito a la carrera "
-                            + " " + Carrera + " en el semestre " + Semestre + " el " + FechaActual ;
+                            + " " + Carrera + " en el semestre " + Semestre + " el " + FechaActual;
                     mBDU.getConnection();
                     SC_Escritura sc = new SC_Escritura();
                     ResultSet Colas = mBDU.ConsultarCola(Carrera);
@@ -427,9 +435,11 @@ public class FrmAlta extends javax.swing.JFrame {
                         String NomCola = Colas.getString(1);
                         sc.enviarmsj(NomCola, Msj);
                     }
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Error al guardar alumno");
                 }
+                JOptionPane.showMessageDialog(null, "El Alumno " + Nombre + " " + ApellidoPaterno + " ha sido inscrito a la carrera "
+                        + " " + Carrera + " en el semestre " + Semestre + " Satisfactoriamentre");
                 txtNumControl.setText("");
                 txtApellidoMaterno.setText("");
                 txtApellidoPaterno.setText("");
@@ -528,7 +538,7 @@ public class FrmAlta extends javax.swing.JFrame {
 
     private void txtCURPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCURPKeyTyped
         // TODO add your handling code here:
-        int limite = 18 ;
+        int limite = 18;
         if (this.txtCURP.getText().length() == limite) {
             evt.consume();
             JOptionPane.showMessageDialog(null, "Solo " + limite + " Caracteres");
@@ -538,6 +548,108 @@ public class FrmAlta extends javax.swing.JFrame {
     private void cmbCarrerasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCarrerasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbCarrerasActionPerformed
+
+    private void cmbSemestreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbSemestreMouseClicked
+        // TODO add your handling code here:
+        ResultSet Alumno = null;
+        String EstadoAI = "";
+        String NC = this.txtNumControl.getText();
+        if (this.cmbSemestre.getSelectedItem() != "1") {
+            try {
+                try {
+                    mBD.Conectar();
+                } catch (Exception ex) {
+                    Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                Alumno = mBD.ConsultarAlumnoE(NC);
+                while (Alumno.next()) {
+                    if ("1".equals(Alumno.getString("Estado"))) {
+                        EstadoAI = "Activo";
+                    } else {
+                        EstadoAI = "Inactivo";
+                    }
+                    Alumno.getString("NoControl");
+                    this.txtNombre.setText(Alumno.getString("Nombre"));
+                    this.txtApellidoPaterno.setText(Alumno.getString("Apellido_Paterno"));
+                    this.txtApellidoMaterno.setText(Alumno.getString("Apellido_Materno"));
+                    this.txtCURP.setText(Alumno.getString("CURP"));
+                    this.txtDireccion.setText(Alumno.getString("Direccion"));
+                    this.cmbCarreras.setSelectedItem(Alumno.getString("Carrera_Clave"));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.txtNombre.setEditable(false);
+            this.txtApellidoPaterno.setEditable(false);
+            this.txtApellidoMaterno.setEditable(false);
+            this.txtDireccion.setEditable(false);
+            this.txtCURP.setEditable(false);
+            this.cmbCarreras.setEditable(true);
+        } else {
+            this.txtNombre.setText("");
+            this.txtApellidoPaterno.setText("");
+            this.txtApellidoMaterno.setText("");
+            this.txtDireccion.setText("");
+            this.txtCURP.setText("");
+            this.txtNombre.setEditable(true);
+            this.txtApellidoPaterno.setEditable(true);
+            this.txtApellidoMaterno.setEditable(true);
+            this.txtDireccion.setEditable(true);
+            this.txtCURP.setEditable(true);
+            this.cmbCarreras.setEditable(true);
+        }
+    }//GEN-LAST:event_cmbSemestreMouseClicked
+
+    private void cmbSemestreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSemestreActionPerformed
+        // TODO add your handling code here:
+        ResultSet Alumno = null;
+        String EstadoAI = "";
+        String NC = this.txtNumControl.getText();
+        if (this.cmbSemestre.getSelectedItem() != "1") {
+            try {
+                try {
+                    mBD.Conectar();
+                } catch (Exception ex) {
+                    Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                Alumno = mBD.ConsultarAlumnoE(NC);
+                while (Alumno.next()) {
+                    if ("1".equals(Alumno.getString("Estado"))) {
+                        EstadoAI = "Activo";
+                    } else {
+                        EstadoAI = "Inactivo";
+                    }
+                    Alumno.getString("NoControl");
+                    this.txtNombre.setText(Alumno.getString("Nombre"));
+                    this.txtApellidoPaterno.setText(Alumno.getString("Apellido_Paterno"));
+                    this.txtApellidoMaterno.setText(Alumno.getString("Apellido_Materno"));
+                    this.txtCURP.setText(Alumno.getString("CURP"));
+                    this.txtDireccion.setText(Alumno.getString("Direccion"));
+                    this.cmbCarreras.setSelectedItem(Alumno.getString("Carrera_Clave"));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.txtNombre.setEditable(false);
+            this.txtApellidoPaterno.setEditable(false);
+            this.txtApellidoMaterno.setEditable(false);
+            this.txtDireccion.setEditable(false);
+            this.txtCURP.setEditable(false);
+            this.cmbCarreras.setEditable(true);
+        } else {
+            this.txtNombre.setText("");
+            this.txtApellidoPaterno.setText("");
+            this.txtApellidoMaterno.setText("");
+            this.txtDireccion.setText("");
+            this.txtCURP.setText("");
+            this.txtNombre.setEditable(true);
+            this.txtApellidoPaterno.setEditable(true);
+            this.txtApellidoMaterno.setEditable(true);
+            this.txtDireccion.setEditable(true);
+            this.txtCURP.setEditable(true);
+            this.cmbCarreras.setEditable(true);
+        }
+    }//GEN-LAST:event_cmbSemestreActionPerformed
 
     /**
      * @param args the command line arguments
