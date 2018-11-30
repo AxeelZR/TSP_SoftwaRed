@@ -7,14 +7,20 @@ package sigera_consultas;
 
 import BD.BD;
 import BD.BD_Usuario;
+import java.awt.Image;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
  *
@@ -27,17 +33,35 @@ public class FrmConsultas extends javax.swing.JFrame {
      */
     SC_Lectura sc = new SC_Lectura();
     BD_Usuario mBD = new BD_Usuario();
-    int id =0;
+    int id = 0;
     DefaultTableModel modelo;
+    ResultSet ListaFechas;
+
     public FrmConsultas(String Usuario) throws IOException, TimeoutException, SQLException {
         initComponents();
+        AutoCompleteDecorator.decorate(cmbFechas);
         LblUsuario.setText(Usuario);
         mBD.Conectar();
         id = mBD.Consultarid(Usuario);
         //JOptionPane.showMessageDialog(null, id);
         sc.RecibirMensaje(Usuario, id);
         //this.LlenarTabla();
+        ImageIcon imagen = new ImageIcon("src/imagenes/Modificar.png");
+        Icon icono;
+        icono = new ImageIcon(imagen.getImage().getScaledInstance(btnConfiguracion.getWidth(), btnConfiguracion.getHeight(), Image.SCALE_DEFAULT));
+        this.btnConfiguracion.setIcon(icono);
+        this.LlenarCombobox();
     }
+
+    public void LlenarCombobox() throws SQLException {
+        mBD.Conectar();
+        ListaFechas = mBD.ConsultarFechas(id);
+        cmbFechas.addItem("Todo");
+        while (ListaFechas.next()) {
+            this.cmbFechas.addItem(ListaFechas.getString("fecha"));
+        }
+    }
+
     public void LlenarTabla() throws SQLException {
         try {
             mBD.Conectar();
@@ -57,7 +81,6 @@ public class FrmConsultas extends javax.swing.JFrame {
             Logger.getLogger(FrmConsultas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -76,6 +99,8 @@ public class FrmConsultas extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         LblUsuario = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        cmbFechas = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -98,6 +123,15 @@ public class FrmConsultas extends javax.swing.JFrame {
         LblUsuario.setFont(new java.awt.Font("Serif", 1, 24)); // NOI18N
         LblUsuario.setText("jLabel7");
 
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel7.setText("Busqueda por fecha:");
+
+        cmbFechas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbFechasItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -105,14 +139,21 @@ public class FrmConsultas extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(LblUsuario)))
-                .addGap(18, 18, 18)
+                        .addComponent(LblUsuario)
+                        .addGap(593, 593, 593))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(13, 13, 13)
+                                .addComponent(jLabel7)
+                                .addGap(18, 18, 18)
+                                .addComponent(cmbFechas, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addComponent(jLabel5)
                 .addContainerGap(11, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,14 +169,19 @@ public class FrmConsultas extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(LblUsuario))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cmbFechas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addGap(6, 6, 6)
@@ -165,13 +211,13 @@ public class FrmConsultas extends javax.swing.JFrame {
 
         tblConsultasUsuario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         tblConsultasUsuario.setName("tblConsultas"); // NOI18N
@@ -198,10 +244,10 @@ public class FrmConsultas extends javax.swing.JFrame {
                 .addGap(81, 81, 81)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 736, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnConfiguracion, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BtnActualizar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnConfiguracion, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+                    .addComponent(BtnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
@@ -211,8 +257,8 @@ public class FrmConsultas extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(BtnActualizar)
-                        .addGap(30, 30, 30)
+                        .addComponent(BtnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnConfiguracion, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -232,8 +278,8 @@ public class FrmConsultas extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -249,11 +295,21 @@ public class FrmConsultas extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnActualizarActionPerformed
 
     private void btnConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracionActionPerformed
-
         FrmConfiguracion mFrmConfiguracion = new FrmConfiguracion(LblUsuario.getText());
-                mFrmConfiguracion.setVisible(true);
-        
+        mFrmConfiguracion.setVisible(true);
     }//GEN-LAST:event_btnConfiguracionActionPerformed
+
+    private void cmbFechasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbFechasItemStateChanged
+        // TODO add your handling code here:
+        String query = this.cmbFechas.getSelectedItem().toString();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(modelo);
+        this.tblConsultasUsuario.setRowSorter(tr);
+        if (query != "Todo") {
+            tr.setRowFilter(RowFilter.regexFilter(query));
+        } else {
+            this.tblConsultasUsuario.setRowSorter(tr);
+        }
+    }//GEN-LAST:event_cmbFechasItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -288,7 +344,7 @@ public class FrmConsultas extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               /* try {
+                /* try {
                     new FrmConsultas().setVisible(true);
                 } catch (IOException ex) {
                     Logger.getLogger(FrmConsultas.class.getName()).log(Level.SEVERE, null, ex);
@@ -303,12 +359,14 @@ public class FrmConsultas extends javax.swing.JFrame {
     private javax.swing.JButton BtnActualizar;
     private javax.swing.JLabel LblUsuario;
     private javax.swing.JButton btnConfiguracion;
+    private javax.swing.JComboBox<String> cmbFechas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;

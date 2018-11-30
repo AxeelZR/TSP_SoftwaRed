@@ -31,7 +31,7 @@ public class FRM_Registro extends javax.swing.JFrame {
         Icon icono2;
         icono2 = new ImageIcon(imagen2.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_DEFAULT));
         lblLogo.setIcon(icono2);
-        ImageIcon imagen = new ImageIcon("src/imagenes/Agregar.png");
+        ImageIcon imagen = new ImageIcon("src/imagenes/Guardar.png");
         Icon icono;
         icono = new ImageIcon(imagen.getImage().getScaledInstance(btnGuardar.getWidth(), btnGuardar.getHeight(), Image.SCALE_DEFAULT));
         btnGuardar.setIcon(icono);

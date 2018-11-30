@@ -42,6 +42,7 @@ public class FrmModificacion extends javax.swing.JFrame {
     String NC;
     String EstadoAI;
     String CarreraAnt;
+    String SemestreActual;
 
     /**
      * Creates new form
@@ -57,7 +58,6 @@ public class FrmModificacion extends javax.swing.JFrame {
             this.cmbSemestre.addItem("5");
             this.cmbSemestre.addItem("7");
             this.cmbSemestre.addItem("9");
-
         } else {
             this.cmbSemestre.addItem("2");
             this.cmbSemestre.addItem("4");
@@ -66,7 +66,7 @@ public class FrmModificacion extends javax.swing.JFrame {
             this.cmbSemestre.addItem("10");
 
         }
-        ImageIcon imagen = new ImageIcon("src/imagenes/diskette_save_saveas_1514.png");
+        ImageIcon imagen = new ImageIcon("src/imagenes/Guardar.png");
         Icon icono;
         icono = new ImageIcon(imagen.getImage().getScaledInstance(btnGuardarAlumno.getWidth(), btnGuardarAlumno.getHeight(), Image.SCALE_DEFAULT));
         btnGuardarAlumno.setIcon(icono);
@@ -81,7 +81,7 @@ public class FrmModificacion extends javax.swing.JFrame {
             Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        try{
+        try {
             ListaCarreras = mBD.ConsultarCarreras();
             while (ListaCarreras.next()) {
                 this.cmbCarreras.addItem(ListaCarreras.getString("Clave"));
@@ -106,6 +106,7 @@ public class FrmModificacion extends javax.swing.JFrame {
             CarreraAnt = ListaAlumno.getString("Carrera_Clave");
             this.cmbCarreras.setSelectedItem(ListaAlumno.getString("Carrera_Clave"));
             this.cmbEstado.setSelectedItem(EstadoAI);
+            SemestreActual = ListaAlumno.getString("Semestre");
             this.cmbSemestre.setSelectedItem(ListaAlumno.getString("Semestre"));
         }
     }
@@ -427,84 +428,86 @@ public class FrmModificacion extends javax.swing.JFrame {
         if ((!"".equals(ApellidoMaterno))
                 && (!"".equals(ApellidoPaterno)) && (!"".equals(CURP))
                 && (!"".equals(Nombre)) && (!"".equals(Direccion))) {
+            if ((Integer.parseInt(Semestre) == Integer.parseInt(SemestreActual))
+                    || (Integer.parseInt(Semestre) == Integer.parseInt(SemestreActual) + 1)) {
 
-            ApellidoMaterno = toUpperCammelCase(ApellidoMaterno);
-            ApellidoPaterno = toUpperCammelCase(ApellidoPaterno);
-            Nombre = toUpperCammelCase(Nombre);
-            Direccion = toUpperCammelCase(Direccion);
+                ApellidoMaterno = toUpperCammelCase(ApellidoMaterno);
+                ApellidoPaterno = toUpperCammelCase(ApellidoPaterno);
+                Nombre = toUpperCammelCase(Nombre);
+                Direccion = toUpperCammelCase(Direccion);
 
-            mAlumno.setApellidoMaterno(ApellidoMaterno);
-            mAlumno.setApellidoPaterno(ApellidoPaterno);
-            mAlumno.setCURP(CURP.toUpperCase());
-            mAlumno.setNombre(Nombre);
-            mAlumno.setCarrera(Carrera);
-            mAlumno.setNC(NC);
-            mAlumno.setEstado(Estado);
-            mAlumno.setSemestre(Integer.parseInt(Semestre));
-            mAlumno.setDireccion(Direccion);
+                mAlumno.setApellidoMaterno(ApellidoMaterno);
+                mAlumno.setApellidoPaterno(ApellidoPaterno);
+                mAlumno.setCURP(CURP.toUpperCase());
+                mAlumno.setNombre(Nombre);
+                mAlumno.setCarrera(Carrera);
+                mAlumno.setNC(NC);
+                mAlumno.setEstado(Estado);
+                mAlumno.setSemestre(Integer.parseInt(Semestre));
+                mAlumno.setDireccion(Direccion);
 
-            try {
-                if(mBD.ModificacionAlumno(NC, mAlumno)){
-                    JOptionPane.showMessageDialog(null, "Se Modifico Correctamente el alumno Con Numero de Control " 
-                            + this.lblNumeroControl.getText());
-                    //Escribir en la cola
-                    SC_Escritura sc  = new SC_Escritura();
-                    BD_Usuario mBDU = new BD_Usuario();
-                    mBDU.getConnection();
-                    
-                    if(!CarreraAnt.equals(Carrera)){
-                        DateFormat formato = new  SimpleDateFormat("dd/MM/YYYY");
-                        Date fechaactual = new Date();
-                        String FechaActual = formato.format(fechaactual);
-                        String Msj1= "El alumno: " + Nombre +" con NC: " + NC 
-                                + " ha cambiado de carrera de: " + CarreraAnt + " a " + Carrera+ " el " + FechaActual;
-                        //Enviar msj a las colas de las nueva carrera
-                        ResultSet Colas = mBDU.ConsultarCola(Carrera);
-                        while(Colas.next()){
-                            String NomCola = Colas.getString(1);
-                            //System.out.println(Carrera + " "+NomCola);
-                            sc.enviarmsj(NomCola, Msj1);
+                try {
+                    if (mBD.ModificacionAlumno(NC, mAlumno)) {
+                        JOptionPane.showMessageDialog(null, "Se Modifico Correctamente el alumno Con Numero de Control "
+                                + this.lblNumeroControl.getText());
+                        //Escribir en la cola
+                        SC_Escritura sc = new SC_Escritura();
+                        BD_Usuario mBDU = new BD_Usuario();
+                        mBDU.getConnection();
+                        DateFormat formato = new SimpleDateFormat("dd/MM/YYYY");
+                        Date fechaactuali = new Date();
+                        String FechaActuali = formato.format(fechaactuali);
+                        if (!CarreraAnt.equals(Carrera)) {
+                            String Msj1 = "El alumno: " + Nombre + " con NC: " + NC
+                                    + " ha cambiado de carrera de: " + CarreraAnt + " a " + Carrera + " el " + FechaActuali;
+                            //Enviar msj a las colas de las nueva carrera
+                            ResultSet Colas = mBDU.ConsultarCola(Carrera);
+                            while (Colas.next()) {
+                                String NomCola = Colas.getString(1);
+                                //System.out.println(Carrera + " "+NomCola);
+                                sc.enviarmsj(NomCola, Msj1);
+                            }
+                            //Enviar msj a las colas de la nueva carrera
+                            Colas = mBDU.ConsultarCola(CarreraAnt);
+                            while (Colas.next()) {
+                                String NomCola = Colas.getString(1);
+                                //System.out.println(CarreraAnt + " "+NomCola);
+                                //System.out.println(NomCola);
+                                sc.enviarmsj(NomCola, Msj1);
+                            }
+                        } else {
+                            String Msj1 = "El alumno: " + Nombre + " con NC: " + NC
+                                    + " ha sido modificado en alguno de sus datos personales el " + FechaActuali;
+                            ResultSet Colas = mBDU.ConsultarCola(Carrera);
+                            while (Colas.next()) {
+                                String NomCola = Colas.getString(1);
+                                sc.enviarmsj(NomCola, Msj1);
+                            }
                         }
-                        //Enviar msj a las colas de la nueva carrera
-                        Colas = mBDU.ConsultarCola(CarreraAnt);
-                        while(Colas.next()){
-                            String NomCola = Colas.getString(1);
-                            //System.out.println(CarreraAnt + " "+NomCola);
-                            //System.out.println(NomCola);
-                            sc.enviarmsj(NomCola, Msj1);
-                        }
-                    }else{
-                        String Msj1= "El alumno: " + Nombre +" con NC: " + NC 
-                                + "ha sido modificado en alguno de sus datos personales el " + FechaActual;
-                        ResultSet Colas = mBDU.ConsultarCola(Carrera);
-                        while(Colas.next()){
-                            String NomCola = Colas.getString(1);
-                            sc.enviarmsj(NomCola, Msj1);
-                        }
+
                     }
-                    
-                    
+                } catch (SQLException ex) {
+                    Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (URISyntaxException ex) {
+                    Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NoSuchAlgorithmException ex) {
+                    Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (KeyManagementException ex) {
+                    Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (TimeoutException ex) {
+                    Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
-            } catch (SQLException ex) {
-                Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (URISyntaxException ex) {
-                Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NoSuchAlgorithmException ex) {
-                Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (KeyManagementException ex) {
-                Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (TimeoutException ex) {
-                Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
+            } else {
+                JOptionPane.showMessageDialog(null, "No se puede inscribir a este semestre");
             }
         } else {
             JOptionPane.showMessageDialog(null, "No dejar cajas de tecto en blanco"
                     + "\n Proporcionar toda la informacion "
                     + "\n Solicitada");
         }
-        this.setVisible(false);
+
     }//GEN-LAST:event_btnGuardarAlumnoActionPerformed
 
     private void txtDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDireccionActionPerformed

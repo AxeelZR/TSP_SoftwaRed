@@ -87,10 +87,10 @@ public class BD_Usuario {
 
     public boolean EliminarUsuario(String Nombre) throws SQLException {
         try {
-            Instruccion = "Delete from usuario where Nombre = '?1';";
+            Instruccion = "Delete from Usuario where Nombre = '?1';";
             Instruccion = Instruccion.replace("?1", Nombre);
             Comando.executeUpdate(Instruccion);
-            JOptionPane.showMessageDialog(null, "Se elimino el usuairio " + Nombre);
+            JOptionPane.showMessageDialog(null, "Se elimino el usuario " + Nombre);
             Instruccion = "";
             Estado = true;
         } catch (Exception e) {

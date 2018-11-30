@@ -128,8 +128,8 @@ public class BD {
             Instruccion = "update Alumno set Estado ='" + Estado + "'  where NoControl='" + NC + "';";
             i = this.Comando.executeUpdate(Instruccion);
             //System.out.println(Instruccion + "Ejecutado");
-            JOptionPane.showMessageDialog(null, "El alumno /n con numero de control "
-                    + NC +" /n ah sido dado de Baja");
+            JOptionPane.showMessageDialog(null, "El alumno con numero de control "
+                    + NC +" \n ha sido dado de Baja");
             return true;
         } catch (Exception ex) {
             System.out.print("Error" + ex);

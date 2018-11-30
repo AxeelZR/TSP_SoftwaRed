@@ -65,7 +65,7 @@ public class FrmAlta extends javax.swing.JFrame {
 
         }
 
-        ImageIcon imagen = new ImageIcon("src/imagenes/diskette_save_saveas_1514.png");
+        ImageIcon imagen = new ImageIcon("src/imagenes/Guardar.png");
         Icon icono;
         icono = new ImageIcon(imagen.getImage().getScaledInstance(btnGuardarAlumno.getWidth(), btnGuardarAlumno.getHeight(), Image.SCALE_DEFAULT));
         btnGuardarAlumno.setIcon(icono);
@@ -551,104 +551,10 @@ public class FrmAlta extends javax.swing.JFrame {
 
     private void cmbSemestreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbSemestreMouseClicked
         // TODO add your handling code here:
-        ResultSet Alumno = null;
-        String EstadoAI = "";
-        String NC = this.txtNumControl.getText();
-        if (this.cmbSemestre.getSelectedItem() != "1") {
-            try {
-                try {
-                    mBD.Conectar();
-                } catch (Exception ex) {
-                    Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                Alumno = mBD.ConsultarAlumnoE(NC);
-                while (Alumno.next()) {
-                    if ("1".equals(Alumno.getString("Estado"))) {
-                        EstadoAI = "Activo";
-                    } else {
-                        EstadoAI = "Inactivo";
-                    }
-                    Alumno.getString("NoControl");
-                    this.txtNombre.setText(Alumno.getString("Nombre"));
-                    this.txtApellidoPaterno.setText(Alumno.getString("Apellido_Paterno"));
-                    this.txtApellidoMaterno.setText(Alumno.getString("Apellido_Materno"));
-                    this.txtCURP.setText(Alumno.getString("CURP"));
-                    this.txtDireccion.setText(Alumno.getString("Direccion"));
-                    this.cmbCarreras.setSelectedItem(Alumno.getString("Carrera_Clave"));
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            this.txtNombre.setEditable(false);
-            this.txtApellidoPaterno.setEditable(false);
-            this.txtApellidoMaterno.setEditable(false);
-            this.txtDireccion.setEditable(false);
-            this.txtCURP.setEditable(false);
-            this.cmbCarreras.setEditable(true);
-        } else {
-            this.txtNombre.setText("");
-            this.txtApellidoPaterno.setText("");
-            this.txtApellidoMaterno.setText("");
-            this.txtDireccion.setText("");
-            this.txtCURP.setText("");
-            this.txtNombre.setEditable(true);
-            this.txtApellidoPaterno.setEditable(true);
-            this.txtApellidoMaterno.setEditable(true);
-            this.txtDireccion.setEditable(true);
-            this.txtCURP.setEditable(true);
-            this.cmbCarreras.setEditable(true);
-        }
     }//GEN-LAST:event_cmbSemestreMouseClicked
 
     private void cmbSemestreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSemestreActionPerformed
         // TODO add your handling code here:
-        ResultSet Alumno = null;
-        String EstadoAI = "";
-        String NC = this.txtNumControl.getText();
-        if (this.cmbSemestre.getSelectedItem() != "1") {
-            try {
-                try {
-                    mBD.Conectar();
-                } catch (Exception ex) {
-                    Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                Alumno = mBD.ConsultarAlumnoE(NC);
-                while (Alumno.next()) {
-                    if ("1".equals(Alumno.getString("Estado"))) {
-                        EstadoAI = "Activo";
-                    } else {
-                        EstadoAI = "Inactivo";
-                    }
-                    Alumno.getString("NoControl");
-                    this.txtNombre.setText(Alumno.getString("Nombre"));
-                    this.txtApellidoPaterno.setText(Alumno.getString("Apellido_Paterno"));
-                    this.txtApellidoMaterno.setText(Alumno.getString("Apellido_Materno"));
-                    this.txtCURP.setText(Alumno.getString("CURP"));
-                    this.txtDireccion.setText(Alumno.getString("Direccion"));
-                    this.cmbCarreras.setSelectedItem(Alumno.getString("Carrera_Clave"));
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            this.txtNombre.setEditable(false);
-            this.txtApellidoPaterno.setEditable(false);
-            this.txtApellidoMaterno.setEditable(false);
-            this.txtDireccion.setEditable(false);
-            this.txtCURP.setEditable(false);
-            this.cmbCarreras.setEditable(true);
-        } else {
-            this.txtNombre.setText("");
-            this.txtApellidoPaterno.setText("");
-            this.txtApellidoMaterno.setText("");
-            this.txtDireccion.setText("");
-            this.txtCURP.setText("");
-            this.txtNombre.setEditable(true);
-            this.txtApellidoPaterno.setEditable(true);
-            this.txtApellidoMaterno.setEditable(true);
-            this.txtDireccion.setEditable(true);
-            this.txtCURP.setEditable(true);
-            this.cmbCarreras.setEditable(true);
-        }
     }//GEN-LAST:event_cmbSemestreActionPerformed
 
     /**

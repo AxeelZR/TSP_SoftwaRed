@@ -96,6 +96,14 @@ public class BD_Usuario {
         Consulta = "";
         return resultado;
     }
+    
+    public ResultSet ConsultarFechas(int id) throws SQLException {
+        Consulta = "SELECT DISTINCT fecha from Historial where idUsuario = '?1'";
+        Consulta = Consulta.replace("?1", String.valueOf(id));
+        ResultSet resultado = this.Comando.executeQuery(Consulta);
+        Consulta = "";
+        return resultado;
+    }
     public int Consultarid(String NombreUsuario) throws SQLException {
         Consulta = "Select idUsuario from Usuario where Nombre = '?1'";
         Consulta = Consulta.replace("?1", NombreUsuario);
