@@ -239,7 +239,6 @@ public class FrmAdminAdministradores extends javax.swing.JFrame {
         int filaseleccionada = this.tblUsuarios.getSelectedRow();
         if (filaseleccionada >= 0) {
             NombreUsuario = (String) tblUsuarios.getValueAt(filaseleccionada, 0);
-            JOptionPane.showMessageDialog(null, NombreUsuario);
         }
     }//GEN-LAST:event_tblUsuariosMouseClicked
 

@@ -47,14 +47,13 @@ public class FrmAlta extends javax.swing.JFrame {
         initComponents();
         FechaActual = "";
         FechaActual = Formato.format(fechaactual);
-        if (FechaActual.compareTo("08") > 0 && FechaActual.compareTo("12") < 0) {
+        if (FechaActual.compareTo("08") > 0 && FechaActual.compareTo("12") <= 0) {
             this.cmbSemestre.addItem("1");
             this.cmbSemestre.addItem("3");
             this.cmbSemestre.addItem("5");
             this.cmbSemestre.addItem("7");
             this.cmbSemestre.addItem("9");
             this.cmbSemestre.addItem("11");
-
         } else {
             this.cmbSemestre.addItem("2");
             this.cmbSemestre.addItem("4");

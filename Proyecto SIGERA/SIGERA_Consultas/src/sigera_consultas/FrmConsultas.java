@@ -47,7 +47,7 @@ public class FrmConsultas extends javax.swing.JFrame {
         id = mBD.Consultarid(Usuario);
         //JOptionPane.showMessageDialog(null, id);
         sc.RecibirMensaje(Usuario, id);
-        //this.LlenarTabla();
+        this.LlenarTabla();
         ImageIcon imagen = new ImageIcon("src/imagenes/Modificar.png");
         Icon icono;
         icono = new ImageIcon(imagen.getImage().getScaledInstance(btnConfiguracion.getWidth(), btnConfiguracion.getHeight(), Image.SCALE_DEFAULT));
@@ -56,9 +56,8 @@ public class FrmConsultas extends javax.swing.JFrame {
         Icon icono2;
         icono2 = new ImageIcon(imagen2.getImage().getScaledInstance(this.btnActualizar.getWidth(), btnActualizar.getHeight(), Image.SCALE_DEFAULT));
         this.btnActualizar.setIcon(icono2);
-        this.LlenarTabla();
         this.LlenarCombobox();
-
+        this.LlenarTabla();
     }
 
     public void LlenarCombobox() throws SQLException {

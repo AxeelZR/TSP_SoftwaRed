@@ -52,7 +52,7 @@ public class FrmModificacion extends javax.swing.JFrame {
         this.lblNumeroControl.setText(NoControl);
         FechaActual = "";
         FechaActual = Formato.format(fechaactual);
-        if (FechaActual.compareTo("08") > 0 && FechaActual.compareTo("12") < 0) {
+        if (FechaActual.compareTo("08") > 0 && FechaActual.compareTo("12") <= 0) {
             this.cmbSemestre.addItem("1");
             this.cmbSemestre.addItem("3");
             this.cmbSemestre.addItem("5");
