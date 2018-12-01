@@ -72,6 +72,12 @@ public class FrmCatalogo extends javax.swing.JFrame {
         icono5 = new ImageIcon(imagen5.getImage().getScaledInstance(btnRegistro.getWidth(), btnRegistro.getHeight(), Image.SCALE_DEFAULT));
         btnRegistro.setIcon(icono5);
         this.LlenarTablaAlumnos();
+        this.LlenarComboboxCarreras();
+        this.LlenarComboboxNC();
+        NC = "";
+    }
+    
+    public void LlenarComboboxCarreras(){
         try {
             mBD = new BD();
             try {
@@ -88,6 +94,9 @@ public class FrmCatalogo extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void LlenarComboboxNC(){
         try {
             mBD = new BD();
             try {
@@ -103,7 +112,6 @@ public class FrmCatalogo extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
         }
-        NC = "";
     }
 
     public void LlenarTablaAlumnos() {
@@ -448,7 +456,6 @@ public class FrmCatalogo extends javax.swing.JFrame {
             Carrera = (String) tblConsultaAlumnos.getValueAt(filaseleccionada, 1);
             Nombre = (String) tblConsultaAlumnos.getValueAt(filaseleccionada, 2);
             Estado = (String) tblConsultaAlumnos.getValueAt(filaseleccionada, 7);
-            //JOptionPane.showMessageDialog(null, NC);
         }
     }//GEN-LAST:event_tblConsultaAlumnosMouseClicked
 
