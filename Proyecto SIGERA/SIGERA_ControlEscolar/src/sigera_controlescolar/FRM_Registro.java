@@ -22,6 +22,7 @@ import sigera_controlescolar.*;
  * @author Alejandro
  */
 public class FRM_Registro extends javax.swing.JFrame {
+
     ResultSet ListaCarreras;
 
     //BD mBD = new BD();
@@ -40,7 +41,7 @@ public class FRM_Registro extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         BD mBD = new BD();
         try {
             mBD.Conectar();
@@ -109,6 +110,11 @@ public class FRM_Registro extends javax.swing.JFrame {
                 btnGuardarActionPerformed(evt);
             }
         });
+        btnGuardar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnGuardarKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -165,7 +171,6 @@ public class FRM_Registro extends javax.swing.JFrame {
                             .addComponent(lblCarrera))
                         .addContainerGap(95, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27))))
         );
@@ -193,24 +198,24 @@ public class FRM_Registro extends javax.swing.JFrame {
             BD_Usuario mBD = new BD_Usuario();
             Usuario mUsuario = new Usuario();
             SC_Escritura sc = new SC_Escritura();
-            
+
             String Nombre_Usuario = txtUsuario.getText();
             String Password = txtPassword.getText();
             String Carrera = (String) cmbCarreras.getSelectedItem();
             if ((!Nombre_Usuario.equals("")) && (!Password.equals(""))) {
-                
+
                 try {
                     mUsuario.setNombre_Usuario(Nombre_Usuario);
                     mUsuario.setContraseña(Password);
                     mUsuario.setCarrera(Carrera);
                     mUsuario.setNomCola(Nombre_Usuario);
-                    
+
                     mBD.getConnection();
-                    if(mBD.Registrar(mUsuario)){
+                    if (mBD.Registrar(mUsuario)) {
                         sc.CrearCola(Nombre_Usuario);
                     }
                     //mBD.Desconectar();
-                    
+
                     txtUsuario.setText("");
                     txtPassword.setText("");
                 } catch (Exception ex) {
@@ -231,6 +236,53 @@ public class FRM_Registro extends javax.swing.JFrame {
             Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnGuardarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnGuardarKeyPressed
+        // TODO add your handling code here:
+        try {
+            // try {
+            // TODO add your handling code here:
+            BD_Usuario mBD = new BD_Usuario();
+            Usuario mUsuario = new Usuario();
+            SC_Escritura sc = new SC_Escritura();
+
+            String Nombre_Usuario = txtUsuario.getText();
+            String Password = txtPassword.getText();
+            String Carrera = (String) cmbCarreras.getSelectedItem();
+            if ((!Nombre_Usuario.equals("")) && (!Password.equals(""))) {
+
+                try {
+                    mUsuario.setNombre_Usuario(Nombre_Usuario);
+                    mUsuario.setContraseña(Password);
+                    mUsuario.setCarrera(Carrera);
+                    mUsuario.setNomCola(Nombre_Usuario);
+
+                    mBD.getConnection();
+                    if (mBD.Registrar(mUsuario)) {
+                        sc.CrearCola(Nombre_Usuario);
+                    }
+                    //mBD.Desconectar();
+
+                    txtUsuario.setText("");
+                    txtPassword.setText("");
+                } catch (Exception ex) {
+                    Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Proporcionar toda la información Solicitada");
+            }
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (KeyManagementException ex) {
+            Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (TimeoutException ex) {
+            Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnGuardarKeyPressed
 
     /**
      * @param args the command line arguments

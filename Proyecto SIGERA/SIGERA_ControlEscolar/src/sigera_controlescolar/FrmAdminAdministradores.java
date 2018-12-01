@@ -141,10 +141,20 @@ public class FrmAdminAdministradores extends javax.swing.JFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
+        btnEliminar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnEliminarKeyPressed(evt);
+            }
+        });
 
         btnRegistroUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistroUsuariosActionPerformed(evt);
+            }
+        });
+        btnRegistroUsuarios.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnRegistroUsuariosKeyPressed(evt);
             }
         });
 
@@ -181,9 +191,9 @@ public class FrmAdminAdministradores extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(88, 88, 88)
                         .addComponent(jLabel1)
-                        .addGap(72, 72, 72)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
         );
@@ -272,6 +282,29 @@ public class FrmAdminAdministradores extends javax.swing.JFrame {
         mFrmRegistro.setVisible(true);
 
     }//GEN-LAST:event_btnRegistroUsuariosActionPerformed
+
+    private void btnEliminarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEliminarKeyPressed
+        // TODO add your handling code here:
+        if (!"".equals(NombreUsuario)) {
+            try {
+                // TODO add your handling code here:
+                BD_Usuario mBD_Usuario = new BD_Usuario();
+                mBD_Usuario.getConnection();
+                mBD_Usuario.EliminarUsuario(NombreUsuario);
+                NombreUsuario = "";
+            } catch (SQLException ex) {
+                Logger.getLogger(FrmAdminAdministradores.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un registro por favor");
+        }
+    }//GEN-LAST:event_btnEliminarKeyPressed
+
+    private void btnRegistroUsuariosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnRegistroUsuariosKeyPressed
+        // TODO add your handling code here:
+        FRM_Registro mFrmRegistro = new FRM_Registro();
+        mFrmRegistro.setVisible(true);
+    }//GEN-LAST:event_btnRegistroUsuariosKeyPressed
 
     /**
      * @param args the command line arguments

@@ -242,16 +242,31 @@ public class FrmCatalogo extends javax.swing.JFrame {
                 btnAgregarActionPerformed(evt);
             }
         });
+        btnAgregar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAgregarKeyPressed(evt);
+            }
+        });
 
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
             }
         });
+        btnEliminar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnEliminarKeyPressed(evt);
+            }
+        });
 
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);
+            }
+        });
+        btnModificar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnModificarKeyPressed(evt);
             }
         });
 
@@ -289,6 +304,11 @@ public class FrmCatalogo extends javax.swing.JFrame {
         btnRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistroActionPerformed(evt);
+            }
+        });
+        btnRegistro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnRegistroKeyPressed(evt);
             }
         });
 
@@ -526,6 +546,89 @@ public class FrmCatalogo extends javax.swing.JFrame {
         }
         NC = "";
     }//GEN-LAST:event_cmbBuscarCarreraItemStateChanged
+
+    private void btnAgregarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAgregarKeyPressed
+        // TODO add your handling code here:
+        FrmAlta mFrmAlta = new FrmAlta();
+        mFrmAlta.setVisible(true);
+        this.LlenarTablaAlumnos();
+    }//GEN-LAST:event_btnAgregarKeyPressed
+
+    private void btnEliminarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEliminarKeyPressed
+        // TODO add your handling code here:
+        if (!"".equals(NC)) {
+            if (!Estado.equals("Inactivo")) {
+                mBD = new BD();
+                try {
+                    mBD.Conectar();
+                } catch (Exception ex) {
+                    Logger.getLogger(FrmCatalogo.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                try {
+                    //Servidor de colas
+                    if (mBD.BajaAlumno(NC)) {
+                        SC_Escritura sc = new SC_Escritura();
+                        BD_Usuario mBDU = new BD_Usuario();
+                        DateFormat formato = new SimpleDateFormat("dd/MM/YYYY");
+                        Date fechaactual = new Date();
+                        String FechaActual = formato.format(fechaactual);
+                        String Msj = "El Alumno " + Nombre + " con NC: " + NC + " ha sido dado de baja el "
+                                + FechaActual;
+                        mBDU.getConnection();
+                        ResultSet Colas = mBDU.ConsultarCola(Carrera);
+                        while (Colas.next()) {
+                            String NomCola = Colas.getString(1);
+                            System.out.println(NomCola);
+                            sc.enviarmsj(NomCola, Msj);
+                        }
+                    }
+                    mBD.Desconectar();
+                    this.LlenarTablaAlumnos();
+                    NC = "";
+                } catch (SQLException ex) {
+                    Logger.getLogger(FrmCatalogo.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (URISyntaxException ex) {
+                    Logger.getLogger(FrmCatalogo.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NoSuchAlgorithmException ex) {
+                    Logger.getLogger(FrmCatalogo.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (KeyManagementException ex) {
+                    Logger.getLogger(FrmCatalogo.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(FrmCatalogo.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (TimeoutException ex) {
+                    Logger.getLogger(FrmCatalogo.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "El alumno ya esta dado de baja");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un registro por favor");
+        }
+    }//GEN-LAST:event_btnEliminarKeyPressed
+
+    private void btnModificarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnModificarKeyPressed
+        // TODO add your handling code here:
+        if (!"".equals(NC)) {
+            try {
+                // TODO add your handling code here:
+                FrmModificacion mFrmModificacion = new FrmModificacion(NC);
+                mFrmModificacion.setVisible(true);
+                this.LlenarTablaAlumnos();
+                NC = "";
+            } catch (SQLException ex) {
+                Logger.getLogger(FrmCatalogo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un registro por favor");
+        }
+    }//GEN-LAST:event_btnModificarKeyPressed
+
+    private void btnRegistroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnRegistroKeyPressed
+        // TODO add your handling code here:
+        FrmAdminAdministradores mFrmAdminAdministradores = new FrmAdminAdministradores();
+        mFrmAdminAdministradores.setVisible(true);
+        this.LlenarTablaAlumnos();
+    }//GEN-LAST:event_btnRegistroKeyPressed
 
     /**
      * @param args the command line arguments

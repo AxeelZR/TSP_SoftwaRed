@@ -213,6 +213,11 @@ public class FrmModificacion extends javax.swing.JFrame {
                 btnGuardarAlumnoActionPerformed(evt);
             }
         });
+        btnGuardarAlumno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnGuardarAlumnoKeyPressed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel1.setText("No. Control:");
@@ -503,9 +508,9 @@ public class FrmModificacion extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "No se puede inscribir a este semestre");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "No dejar cajas de tecto en blanco"
-                    + "\n Proporcionar toda la informacion "
-                    + "\n Solicitada");
+            JOptionPane.showMessageDialog(null, "No dejar cajas de texto en blanco"
+                    + "\n Favor de proporcionar toda la "
+                    + "\n informacion solicitada");
         }
 
     }//GEN-LAST:event_btnGuardarAlumnoActionPerformed
@@ -556,6 +561,114 @@ public class FrmModificacion extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Solo " + limite + " Caracteres");
         }
     }//GEN-LAST:event_txtCURPKeyTyped
+
+    private void btnGuardarAlumnoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnGuardarAlumnoKeyPressed
+        // TODO add your handling code here:
+        BD mBD = new BD();
+        try {
+            mBD.Conectar();
+        } catch (Exception ex) {
+            Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Alumno mAlumno = new Alumno();
+        String NC = this.lblNumeroControl.getText();
+        String ApellidoMaterno = txtApellidoMaterno.getText();
+        String ApellidoPaterno = txtApellidoPaterno.getText();
+        String CURP = txtCURP.getText();
+        String Nombre = txtNombre.getText();
+        String Carrera = (String) cmbCarreras.getSelectedItem();
+        String Direccion = txtDireccion.getText();
+        String Estado = (String) cmbEstado.getSelectedItem();
+        String Semestre = (String) cmbSemestre.getSelectedItem();
+
+        if ("Activo".equals(Estado)) {
+            Estado = "1";
+        } else if ("Inactivo".equals(Estado)) {
+            Estado = "0";
+        }
+        if ((!"".equals(ApellidoMaterno))
+                && (!"".equals(ApellidoPaterno)) && (!"".equals(CURP))
+                && (!"".equals(Nombre)) && (!"".equals(Direccion))) {
+            if ((Integer.parseInt(Semestre) == Integer.parseInt(SemestreActual))
+                    || (Integer.parseInt(Semestre) == Integer.parseInt(SemestreActual) + 1)) {
+
+                ApellidoMaterno = toUpperCammelCase(ApellidoMaterno);
+                ApellidoPaterno = toUpperCammelCase(ApellidoPaterno);
+                Nombre = toUpperCammelCase(Nombre);
+                Direccion = toUpperCammelCase(Direccion);
+
+                mAlumno.setApellidoMaterno(ApellidoMaterno);
+                mAlumno.setApellidoPaterno(ApellidoPaterno);
+                mAlumno.setCURP(CURP.toUpperCase());
+                mAlumno.setNombre(Nombre);
+                mAlumno.setCarrera(Carrera);
+                mAlumno.setNC(NC);
+                mAlumno.setEstado(Estado);
+                mAlumno.setSemestre(Integer.parseInt(Semestre));
+                mAlumno.setDireccion(Direccion);
+
+                try {
+                    if (mBD.ModificacionAlumno(NC, mAlumno)) {
+                        JOptionPane.showMessageDialog(null, "Se Modifico Correctamente el alumno Con Numero de Control "
+                                + this.lblNumeroControl.getText());
+                        //Escribir en la cola
+                        SC_Escritura sc = new SC_Escritura();
+                        BD_Usuario mBDU = new BD_Usuario();
+                        mBDU.getConnection();
+                        DateFormat formato = new SimpleDateFormat("dd/MM/YYYY");
+                        Date fechaactuali = new Date();
+                        String FechaActuali = formato.format(fechaactuali);
+                        if (!CarreraAnt.equals(Carrera)) {
+                            String Msj1 = "El alumno: " + Nombre + " con NC: " + NC
+                                    + " ha cambiado de carrera de: " + CarreraAnt + " a " + Carrera + " el " + FechaActuali;
+                            //Enviar msj a las colas de las nueva carrera
+                            ResultSet Colas = mBDU.ConsultarCola(Carrera);
+                            while (Colas.next()) {
+                                String NomCola = Colas.getString(1);
+                                //System.out.println(Carrera + " "+NomCola);
+                                sc.enviarmsj(NomCola, Msj1);
+                            }
+                            //Enviar msj a las colas de la nueva carrera
+                            Colas = mBDU.ConsultarCola(CarreraAnt);
+                            while (Colas.next()) {
+                                String NomCola = Colas.getString(1);
+                                //System.out.println(CarreraAnt + " "+NomCola);
+                                //System.out.println(NomCola);
+                                sc.enviarmsj(NomCola, Msj1);
+                            }
+                        } else {
+                            String Msj1 = "El alumno: " + Nombre + " con NC: " + NC
+                                    + " ha sido modificado en alguno de sus datos personales el " + FechaActuali;
+                            ResultSet Colas = mBDU.ConsultarCola(Carrera);
+                            while (Colas.next()) {
+                                String NomCola = Colas.getString(1);
+                                sc.enviarmsj(NomCola, Msj1);
+                            }
+                        }
+
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (URISyntaxException ex) {
+                    Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NoSuchAlgorithmException ex) {
+                    Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (KeyManagementException ex) {
+                    Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (TimeoutException ex) {
+                    Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No se puede inscribir a este semestre");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No dejar cajas de texto en blanco"
+                    + "\n Favor de proporcionar toda la "
+                    + "\n informacion solicitada");
+        }
+    }//GEN-LAST:event_btnGuardarAlumnoKeyPressed
 
     /**
      * @param args the command line arguments

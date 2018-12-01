@@ -99,9 +99,6 @@ public class BD {
             Instruccion = Instruccion.replace("?9", Direccion);
             Conectar();
             i = this.Comando.executeUpdate(Instruccion);
-            //System.out.print(Instruccion + "Ejecutado");
-            JOptionPane.showMessageDialog(null, "El alumno " + Nombre + "/n con numero de control "
-                    + NC +" /n ah sido inscrito satisfactoriamente");
             Instruccion = "";
             Nombre = "";
             ApellidoMaterno = "";

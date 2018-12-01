@@ -36,7 +36,9 @@ public class FrmConsultas extends javax.swing.JFrame {
     int id = 0;
     DefaultTableModel modelo;
     ResultSet ListaFechas;
+    String query;
 
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public FrmConsultas(String Usuario) throws IOException, TimeoutException, SQLException {
         initComponents();
         AutoCompleteDecorator.decorate(cmbFechas);
@@ -50,15 +52,22 @@ public class FrmConsultas extends javax.swing.JFrame {
         Icon icono;
         icono = new ImageIcon(imagen.getImage().getScaledInstance(btnConfiguracion.getWidth(), btnConfiguracion.getHeight(), Image.SCALE_DEFAULT));
         this.btnConfiguracion.setIcon(icono);
+        this.LlenarTabla();
         this.LlenarCombobox();
+
     }
 
     public void LlenarCombobox() throws SQLException {
         mBD.Conectar();
+        this.cmbFechas.removeAllItems();
         ListaFechas = mBD.ConsultarFechas(id);
         cmbFechas.addItem("Todo");
-        while (ListaFechas.next()) {
-            this.cmbFechas.addItem(ListaFechas.getString("fecha"));
+        try {
+            while (ListaFechas.next()) {
+                this.cmbFechas.addItem(ListaFechas.getString("fecha"));
+            }
+        } catch (Exception e) {
+
         }
     }
 
@@ -69,11 +78,15 @@ public class FrmConsultas extends javax.swing.JFrame {
             if (Mensajes != null) {
                 Object[] Encabezado = {"Historial de Mensajes"};
                 modelo = new DefaultTableModel(null, Encabezado);
-                while (Mensajes.next()) {
-                    Object[] actual = {
-                        Mensajes.getString(1)
-                    };
-                    modelo.addRow(actual);
+                try {
+                    while (Mensajes.next()) {
+                        Object[] actual = {
+                            Mensajes.getString(1)
+                        };
+                        modelo.addRow(actual);
+                    }
+                } catch (Exception e) {
+
                 }
             }
             this.tblConsultasUsuario.setModel(modelo);
@@ -129,6 +142,11 @@ public class FrmConsultas extends javax.swing.JFrame {
         cmbFechas.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbFechasItemStateChanged(evt);
+            }
+        });
+        cmbFechas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cmbFechasKeyPressed(evt);
             }
         });
 
@@ -228,6 +246,11 @@ public class FrmConsultas extends javax.swing.JFrame {
                 btnConfiguracionActionPerformed(evt);
             }
         });
+        btnConfiguracion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnConfiguracionKeyPressed(evt);
+            }
+        });
 
         BtnActualizar.setText("Actualizar");
         BtnActualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -287,8 +310,11 @@ public class FrmConsultas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnActualizarActionPerformed
+
         try {
             LlenarTabla();
+
+            this.LlenarCombobox();
         } catch (SQLException ex) {
             Logger.getLogger(FrmConsultas.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -301,15 +327,33 @@ public class FrmConsultas extends javax.swing.JFrame {
 
     private void cmbFechasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbFechasItemStateChanged
         // TODO add your handling code here:
-        String query = this.cmbFechas.getSelectedItem().toString();
-        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(modelo);
-        this.tblConsultasUsuario.setRowSorter(tr);
-        if (query != "Todo") {
-            tr.setRowFilter(RowFilter.regexFilter(query));
-        } else {
+        try {
+            String query = this.cmbFechas.getSelectedItem().toString();
+            TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(modelo);
             this.tblConsultasUsuario.setRowSorter(tr);
+            if (!"Todo".equals(query)) {
+                tr.setRowFilter(RowFilter.regexFilter(query));
+            } else if (query.equals("Todo")) {
+                tr = new TableRowSorter<DefaultTableModel>(modelo);
+                //this.tblConsultasUsuario.setRowSorter(tr);
+            } else {
+                this.tblConsultasUsuario.setRowSorter(tr);
+            }
+        } catch (Exception e) {
+
         }
+
     }//GEN-LAST:event_cmbFechasItemStateChanged
+
+    private void btnConfiguracionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnConfiguracionKeyPressed
+        // TODO add your handling code here:
+        FrmConfiguracion mFrmConfiguracion = new FrmConfiguracion(LblUsuario.getText());
+        mFrmConfiguracion.setVisible(true);
+    }//GEN-LAST:event_btnConfiguracionKeyPressed
+
+    private void cmbFechasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmbFechasKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbFechasKeyPressed
 
     /**
      * @param args the command line arguments

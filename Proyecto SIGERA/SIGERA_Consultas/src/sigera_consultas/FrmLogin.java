@@ -91,6 +91,11 @@ public class FrmLogin extends javax.swing.JFrame {
                 BtnIngresarActionPerformed(evt);
             }
         });
+        BtnIngresar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BtnIngresarKeyPressed(evt);
+            }
+        });
 
         TxtPassword.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
 
@@ -218,6 +223,37 @@ public class FrmLogin extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_BtnIngresarActionPerformed
+
+    private void BtnIngresarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnIngresarKeyPressed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            BD_Usuario mBD = new BD_Usuario();
+            String Usuario = TxtUsuario.getText();
+            String Contrasena = TxtPassword.getText();
+            if (!"".equals(Usuario) && !"".equals(Contrasena)) {
+                mBD.Conectar();
+                if (mBD.Autentificar(Usuario, Contrasena)) {
+                    this.dispose();
+                    JOptionPane.showMessageDialog(null, "Bienvenido " + Usuario + "\n Has ingresado satisfactoriamente al sistema");
+                    SC_Lectura sc = new SC_Lectura();
+                    FrmConsultas mFrmConsultas = new FrmConsultas(Usuario);
+                    mFrmConsultas.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Acceso denegado:\n"
+                            + "Por favor ingrese un usuario y/o contraseña correctos");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Favor de llenar todos los campos");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmLogin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FrmLogin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (TimeoutException ex) {
+            Logger.getLogger(FrmLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_BtnIngresarKeyPressed
 
     /**
      * @param args the command line arguments

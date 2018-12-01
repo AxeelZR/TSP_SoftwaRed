@@ -198,6 +198,11 @@ public class FrmAlta extends javax.swing.JFrame {
                 btnGuardarAlumnoActionPerformed(evt);
             }
         });
+        btnGuardarAlumno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnGuardarAlumnoKeyPressed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel1.setText("No. Control:");
@@ -463,8 +468,8 @@ public class FrmAlta extends javax.swing.JFrame {
                 Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "No dejar cajas de tecto en blanco"
-                    + "\n Proporcionar toda la informacion Solicitada");
+            JOptionPane.showMessageDialog(null, "No dejar cajas de texto en blanco"
+                    + "\n Favor de proporcionar toda \n la informacion Solicitada");
         }
     }//GEN-LAST:event_btnGuardarAlumnoActionPerformed
 
@@ -556,6 +561,91 @@ public class FrmAlta extends javax.swing.JFrame {
     private void cmbSemestreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSemestreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbSemestreActionPerformed
+
+    private void btnGuardarAlumnoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnGuardarAlumnoKeyPressed
+        // TODO add your handling code here:
+        BD mBD = new BD();
+        BD_Usuario mBDU = new BD_Usuario();
+        Alumno mAlumno = new Alumno();
+
+        try {
+            //mBD.Conectar();
+        } catch (Exception ex) {
+            Logger.getLogger(FrmModificacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String NumControl = txtNumControl.getText();
+        String ApellidoMaterno = txtApellidoMaterno.getText();
+        String ApellidoPaterno = txtApellidoPaterno.getText();
+        String CURP = txtCURP.getText();
+        String Nombre = txtNombre.getText();
+        String Carrera = (String) cmbCarreras.getSelectedItem();
+        String Direccion = txtDireccion.getText();
+        String Semestre = (String) cmbSemestre.getSelectedItem();
+
+        if ((!"".equals(NumControl)) && (!"".equals(ApellidoMaterno))
+                && (!"".equals(ApellidoPaterno)) && (!"".equals(CURP))
+                && (!"".equals(Nombre)) && (!"".equals(Direccion))) {
+
+            try {
+                ApellidoMaterno = toUpperCammelCase(ApellidoMaterno);
+                ApellidoPaterno = toUpperCammelCase(ApellidoPaterno);
+                Nombre = toUpperCammelCase(Nombre);
+                Direccion = toUpperCammelCase(Direccion);
+                mAlumno.setApellidoMaterno(ApellidoMaterno);
+                mAlumno.setApellidoPaterno(ApellidoPaterno);
+                mAlumno.setCURP(CURP.toUpperCase());
+                mAlumno.setNombre(Nombre);
+                mAlumno.setCarrera(Carrera);
+                mAlumno.setNC(NumControl);
+                mAlumno.setDireccion(Direccion);
+                mAlumno.setEstado("1");
+                mAlumno.setSemestre(Integer.parseInt(Semestre));
+                mBD.Conectar();
+                //Guardar Alumno
+                if (mBD.AltaAlumno(mAlumno)) {
+                    DateFormat Formato = new SimpleDateFormat("dd/MM/YYYY");
+                    FechaActual = Formato.format(fechaactual);
+                    String Msj = "El Alumno " + Nombre + " " + ApellidoPaterno + " ha sido inscrito a la carrera "
+                            + " " + Carrera + " en el semestre " + Semestre + " el " + FechaActual;
+                    mBDU.getConnection();
+                    SC_Escritura sc = new SC_Escritura();
+                    ResultSet Colas = mBDU.ConsultarCola(Carrera);
+                    while (Colas.next()) {
+                        String NomCola = Colas.getString(1);
+                        sc.enviarmsj(NomCola, Msj);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al guardar alumno");
+                }
+                JOptionPane.showMessageDialog(null, "El Alumno " + Nombre + " " + ApellidoPaterno + " ha sido inscrito a la carrera "
+                        + " " + Carrera + " en el semestre " + Semestre + " Satisfactoriamentre");
+                txtNumControl.setText("");
+                txtApellidoMaterno.setText("");
+                txtApellidoPaterno.setText("");
+                txtCURP.setText("");
+                txtNombre.setText("");
+                txtDireccion.setText("");
+                cmbSemestre.setSelectedItem("");
+            } catch (SQLException ex) {
+                Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (URISyntaxException ex) {
+                Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyManagementException ex) {
+                Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (TimeoutException ex) {
+                Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No dejar cajas de texto en blanco"
+                    + "\n  Favor de proporcionar toda \n la informacion Solicitada");
+        }
+    }//GEN-LAST:event_btnGuardarAlumnoKeyPressed
 
     /**
      * @param args the command line arguments
