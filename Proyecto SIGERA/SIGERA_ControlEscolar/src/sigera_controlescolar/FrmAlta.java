@@ -247,6 +247,12 @@ public class FrmAlta extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel9.setText("Direccion:");
 
+        txtDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDireccionKeyTyped(evt);
+            }
+        });
+
         cmbCarreras.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         cmbCarreras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CP", "ISC", "IEM", "IGE", "IIA", "IA", "ITICS" }));
         cmbCarreras.addActionListener(new java.awt.event.ActionListener() {
@@ -721,6 +727,19 @@ public class FrmAlta extends javax.swing.JFrame {
                     + "\n  Favor de proporcionar toda \n la informacion Solicitada");
         }
     }//GEN-LAST:event_btnGuardarAlumnoKeyPressed
+
+    private void txtDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c) || c == (char) 8 || Character.isDigit(c) 
+                || c == (char)35 || c == (char)32 || c ==(char)46) {
+
+        } else {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "No caracteres especiales solo # y .");
+        }
+    }//GEN-LAST:event_txtDireccionKeyTyped
 
     /**
      * @param args the command line arguments

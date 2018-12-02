@@ -164,6 +164,11 @@ public class FrmModificacion extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(9, 9, 9, 9, new java.awt.Color(0, 102, 255)));
+        jPanel1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jPanel1KeyTyped(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Serif", 1, 48)); // NOI18N
         jLabel7.setText("Modificación de Datos");
@@ -248,6 +253,11 @@ public class FrmModificacion extends javax.swing.JFrame {
         txtDireccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDireccionActionPerformed(evt);
+            }
+        });
+        txtDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDireccionKeyTyped(evt);
             }
         });
 
@@ -526,30 +536,36 @@ public class FrmModificacion extends javax.swing.JFrame {
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         // TODO add your handling code here:
         char c = evt.getKeyChar();
-        if (Character.isDigit(c)) {
+        if (Character.isLetter(c) || c == (char) 32 || c == (char) 8) {
+
+        } else {
             getToolkit().beep();
             evt.consume();
-            JOptionPane.showMessageDialog(null, "No se admiten Numeros");
+            JOptionPane.showMessageDialog(null, "Solo letras");
         }
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtApellidoPaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoPaternoKeyTyped
         // TODO add your handling code here:
         char c = evt.getKeyChar();
-        if (Character.isDigit(c)) {
+        if (Character.isLetter(c) || c == (char) 8) {
+
+        } else {
             getToolkit().beep();
             evt.consume();
-            JOptionPane.showMessageDialog(null, "No se admiten Numeros");
+            JOptionPane.showMessageDialog(null, "Solo letras");
         }
     }//GEN-LAST:event_txtApellidoPaternoKeyTyped
 
     private void txtApellidoMaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoMaternoKeyTyped
         // TODO add your handling code here:
         char c = evt.getKeyChar();
-        if (Character.isDigit(c)) {
+        if (Character.isLetter(c) || c == (char) 8) {
+
+        } else {
             getToolkit().beep();
             evt.consume();
-            JOptionPane.showMessageDialog(null, "No se admiten Numeros");
+            JOptionPane.showMessageDialog(null, "Solo letras");
         }
     }//GEN-LAST:event_txtApellidoMaternoKeyTyped
 
@@ -559,6 +575,13 @@ public class FrmModificacion extends javax.swing.JFrame {
         if (this.txtCURP.getText().length() == limite) {
             evt.consume();
             JOptionPane.showMessageDialog(null, "Solo " + limite + " Caracteres");
+        }
+        char c = evt.getKeyChar();
+        if (Character.isDigit(c) || Character.isLetter(c) || c == (char) 8) {
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Solo numeros y letras");
+            evt.consume();
         }
     }//GEN-LAST:event_txtCURPKeyTyped
 
@@ -669,6 +692,23 @@ public class FrmModificacion extends javax.swing.JFrame {
                     + "\n informacion solicitada");
         }
     }//GEN-LAST:event_btnGuardarAlumnoKeyPressed
+
+    private void jPanel1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel1KeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel1KeyTyped
+
+    private void txtDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c) || c == (char) 8 || Character.isDigit(c) 
+                || c == (char)35 || c == (char)32 || c ==(char)46) {
+
+        } else {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "No caracteres especiales solo # y .");
+        }
+    }//GEN-LAST:event_txtDireccionKeyTyped
 
     /**
      * @param args the command line arguments
