@@ -4,27 +4,13 @@ CREATE TABLE Carrera (
   PRIMARY KEY(Clave)
 );
 
-CREATE TABLE Usuario (
-  idUsuario INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  Carrera_Clave VARCHAR(25) NOT NULL,
-  Nombre VARCHAR(25) NULL,
-  Contrasenia VARCHAR(50) NULL,
-  Nombre_Cola VARCHAR(150) NOT NULL,
-  PRIMARY KEY(idUsuario),
-  INDEX Usuario_FKIndex1(Carrera_Clave),
-  FOREIGN KEY(Carrera_Clave)
-    REFERENCES Carrera(Clave)
-      ON DELETE NO ACTION
-      ON UPDATE NO ACTION
-);
-
 CREATE TABLE Alumno (
-  NoControl VARCHAR(20) NOT NULL,
+  NoControl VARCHAR(20) NOT NULL UNIQUE,
   Carrera_Clave VARCHAR(25) NOT NULL,
   Nombre VARCHAR(25) NULL,
   Apellido_Paterno VARCHAR(25) NULL,
   Apellido_Materno VARCHAR(25) NULL,
-  CURP VARCHAR(25) NULL,
+  CURP VARCHAR(25) NOT NULL UNIQUE,
   Semestre INTEGER UNSIGNED NULL,
   Estado BOOL NULL,
   Direccion VARCHAR(100) NULL,

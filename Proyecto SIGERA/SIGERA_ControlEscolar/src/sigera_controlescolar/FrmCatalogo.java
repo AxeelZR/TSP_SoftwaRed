@@ -539,7 +539,6 @@ public class FrmCatalogo extends javax.swing.JFrame {
         int filaseleccionada = this.tblConsultaAlumnos.getSelectedRow();
         if (filaseleccionada >= 0) {
             NC = (String) tblConsultaAlumnos.getValueAt(filaseleccionada, 0);
-            JOptionPane.showMessageDialog(null, NC);
         }
     }//GEN-LAST:event_tblConsultaAlumnosKeyPressed
 

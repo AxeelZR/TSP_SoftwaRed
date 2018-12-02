@@ -1,0 +1,23 @@
+CREATE TABLE Usuario (
+  idUsuario INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  Carrera_Clave VARCHAR(25) NOT NULL,
+  Nombre VARCHAR(25) NULL UNIQUE,
+  Contrasenia VARCHAR(50) NULL,
+  Nombre_Cola VARCHAR(150) NOT NULL,
+  PRIMARY KEY(idUsuario)
+);
+
+CREATE TABLE Historial (
+  id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  idUsuario INTEGER UNSIGNED NOT NULL,
+  Msj TEXT NOT NULL,
+  Fecha VARCHAR(25) NOT NULL,
+  PRIMARY KEY(id),
+  INDEX Historial_FKIndex1(idUsuario),
+  FOREIGN KEY(idUsuario)
+    REFERENCES Usuario(idUsuario)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+);
+
+

@@ -39,6 +39,13 @@ public class FrmAlta extends javax.swing.JFrame {
     Date fechaactual = new Date();
     DateFormat Formato = new SimpleDateFormat("MM");
     String FechaActual;
+    Date FechaAnyo = new Date();
+    DateFormat FormatoAnyo = new SimpleDateFormat("yyyy");
+    String FechaAnyoo;
+    String NumeroControlNew;
+    ResultSet ListaNumControl;
+    String NumeroControlAnterior;
+    String NumControl;
 
     /**
      * Creates new form
@@ -46,6 +53,8 @@ public class FrmAlta extends javax.swing.JFrame {
     public FrmAlta() {
         initComponents();
         FechaActual = "";
+        NumeroControlNew = "";
+        NumeroControlAnterior = "";
         FechaActual = Formato.format(fechaactual);
         if (FechaActual.compareTo("08") > 0 && FechaActual.compareTo("12") <= 0) {
             this.cmbSemestre.addItem("1");
@@ -371,6 +380,38 @@ public class FrmAlta extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
 
+    public void GenerarNoControl() {
+        FechaAnyoo = "";
+        FechaAnyoo = FormatoAnyo.format(FechaAnyo);
+        try {
+            mBD.Conectar();
+            ListaNumControl = mBD.ConsultarNumControlUltimo();
+            if (!ListaNumControl.equals("")) {
+                while (ListaNumControl.next()) {
+                    String AnyoBD = ListaNumControl.getString("LAST_INSERT_ID(NoControl)");
+                    AnyoBD = AnyoBD.substring(0, 4);
+                    if (FechaAnyoo.equals(AnyoBD)) {
+                        int NumeroControlAnterior = Integer.parseInt(ListaNumControl.getString("LAST_INSERT_ID(NoControl)")) + 1;
+                        NumControl = String.valueOf(NumeroControlAnterior);
+                    } else {
+                        FechaAnyoo = "";
+                        FechaAnyoo = FormatoAnyo.format(FechaAnyo);
+                        NumeroControlNew = FechaAnyoo + 1;
+                        NumControl = NumeroControlNew;
+                    }
+                }
+            } else {
+                FechaAnyoo = "";
+                FechaAnyoo = FormatoAnyo.format(FechaAnyo);
+                NumeroControlNew = FechaAnyoo + 1;
+                NumControl = NumeroControlNew;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     public String toUpperCammelCase(String cadena) {
         cadena = cadena.toLowerCase();
         char[] caracteres = cadena.toCharArray();
@@ -500,43 +541,48 @@ public class FrmAlta extends javax.swing.JFrame {
     private void txtNumControlKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumControlKeyTyped
         // TODO add your handling code here:
         char caracter = evt.getKeyChar();
-
         // Verificar si la tecla pulsada no es un digito
-        if (((caracter < '0')
-                || (caracter > '9'))
-                && (caracter != '\b' /*corresponde a BACK_SPACE*/)) {
+        if (Character.isDigit(caracter) || caracter == (char) 8) {
+
+        } else {
             evt.consume();  // ignorar el evento de teclado
-            JOptionPane.showMessageDialog(null, "No se admiten letras");
+            JOptionPane.showMessageDialog(null, "Solo numeros");
         }
     }//GEN-LAST:event_txtNumControlKeyTyped
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         // TODO add your handling code here:
         char c = evt.getKeyChar();
-        if (Character.isDigit(c)) {
+        if (Character.isLetter(c) || c == (char) 32 || c == (char) 8) {
+
+        } else {
             getToolkit().beep();
             evt.consume();
-            JOptionPane.showMessageDialog(null, "No se admiten Numeros");
+            JOptionPane.showMessageDialog(null, "Solo letras");
         }
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtApellidoPaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoPaternoKeyTyped
         // TODO add your handling code here:
         char c = evt.getKeyChar();
-        if (Character.isDigit(c)) {
+        if (Character.isLetter(c) || c == (char) 8) {
+
+        } else {
             getToolkit().beep();
             evt.consume();
-            JOptionPane.showMessageDialog(null, "No se admiten Numeros");
+            JOptionPane.showMessageDialog(null, "Solo letras");
         }
     }//GEN-LAST:event_txtApellidoPaternoKeyTyped
 
     private void txtApellidoMaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoMaternoKeyTyped
         // TODO add your handling code here:
         char c = evt.getKeyChar();
-        if (Character.isDigit(c)) {
+        if (Character.isLetter(c) || c == (char) 8) {
+
+        } else {
             getToolkit().beep();
             evt.consume();
-            JOptionPane.showMessageDialog(null, "No se admiten Numeros");
+            JOptionPane.showMessageDialog(null, "Solo letras");
         }
     }//GEN-LAST:event_txtApellidoMaternoKeyTyped
 
@@ -547,6 +593,13 @@ public class FrmAlta extends javax.swing.JFrame {
             evt.consume();
             JOptionPane.showMessageDialog(null, "Solo " + limite + " Caracteres");
         }
+        char c = evt.getKeyChar();
+        if (Character.isDigit(c) || Character.isLetter(c) || c == (char) 8) {
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Solo numeros y letras");
+            evt.consume();
+        }
     }//GEN-LAST:event_txtCURPKeyTyped
 
     private void cmbCarrerasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCarrerasActionPerformed
@@ -555,10 +608,26 @@ public class FrmAlta extends javax.swing.JFrame {
 
     private void cmbSemestreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbSemestreMouseClicked
         // TODO add your handling code here:
+        if (this.cmbSemestre.getSelectedItem() == "1") {
+            this.GenerarNoControl();
+            this.txtNumControl.setText(NumControl);
+            this.txtNumControl.setEditable(false);
+        } else {
+            this.txtNumControl.setText("");
+            this.txtNumControl.setEditable(true);
+        }
     }//GEN-LAST:event_cmbSemestreMouseClicked
 
     private void cmbSemestreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSemestreActionPerformed
         // TODO add your handling code here:
+        if (this.cmbSemestre.getSelectedItem() == "1") {
+            this.GenerarNoControl();
+            this.txtNumControl.setText(NumControl);
+            this.txtNumControl.setEditable(false);
+        } else {
+            this.txtNumControl.setText("");
+            this.txtNumControl.setEditable(true);
+        }
     }//GEN-LAST:event_cmbSemestreActionPerformed
 
     private void btnGuardarAlumnoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnGuardarAlumnoKeyPressed

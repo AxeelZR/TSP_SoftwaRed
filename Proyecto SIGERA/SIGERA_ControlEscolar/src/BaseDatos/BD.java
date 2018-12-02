@@ -229,4 +229,10 @@ public class BD {
             return false;
         }
     }
+     public ResultSet ConsultarNumControlUltimo() throws SQLException {
+        Consulta = "SELECT LAST_INSERT_ID(NoControl) FROM alumno Where Semestre = '1' ORDER BY NoControl Desc LIMIT 1; ";
+        ResultSet resultado = this.Comando.executeQuery(Consulta);
+        Consulta = "";
+        return resultado;
+    }
 }
