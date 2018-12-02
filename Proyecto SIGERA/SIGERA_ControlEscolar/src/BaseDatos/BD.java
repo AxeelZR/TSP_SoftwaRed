@@ -86,7 +86,7 @@ public class BD {
         Direccion = mAlumno.getDireccion();
 
         try {
-            Instruccion = "insert into Alumno(NoControl,Carrera_Clave, Nombre, Apellido_Paterno, Apellido_Materno, CURP,Semestre,Estado,Direccion) values ('?1','?2','?3','?4', '?5','?6','?7','?8','?9');";
+            Instruccion = "insert into Alumno(Id, NoControl,Carrera_Clave, Nombre, Apellido_Paterno, Apellido_Materno, CURP,Semestre,Estado,Direccion) values (null,'?1','?2','?3','?4', '?5','?6','?7','?8','?9');";
             Instruccion = Instruccion.replace("?1", String.valueOf(NC));
             Instruccion = Instruccion.replace("?2", Carrera);
             Instruccion = Instruccion.replace("?3", Nombre);
@@ -228,7 +228,7 @@ public class BD {
         }
     }
      public ResultSet ConsultarNumControlUltimo() throws SQLException {
-        Consulta = "SELECT LAST_INSERT_ID(NoControl) FROM alumno Where Semestre = '1' ORDER BY NoControl Desc LIMIT 1; ";
+        Consulta = "SELECT NoControl FROM `alumno` where Semestre = '1' ORDER by Id DESC LIMIT 1;";
         ResultSet resultado = this.Comando.executeQuery(Consulta);
         Consulta = "";
         return resultado;

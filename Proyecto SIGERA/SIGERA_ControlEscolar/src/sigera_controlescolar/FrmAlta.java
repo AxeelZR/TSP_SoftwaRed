@@ -384,15 +384,19 @@ public class FrmAlta extends javax.swing.JFrame {
         FechaAnyoo = FormatoAnyo.format(FechaAnyo);
         NumeroControlNew = FechaAnyoo + 1;
         NumControl = NumeroControlNew;
+        int Cont = 1;
         try {
             mBD.Conectar();
             ListaNumControl = mBD.ConsultarNumControlUltimo();
             if (!ListaNumControl.equals("")) {
                 while (ListaNumControl.next()) {
-                    String AnyoBD = ListaNumControl.getString("LAST_INSERT_ID(NoControl)");
+                    String AnyoBD = ListaNumControl.getString("NoControl");
                     AnyoBD = AnyoBD.substring(0, 4);
+                    String Resto = ListaNumControl.getString("NoControl");
+                    Resto = Resto.substring(4, Resto.length());
+                    System.out.print("Resto " + Resto);
                     if (FechaAnyoo.equals(AnyoBD)) {
-                        int NumeroControlAnterior = Integer.parseInt(ListaNumControl.getString("LAST_INSERT_ID(NoControl)")) + 1;
+                        int NumeroControlAnterior = Integer.parseInt(AnyoBD + (Integer.parseInt(Resto) + 1));
                         NumControl = String.valueOf(NumeroControlAnterior);
                     } else {
                         FechaAnyoo = "";
@@ -696,7 +700,7 @@ public class FrmAlta extends javax.swing.JFrame {
                 txtCURP.setText("");
                 txtNombre.setText("");
                 txtDireccion.setText("");
-                cmbSemestre.setSelectedItem("");
+                cmbSemestre.setSelectedItem("1");
             } catch (SQLException ex) {
                 Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
             } catch (URISyntaxException ex) {

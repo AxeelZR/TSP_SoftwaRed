@@ -5,6 +5,7 @@ CREATE TABLE Carrera (
 );
 
 CREATE TABLE Alumno (
+  Id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   NoControl VARCHAR(20) NOT NULL UNIQUE,
   Carrera_Clave VARCHAR(25) NOT NULL,
   Nombre VARCHAR(25) NULL,
@@ -14,7 +15,7 @@ CREATE TABLE Alumno (
   Semestre INTEGER UNSIGNED NULL,
   Estado BOOL NULL,
   Direccion VARCHAR(100) NULL,
-  PRIMARY KEY(NoControl),
+  PRIMARY KEY(Id),
   INDEX Alumno_FKIndex1(Carrera_Clave),
   FOREIGN KEY(Carrera_Clave)
     REFERENCES Carrera(Clave)
