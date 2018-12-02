@@ -461,14 +461,12 @@ public class FrmCatalogo extends javax.swing.JFrame {
         // TODO add your handling code here:
         FrmAlta mFrmAlta = new FrmAlta();
         mFrmAlta.setVisible(true);
-        this.LlenarTablaAlumnos();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
         // TODO add your handling code here:
         FrmAdminAdministradores mFrmAdminAdministradores = new FrmAdminAdministradores();
         mFrmAdminAdministradores.setVisible(true);
-        this.LlenarTablaAlumnos();
     }//GEN-LAST:event_btnRegistroActionPerformed
 
     private void tblConsultaAlumnosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblConsultaAlumnosMouseClicked
@@ -588,7 +586,6 @@ public class FrmCatalogo extends javax.swing.JFrame {
         // TODO add your handling code here:
         FrmAlta mFrmAlta = new FrmAlta();
         mFrmAlta.setVisible(true);
-        this.LlenarTablaAlumnos();
     }//GEN-LAST:event_btnAgregarKeyPressed
 
     private void btnEliminarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEliminarKeyPressed
@@ -671,11 +668,11 @@ public class FrmCatalogo extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             mBD.Conectar();
+            this.LlenarTablaAlumnos();
             this.cmbBuscarCarrera.removeAllItems();
             this.cmbNumControl.removeAllItems();
             this.LlenarComboboxCarreras();
             this.LlenarComboboxNC();
-            this.LlenarTablaAlumnos();
         } catch (Exception ex) {
             Logger.getLogger(FrmCatalogo.class.getName()).log(Level.SEVERE, null, ex);
         }

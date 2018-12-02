@@ -86,7 +86,6 @@ public class BD {
         Direccion = mAlumno.getDireccion();
 
         try {
-
             Instruccion = "insert into Alumno(NoControl,Carrera_Clave, Nombre, Apellido_Paterno, Apellido_Materno, CURP,Semestre,Estado,Direccion) values ('?1','?2','?3','?4', '?5','?6','?7','?8','?9');";
             Instruccion = Instruccion.replace("?1", String.valueOf(NC));
             Instruccion = Instruccion.replace("?2", Carrera);
@@ -111,7 +110,6 @@ public class BD {
             Direccion = "";
             return true;
         } catch (Exception ex) {
-            System.out.print("Error" + ex);
             return false;
         }
 

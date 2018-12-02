@@ -70,7 +70,6 @@ public class FrmAlta extends javax.swing.JFrame {
             this.cmbSemestre.addItem("8");
             this.cmbSemestre.addItem("10");
             this.cmbSemestre.addItem("12");
-
         }
 
         ImageIcon imagen = new ImageIcon("src/imagenes/Guardar.png");
@@ -383,6 +382,8 @@ public class FrmAlta extends javax.swing.JFrame {
     public void GenerarNoControl() {
         FechaAnyoo = "";
         FechaAnyoo = FormatoAnyo.format(FechaAnyo);
+        NumeroControlNew = FechaAnyoo + 1;
+        NumControl = NumeroControlNew;
         try {
             mBD.Conectar();
             ListaNumControl = mBD.ConsultarNumControlUltimo();
@@ -409,7 +410,6 @@ public class FrmAlta extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     public String toUpperCammelCase(String cadena) {
@@ -480,18 +480,20 @@ public class FrmAlta extends javax.swing.JFrame {
                         String NomCola = Colas.getString(1);
                         sc.enviarmsj(NomCola, Msj);
                     }
+                    JOptionPane.showMessageDialog(null, "El Alumno " + Nombre + " " + ApellidoPaterno + " ha sido inscrito a la carrera "
+                            + " " + Carrera + " en el semestre " + Semestre + " Satisfactoriamentre");
                 } else {
-                    JOptionPane.showMessageDialog(null, "Error al guardar alumno");
+                    JOptionPane.showMessageDialog(null, "Error al guardar alumno verifique la informacion \n "
+                            + " el alumno ya ha sido inscrito");
                 }
-                JOptionPane.showMessageDialog(null, "El Alumno " + Nombre + " " + ApellidoPaterno + " ha sido inscrito a la carrera "
-                        + " " + Carrera + " en el semestre " + Semestre + " Satisfactoriamentre");
+
                 txtNumControl.setText("");
                 txtApellidoMaterno.setText("");
                 txtApellidoPaterno.setText("");
                 txtCURP.setText("");
                 txtNombre.setText("");
                 txtDireccion.setText("");
-                cmbSemestre.setSelectedItem("");
+                cmbSemestre.setSelectedItem("1");
             } catch (SQLException ex) {
                 Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
             } catch (URISyntaxException ex) {
@@ -682,11 +684,12 @@ public class FrmAlta extends javax.swing.JFrame {
                         String NomCola = Colas.getString(1);
                         sc.enviarmsj(NomCola, Msj);
                     }
+                    JOptionPane.showMessageDialog(null, "El Alumno " + Nombre + " " + ApellidoPaterno + " ha sido inscrito a la carrera "
+                            + " " + Carrera + " en el semestre " + Semestre + " Satisfactoriamentre");
                 } else {
-                    JOptionPane.showMessageDialog(null, "Error al guardar alumno");
+                    JOptionPane.showMessageDialog(null, "Error al guardar alumno verifique la informacion \n "
+                            + " el alumno ya ha sido inscrito");
                 }
-                JOptionPane.showMessageDialog(null, "El Alumno " + Nombre + " " + ApellidoPaterno + " ha sido inscrito a la carrera "
-                        + " " + Carrera + " en el semestre " + Semestre + " Satisfactoriamentre");
                 txtNumControl.setText("");
                 txtApellidoMaterno.setText("");
                 txtApellidoPaterno.setText("");
