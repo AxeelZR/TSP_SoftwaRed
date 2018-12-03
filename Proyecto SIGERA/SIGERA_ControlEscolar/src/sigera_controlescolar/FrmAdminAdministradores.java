@@ -8,8 +8,13 @@ package sigera_controlescolar;
 import BaseDatos.BD;
 import BaseDatos.BD_Usuario;
 import java.awt.Image;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
@@ -24,7 +29,7 @@ import javax.swing.table.DefaultTableModel;
 public class FrmAdminAdministradores extends javax.swing.JFrame {
 
     String NombreUsuario;
-    DefaultTableModel modelo;
+    DefaultTableModel Modelo;
 
     /**
      * Creates new form FrmAdminAdministradores
@@ -45,16 +50,19 @@ public class FrmAdminAdministradores extends javax.swing.JFrame {
         Icon icono3;
         icono3 = new ImageIcon(imagen3.getImage().getScaledInstance(btnRegistroUsuarios.getWidth(), btnRegistroUsuarios.getHeight(), Image.SCALE_DEFAULT));
         btnRegistroUsuarios.setIcon(icono3);
+        ImageIcon imagen6 = new ImageIcon("src/imagenes/Refresh.png");
+        Icon icono6;
+        icono6 = new ImageIcon(imagen6.getImage().getScaledInstance(this.btnActualizar.getWidth(), btnActualizar.getHeight(), Image.SCALE_DEFAULT));
     }
 
     public void LlenarTablaUsuarios() {
         BD_Usuario mBD = new BD_Usuario();
         try {
-            mBD.getConnection();
+            mBD.GetConnection();
             ResultSet ListaUsuarios = mBD.ConsultarUsuarios();
             if (ListaUsuarios != null) {
                 Object[] Encabezado = {"Nombre", "Carrera_Clave", "Nombre_Cola"};
-                modelo = new DefaultTableModel(null, Encabezado) {
+                Modelo = new DefaultTableModel(null, Encabezado) {
                     @Override
                     public boolean isCellEditable(int fila, int columna) {
                         if (columna > 3) {
@@ -65,13 +73,13 @@ public class FrmAdminAdministradores extends javax.swing.JFrame {
                 };
 
                 while (ListaUsuarios.next()) {
-                    Object[] actual = {
+                    Object[] Actual = {
                         ListaUsuarios.getString("Nombre"),
                         ListaUsuarios.getString("Carrera_Clave"),
                         ListaUsuarios.getString("Nombre_Cola"),};
-                    modelo.addRow(actual);
+                    Modelo.addRow(Actual);
                 }
-                this.tblUsuarios.setModel(modelo);
+                this.tblUsuarios.setModel(Modelo);
             }
         } catch (Exception ex) {
             Logger.getLogger(FrmCatalogo.class.getName()).log(Level.SEVERE, null, ex);
@@ -95,6 +103,7 @@ public class FrmAdminAdministradores extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         btnEliminar = new javax.swing.JButton();
         btnRegistroUsuarios = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -179,6 +188,12 @@ public class FrmAdminAdministradores extends javax.swing.JFrame {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -193,6 +208,8 @@ public class FrmAdminAdministradores extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(88, 88, 88)
                         .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
@@ -208,7 +225,9 @@ public class FrmAdminAdministradores extends javax.swing.JFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(413, 413, 413))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
+                            .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(398, 398, 398))))
@@ -236,9 +255,9 @@ public class FrmAdminAdministradores extends javax.swing.JFrame {
 
     private void tblUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsuariosMouseClicked
         // TODO add your handling code here:
-        int filaseleccionada = this.tblUsuarios.getSelectedRow();
-        if (filaseleccionada >= 0) {
-            NombreUsuario = (String) tblUsuarios.getValueAt(filaseleccionada, 0);
+        int Filaseleccionada = this.tblUsuarios.getSelectedRow();
+        if (Filaseleccionada >= 0) {
+            NombreUsuario = (String) tblUsuarios.getValueAt(Filaseleccionada, 0);
         }
     }//GEN-LAST:event_tblUsuariosMouseClicked
 
@@ -252,9 +271,9 @@ public class FrmAdminAdministradores extends javax.swing.JFrame {
 
     private void tblUsuariosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblUsuariosKeyReleased
         // TODO add your handling code here:
-        int filaseleccionada = this.tblUsuarios.getSelectedRow();
-        if (filaseleccionada >= 0) {
-            NombreUsuario = (String) tblUsuarios.getValueAt(filaseleccionada, 0);
+        int Filaseleccionada = this.tblUsuarios.getSelectedRow();
+        if (Filaseleccionada >= 0) {
+            NombreUsuario = (String) tblUsuarios.getValueAt(Filaseleccionada, 0);
         }
     }//GEN-LAST:event_tblUsuariosKeyReleased
 
@@ -263,10 +282,23 @@ public class FrmAdminAdministradores extends javax.swing.JFrame {
             try {
                 // TODO add your handling code here:
                 BD_Usuario mBD_Usuario = new BD_Usuario();
-                mBD_Usuario.getConnection();
-                mBD_Usuario.EliminarUsuario(NombreUsuario);
+                mBD_Usuario.GetConnection();
+                if(mBD_Usuario.EliminarUsuario(NombreUsuario)){
+                    SC_Escritura Sc = new SC_Escritura();
+                    Sc.EliminarCola(NombreUsuario);
+                }
                 NombreUsuario = "";
             } catch (SQLException ex) {
+                Logger.getLogger(FrmAdminAdministradores.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (URISyntaxException ex) {
+                Logger.getLogger(FrmAdminAdministradores.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(FrmAdminAdministradores.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyManagementException ex) {
+                Logger.getLogger(FrmAdminAdministradores.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(FrmAdminAdministradores.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (TimeoutException ex) {
                 Logger.getLogger(FrmAdminAdministradores.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
@@ -287,10 +319,23 @@ public class FrmAdminAdministradores extends javax.swing.JFrame {
             try {
                 // TODO add your handling code here:
                 BD_Usuario mBD_Usuario = new BD_Usuario();
-                mBD_Usuario.getConnection();
-                mBD_Usuario.EliminarUsuario(NombreUsuario);
+                mBD_Usuario.GetConnection();
+                if(mBD_Usuario.EliminarUsuario(NombreUsuario)){
+                    SC_Escritura Sc = new SC_Escritura();
+                    Sc.EliminarCola(NombreUsuario);
+                }
                 NombreUsuario = "";
             } catch (SQLException ex) {
+                Logger.getLogger(FrmAdminAdministradores.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (URISyntaxException ex) {
+                Logger.getLogger(FrmAdminAdministradores.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(FrmAdminAdministradores.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyManagementException ex) {
+                Logger.getLogger(FrmAdminAdministradores.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(FrmAdminAdministradores.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (TimeoutException ex) {
                 Logger.getLogger(FrmAdminAdministradores.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
@@ -303,6 +348,10 @@ public class FrmAdminAdministradores extends javax.swing.JFrame {
         FRM_Registro mFrmRegistro = new FRM_Registro();
         mFrmRegistro.setVisible(true);
     }//GEN-LAST:event_btnRegistroUsuariosKeyPressed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        this.LlenarTablaUsuarios();
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -340,6 +389,7 @@ public class FrmAdminAdministradores extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnRegistroUsuarios;
     private javax.swing.JLabel jLabel1;

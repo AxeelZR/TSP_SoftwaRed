@@ -34,13 +34,13 @@ public class BD_Usuario {
 
     }
 
-    public Connection getConnection() {
+    public Connection GetConnection() {
         try {
             if (Conexion == null) {
-                String URL = "jdbc:mysql://www.db4free.net:3306/sigerabd?autoReconnect=true";
+                String Url = "jdbc:mysql://www.db4free.net:3306/sigerabd?autoReconnect=true";
                 String Pwd = "sigeraisc9";
                 String User = "sigeraisc";
-                Conexion = DriverManager.getConnection(URL, User, Pwd);
+                Conexion = DriverManager.getConnection(Url, User, Pwd);
                 Comando = Conexion.createStatement();
                 //System.out.println("Conectionesfull");
                 //JOptionPane.showMessageDialog(null,"Si conecta");
@@ -59,7 +59,6 @@ public class BD_Usuario {
             Instruccion = Instruccion.replace("?3", mUsuario.getContraseña());
             Instruccion = Instruccion.replace("?4", mUsuario.getNomCola());
             Comando.executeUpdate(Instruccion);
-            //System.out.print("Guarde");
             Instruccion = "";
             Estado = true;
         } catch (Exception e) {

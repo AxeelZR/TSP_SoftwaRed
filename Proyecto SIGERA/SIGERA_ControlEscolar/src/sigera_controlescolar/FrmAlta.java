@@ -62,14 +62,12 @@ public class FrmAlta extends javax.swing.JFrame {
             this.cmbSemestre.addItem("5");
             this.cmbSemestre.addItem("7");
             this.cmbSemestre.addItem("9");
-            this.cmbSemestre.addItem("11");
         } else {
             this.cmbSemestre.addItem("2");
             this.cmbSemestre.addItem("4");
             this.cmbSemestre.addItem("6");
             this.cmbSemestre.addItem("8");
             this.cmbSemestre.addItem("10");
-            this.cmbSemestre.addItem("12");
         }
 
         ImageIcon imagen = new ImageIcon("src/imagenes/Guardar.png");
@@ -81,19 +79,9 @@ public class FrmAlta extends javax.swing.JFrame {
         icono2 = new ImageIcon(imagen2.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_DEFAULT));
         lblLogo.setIcon(icono2);
         try {
-            //mBD.Conectar();
         } catch (Exception ex) {
             Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        /*try {
-            ListaCarreras = mBD.ConsultarCarreras();
-            while (ListaCarreras.next()) {
-                this.cmbCarreras.addItem(ListaCarreras.getString("Nombre"));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(FrmAlta.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
     }
 
     /**
@@ -400,7 +388,7 @@ public class FrmAlta extends javax.swing.JFrame {
                     AnyoBD = AnyoBD.substring(0, 4);
                     String Resto = ListaNumControl.getString("NoControl");
                     Resto = Resto.substring(4, Resto.length());
-                    System.out.print("Resto " + Resto);
+                    //System.out.print("Resto " + Resto);
                     if (FechaAnyoo.equals(AnyoBD)) {
                         int NumeroControlAnterior = Integer.parseInt(AnyoBD + (Integer.parseInt(Resto) + 1));
                         NumControl = String.valueOf(NumeroControlAnterior);
@@ -483,7 +471,7 @@ public class FrmAlta extends javax.swing.JFrame {
                     FechaActual = Formato.format(fechaactual);
                     String Msj = "El Alumno " + Nombre + " " + ApellidoPaterno + " ha sido inscrito a la carrera "
                             + " " + Carrera + " en el semestre " + Semestre + " el " + FechaActual;
-                    mBDU.getConnection();
+                    mBDU.GetConnection();
                     SC_Escritura sc = new SC_Escritura();
                     ResultSet Colas = mBDU.ConsultarCola(Carrera);
                     while (Colas.next()) {
@@ -687,7 +675,7 @@ public class FrmAlta extends javax.swing.JFrame {
                     FechaActual = Formato.format(fechaactual);
                     String Msj = "El Alumno " + Nombre + " " + ApellidoPaterno + " ha sido inscrito a la carrera "
                             + " " + Carrera + " en el semestre " + Semestre + " el " + FechaActual;
-                    mBDU.getConnection();
+                    mBDU.GetConnection();
                     SC_Escritura sc = new SC_Escritura();
                     ResultSet Colas = mBDU.ConsultarCola(Carrera);
                     while (Colas.next()) {

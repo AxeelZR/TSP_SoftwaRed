@@ -22,48 +22,52 @@ import java.util.logging.Logger;
  * @author juanj
  */
 public class SC_Escritura {
-    Channel channel;
-    Connection connection;
-    ConnectionFactory factory;
+    Channel Channel;
+    Connection Connection;
+    ConnectionFactory Factory;
     public SC_Escritura() throws URISyntaxException, NoSuchAlgorithmException, KeyManagementException, IOException, TimeoutException{
-         factory = new ConnectionFactory();
-         factory.setUri("amqp://gmlwmzpm:v3Xz7-Mv7chUuduRsg0mqG-XO4yeCyE7@chimpanzee.rmq.cloudamqp.com/gmlwmzpm");
-         connection = factory.newConnection();
-         channel = connection.createChannel();
+         Factory = new ConnectionFactory();
+         Factory.setUri("amqp://gmlwmzpm:v3Xz7-Mv7chUuduRsg0mqG-XO4yeCyE7@chimpanzee.rmq.cloudamqp.com/gmlwmzpm");
+         Connection = Factory.newConnection();
+         Channel = Connection.createChannel();
     }
     
-    public String CrearCola(String NomCola) throws URISyntaxException, NoSuchAlgorithmException, KeyManagementException, TimeoutException{
-        String msj="";
+    public void CrearCola(String NomCola) throws URISyntaxException, NoSuchAlgorithmException, KeyManagementException, TimeoutException{
         try {
-            channel.queueDeclare(NomCola, false, false, false, null);
-            channel.close();
-            connection.close();
+            Channel.queueDeclare(NomCola, false, false, false, null);
+            Channel.close();
+            Connection.close();
         } catch (IOException ex) {
             Logger.getLogger(SC_Escritura.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        return msj;
     }
     
     public Boolean enviarmsj(String NomCola, String Msj) throws IOException, TimeoutException, URISyntaxException{
-        Boolean envio = false;
+        Boolean Envio = false;
         try {
             
-            factory = new ConnectionFactory();
-            factory.setUri("amqp://gmlwmzpm:v3Xz7-Mv7chUuduRsg0mqG-XO4yeCyE7@chimpanzee.rmq.cloudamqp.com/gmlwmzpm");
-            connection = factory.newConnection();
-            channel = connection.createChannel();
-            channel.basicPublish("", NomCola, null, Msj.getBytes("UTF-8"));
-            channel.close();
-            connection.close();
-            envio= true;
+            Factory = new ConnectionFactory();
+            Factory.setUri("amqp://gmlwmzpm:v3Xz7-Mv7chUuduRsg0mqG-XO4yeCyE7@chimpanzee.rmq.cloudamqp.com/gmlwmzpm");
+            Connection = Factory.newConnection();
+            Channel = Connection.createChannel();
+            Channel.basicPublish("", NomCola, null, Msj.getBytes("UTF-8"));
+            Channel.close();
+            Connection.close();
+            Envio= true;
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(SC_Escritura.class.getName()).log(Level.SEVERE, null, ex);
         } catch (KeyManagementException ex) {
             Logger.getLogger(SC_Escritura.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return envio;
+        return Envio;
     }
-     
-    
+    public void EliminarCola(String NomCola) throws URISyntaxException, NoSuchAlgorithmException, KeyManagementException, TimeoutException{
+        try {
+            Channel.queueDelete(NomCola);
+            Channel.close();
+            Connection.close();
+        } catch (IOException ex) {
+            Logger.getLogger(SC_Escritura.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

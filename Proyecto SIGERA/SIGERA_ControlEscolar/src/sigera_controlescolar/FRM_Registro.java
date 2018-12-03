@@ -28,16 +28,15 @@ public class FRM_Registro extends javax.swing.JFrame {
     //BD mBD = new BD();
     public FRM_Registro() {
         initComponents();
-        ImageIcon imagen2 = new ImageIcon("src/imagenes/LogoSIGERAControlEscolar.png");
-        Icon icono2;
-        icono2 = new ImageIcon(imagen2.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_DEFAULT));
-        lblLogo.setIcon(icono2);
-        ImageIcon imagen = new ImageIcon("src/imagenes/Guardar.png");
-        Icon icono;
-        icono = new ImageIcon(imagen.getImage().getScaledInstance(btnGuardar.getWidth(), btnGuardar.getHeight(), Image.SCALE_DEFAULT));
-        btnGuardar.setIcon(icono);
+        ImageIcon Imagen2 = new ImageIcon("src/imagenes/LogoSIGERAControlEscolar.png");
+        Icon Icono2;
+        Icono2 = new ImageIcon(Imagen2.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_DEFAULT));
+        lblLogo.setIcon(Icono2);
+        ImageIcon Imagen = new ImageIcon("src/imagenes/Guardar.png");
+        Icon Icono;
+        Icono = new ImageIcon(Imagen.getImage().getScaledInstance(btnGuardar.getWidth(), btnGuardar.getHeight(), Image.SCALE_DEFAULT));
+        btnGuardar.setIcon(Icono);
         try {
-            //mBD.Conectar();
         } catch (Exception ex) {
             Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -210,12 +209,12 @@ public class FRM_Registro extends javax.swing.JFrame {
                     mUsuario.setCarrera(Carrera);
                     mUsuario.setNomCola(Nombre_Usuario);
 
-                    mBD.getConnection();
+                    mBD.GetConnection();
+                    
                     if (mBD.Registrar(mUsuario)) {
                         sc.CrearCola(Nombre_Usuario);
                     }
-                    //mBD.Desconectar();
-
+                    
                     txtUsuario.setText("");
                     txtPassword.setText("");
                 } catch (Exception ex) {
@@ -257,12 +256,12 @@ public class FRM_Registro extends javax.swing.JFrame {
                     mUsuario.setCarrera(Carrera);
                     mUsuario.setNomCola(Nombre_Usuario);
 
-                    mBD.getConnection();
+                    mBD.GetConnection();
+                    
                     if (mBD.Registrar(mUsuario)) {
                         sc.CrearCola(Nombre_Usuario);
                     }
-                    //mBD.Desconectar();
-
+                    
                     txtUsuario.setText("");
                     txtPassword.setText("");
                 } catch (Exception ex) {

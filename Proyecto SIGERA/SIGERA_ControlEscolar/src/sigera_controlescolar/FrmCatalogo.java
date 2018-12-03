@@ -44,7 +44,7 @@ public class FrmCatalogo extends javax.swing.JFrame {
     ResultSet ListaNumControl;
     BD mBD = new BD();
     String Estado;
-    DefaultTableModel modelo;
+    DefaultTableModel Modelo;
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public FrmCatalogo() {
@@ -126,7 +126,7 @@ public class FrmCatalogo extends javax.swing.JFrame {
             if (ListaAlumnos != null) {
                 Object[] Encabezado = {"No.Control", "Carrera", "Nombre", "Apellido Paterno",
                     "Apellido Materno", "CURP", "Semestre", "Estado", "Direccion"};
-                modelo = new DefaultTableModel(null, Encabezado) {
+                Modelo = new DefaultTableModel(null, Encabezado) {
                     @Override
                     public boolean isCellEditable(int fila, int columna) {
                         if (columna > 8) {
@@ -153,12 +153,12 @@ public class FrmCatalogo extends javax.swing.JFrame {
                             Estado,
                             ListaAlumnos.getString("Direccion")
                         };
-                        modelo.addRow(actual);
+                        Modelo.addRow(actual);
                     }
                 } catch (Exception e) {
 
                 }
-                this.tblConsultaAlumnos.setModel(modelo);
+                this.tblConsultaAlumnos.setModel(Modelo);
             }
         } catch (Exception ex) {
             Logger.getLogger(FrmCatalogo.class.getName()).log(Level.SEVERE, null, ex);
@@ -500,7 +500,7 @@ public class FrmCatalogo extends javax.swing.JFrame {
                         String FechaActual = formato.format(fechaactual);
                         String Msj = "El Alumno " + Nombre + " con NC: " + NC + " ha sido dado de baja el "
                                 + FechaActual;
-                        mBDU.getConnection();
+                        mBDU.GetConnection();
                         ResultSet Colas = mBDU.ConsultarCola(Carrera);
                         while (Colas.next()) {
                             String NomCola = Colas.getString(1);
@@ -552,7 +552,7 @@ public class FrmCatalogo extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             String query = this.cmbNumControl.getSelectedItem().toString();
-            TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(modelo);
+            TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(Modelo);
             this.tblConsultaAlumnos.setRowSorter(tr);
             if (query != "Todos") {
                 tr.setRowFilter(RowFilter.regexFilter(query));
@@ -569,7 +569,7 @@ public class FrmCatalogo extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             String query = this.cmbBuscarCarrera.getSelectedItem().toString();
-            TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(modelo);
+            TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(Modelo);
             this.tblConsultaAlumnos.setRowSorter(tr);
             if (query != "Todos") {
                 tr.setRowFilter(RowFilter.regexFilter(query));
@@ -608,7 +608,7 @@ public class FrmCatalogo extends javax.swing.JFrame {
                         String FechaActual = formato.format(fechaactual);
                         String Msj = "El Alumno " + Nombre + " con NC: " + NC + " ha sido dado de baja el "
                                 + FechaActual;
-                        mBDU.getConnection();
+                        mBDU.GetConnection();
                         ResultSet Colas = mBDU.ConsultarCola(Carrera);
                         while (Colas.next()) {
                             String NomCola = Colas.getString(1);

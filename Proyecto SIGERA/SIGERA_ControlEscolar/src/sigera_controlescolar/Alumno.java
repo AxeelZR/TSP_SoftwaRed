@@ -19,16 +19,6 @@ public class Alumno {
     private int Semestre;
     private String Direccion;
 
-
-    /*public Alumno(int NC, String Nombre, String ApellidoPaterno, String ApellidoMaterno, String CURP, String Carrera) {
-        this.NC = NC;
-        this.Nombre = Nombre;
-        this.ApellidoPaterno = ApellidoPaterno;
-        this.ApellidoMaterno = ApellidoMaterno;
-        this.CURP = CURP;
-        this.Carrera = Carrera;
-    }*/
-
     
     public String getNC() {
         return NC;

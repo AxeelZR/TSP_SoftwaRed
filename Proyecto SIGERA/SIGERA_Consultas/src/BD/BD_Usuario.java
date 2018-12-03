@@ -25,8 +25,6 @@ public class BD_Usuario {
     String Contraseña;
     String Carrera;
     boolean Estado;
-    int idUsuario;
-    String Contrasenia;
 
     public BD_Usuario() {
         Nombre_Usuario = "";

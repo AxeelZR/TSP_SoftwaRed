@@ -24,7 +24,6 @@ import javax.swing.JOptionPane;
  */
 public class SC_Lectura {
 
-    int aux = 0;
 
     public void RecibirMensaje(String NomCola, int id) throws IOException, TimeoutException {
         try {

@@ -28,7 +28,7 @@ public class BD {
     String Nombre;
     String ApellidoMaterno;
     String ApellidoPaterno;
-    String NC;
+    String Nc;
     String Carrera;
     String CURP;
     int Semestre;
@@ -47,7 +47,7 @@ public class BD {
         Nombre = "";
         ApellidoMaterno = "";
         ApellidoPaterno = "";
-        NC = "";
+        Nc = "";
         Carrera = "";
         CURP = "";
         Semestre = 0;
@@ -60,7 +60,7 @@ public class BD {
         Host = "localhost";
         BD = "SIGERA";
         User = "root";
-        Password = "";
+        Password = "root";
         try {
             this.Conexion = DriverManager.getConnection("jdbc:mysql://" + Host + "/" + BD +"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC" , User, Password);
             this.Comando = Conexion.createStatement();
@@ -78,7 +78,7 @@ public class BD {
         Nombre = mAlumno.getNombre();
         ApellidoPaterno = mAlumno.getApellidoPaterno();
         ApellidoMaterno = mAlumno.getApellidoMaterno();
-        NC = mAlumno.getNC();
+        Nc = mAlumno.getNC();
         Carrera = mAlumno.getCarrera();
         CURP = mAlumno.getCURP();
         Semestre = mAlumno.getSemestre();
@@ -87,7 +87,7 @@ public class BD {
 
         try {
             Instruccion = "insert into Alumno(Id, NoControl,Carrera_Clave, Nombre, Apellido_Paterno, Apellido_Materno, CURP,Semestre,Estado,Direccion) values (null,'?1','?2','?3','?4', '?5','?6','?7','?8','?9');";
-            Instruccion = Instruccion.replace("?1", String.valueOf(NC));
+            Instruccion = Instruccion.replace("?1", String.valueOf(Nc));
             Instruccion = Instruccion.replace("?2", Carrera);
             Instruccion = Instruccion.replace("?3", Nombre);
             Instruccion = Instruccion.replace("?4", ApellidoPaterno);
@@ -102,7 +102,7 @@ public class BD {
             Nombre = "";
             ApellidoMaterno = "";
             ApellidoPaterno = "";
-            NC = "";
+            Nc = "";
             Carrera = "";
             CURP = "";
             Semestre = 0;
@@ -191,7 +191,7 @@ public class BD {
         Nombre = mAlumno.getNombre();
         ApellidoPaterno = mAlumno.getApellidoPaterno();
         ApellidoMaterno = mAlumno.getApellidoMaterno();
-        NC = mAlumno.getNC();
+        Nc = mAlumno.getNC();
         Carrera = mAlumno.getCarrera();
         CURP = mAlumno.getCURP();
         Semestre = mAlumno.getSemestre();
@@ -200,7 +200,7 @@ public class BD {
 
         try {
             Instruccion = "UPDATE `alumno` SET `Carrera_Clave` = '?2', `Nombre` = '?3', `Apellido_Paterno` = '?4', `Apellido_Materno` = '?5', `CURP` = '?6', `Semestre` = '?7', `Estado` = '?8', `Direccion` = '?9' WHERE `alumno`.`NoControl` = '" + NCR + "'; ";
-            Instruccion = Instruccion.replace("?1", String.valueOf(NC));
+            Instruccion = Instruccion.replace("?1", String.valueOf(Nc));
             Instruccion = Instruccion.replace("?2", Carrera);
             Instruccion = Instruccion.replace("?3", Nombre);
             Instruccion = Instruccion.replace("?4", ApellidoPaterno);
@@ -215,7 +215,7 @@ public class BD {
             Nombre = "";
             ApellidoMaterno = "";
             ApellidoPaterno = "";
-            NC = "";
+            Nc = "";
             Carrera = "";
             CURP = "";
             Semestre = 0;

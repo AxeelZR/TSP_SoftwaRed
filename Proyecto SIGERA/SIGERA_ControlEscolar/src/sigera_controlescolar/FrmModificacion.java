@@ -468,7 +468,7 @@ public class FrmModificacion extends javax.swing.JFrame {
                         //Escribir en la cola
                         SC_Escritura sc = new SC_Escritura();
                         BD_Usuario mBDU = new BD_Usuario();
-                        mBDU.getConnection();
+                        mBDU.GetConnection();
                         DateFormat formato = new SimpleDateFormat("dd/MM/YYYY");
                         Date fechaactuali = new Date();
                         String FechaActuali = formato.format(fechaactuali);
@@ -479,15 +479,12 @@ public class FrmModificacion extends javax.swing.JFrame {
                             ResultSet Colas = mBDU.ConsultarCola(Carrera);
                             while (Colas.next()) {
                                 String NomCola = Colas.getString(1);
-                                //System.out.println(Carrera + " "+NomCola);
                                 sc.enviarmsj(NomCola, Msj1);
                             }
                             //Enviar msj a las colas de la nueva carrera
                             Colas = mBDU.ConsultarCola(CarreraAnt);
                             while (Colas.next()) {
                                 String NomCola = Colas.getString(1);
-                                //System.out.println(CarreraAnt + " "+NomCola);
-                                //System.out.println(NomCola);
                                 sc.enviarmsj(NomCola, Msj1);
                             }
                         } else {
@@ -637,26 +634,22 @@ public class FrmModificacion extends javax.swing.JFrame {
                         //Escribir en la cola
                         SC_Escritura sc = new SC_Escritura();
                         BD_Usuario mBDU = new BD_Usuario();
-                        mBDU.getConnection();
+                        mBDU.GetConnection();
                         DateFormat formato = new SimpleDateFormat("dd/MM/YYYY");
                         Date fechaactuali = new Date();
                         String FechaActuali = formato.format(fechaactuali);
                         if (!CarreraAnt.equals(Carrera)) {
                             String Msj1 = "El alumno: " + Nombre + " con NC: " + NC
                                     + " ha cambiado de carrera de: " + CarreraAnt + " a " + Carrera + " el " + FechaActuali;
-                            //Enviar msj a las colas de las nueva carrera
                             ResultSet Colas = mBDU.ConsultarCola(Carrera);
                             while (Colas.next()) {
                                 String NomCola = Colas.getString(1);
-                                //System.out.println(Carrera + " "+NomCola);
                                 sc.enviarmsj(NomCola, Msj1);
                             }
                             //Enviar msj a las colas de la nueva carrera
                             Colas = mBDU.ConsultarCola(CarreraAnt);
                             while (Colas.next()) {
                                 String NomCola = Colas.getString(1);
-                                //System.out.println(CarreraAnt + " "+NomCola);
-                                //System.out.println(NomCola);
                                 sc.enviarmsj(NomCola, Msj1);
                             }
                         } else {

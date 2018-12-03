@@ -31,7 +31,7 @@ public class FrmConsultas extends javax.swing.JFrame {
     /**
      * Creates new form FrmConsultas
      */
-    SC_Lectura sc = new SC_Lectura();
+    SC_Lectura Sc = new SC_Lectura();
     BD_Usuario mBD = new BD_Usuario();
     int id = 0;
     DefaultTableModel modelo;
@@ -46,7 +46,7 @@ public class FrmConsultas extends javax.swing.JFrame {
         mBD.Conectar();
         id = mBD.Consultarid(Usuario);
         //JOptionPane.showMessageDialog(null, id);
-        sc.RecibirMensaje(Usuario, id);
+        Sc.RecibirMensaje(Usuario, id);
         this.LlenarTabla();
         ImageIcon imagen = new ImageIcon("src/imagenes/Modificar.png");
         Icon icono;
