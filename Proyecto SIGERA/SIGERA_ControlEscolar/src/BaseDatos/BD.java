@@ -60,7 +60,7 @@ public class BD {
         Host = "localhost";
         BD = "SIGERA";
         User = "root";
-        Password = "root";
+        Password = "";
         try {
             this.Conexion = DriverManager.getConnection("jdbc:mysql://" + Host + "/" + BD +"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC" , User, Password);
             this.Comando = Conexion.createStatement();

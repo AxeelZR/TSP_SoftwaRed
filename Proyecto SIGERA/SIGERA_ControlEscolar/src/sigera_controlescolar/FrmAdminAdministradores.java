@@ -53,6 +53,7 @@ public class FrmAdminAdministradores extends javax.swing.JFrame {
         ImageIcon imagen6 = new ImageIcon("src/imagenes/Refresh.png");
         Icon icono6;
         icono6 = new ImageIcon(imagen6.getImage().getScaledInstance(this.btnActualizar.getWidth(), btnActualizar.getHeight(), Image.SCALE_DEFAULT));
+        this.btnActualizar.setIcon(icono6);
     }
 
     public void LlenarTablaUsuarios() {
