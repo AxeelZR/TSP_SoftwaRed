@@ -183,7 +183,7 @@ public class FrmConfiguracion extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null,
                     "La contraseña no puede estar vacia"
-                    + "\n Proporcionar toda la informacion "
+                    + "\n Proporcionar toda la información "
                     + "\n Solicitada");
         }
     }//GEN-LAST:event_btnOkActionPerformed

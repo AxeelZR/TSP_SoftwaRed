@@ -7,8 +7,7 @@ package sigera_consultas;
 
 import BD.*;
 import java.sql.SQLException;
-import java.util.Date;
-import javax.swing.JOptionPane;
+
 
 /**
  *
