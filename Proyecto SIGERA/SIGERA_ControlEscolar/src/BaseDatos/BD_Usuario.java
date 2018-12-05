@@ -46,7 +46,7 @@ public class BD_Usuario {
                 //JOptionPane.showMessageDialog(null,"Si conecta");
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "                   No hay internet \n Verifique la conexión y vuelva a ejecutar.");
         }
         return Conexion;
     }
@@ -89,7 +89,7 @@ public class BD_Usuario {
             Instruccion = "Delete from Usuario where Nombre = '?1';";
             Instruccion = Instruccion.replace("?1", Nombre);
             Comando.executeUpdate(Instruccion);
-            JOptionPane.showMessageDialog(null, "Se elimino el usuario " + Nombre);
+            JOptionPane.showMessageDialog(null, "Se eliminó el usuario " + Nombre);
             Instruccion = "";
             Estado = true;
         } catch (Exception e) {

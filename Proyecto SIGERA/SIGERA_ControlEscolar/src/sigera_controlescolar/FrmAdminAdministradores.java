@@ -38,19 +38,19 @@ public class FrmAdminAdministradores extends javax.swing.JFrame {
         initComponents();
         NombreUsuario = "";
         this.LlenarTablaUsuarios();
-        ImageIcon imagen = new ImageIcon("src/imagenes/Eliminar.png");
+        ImageIcon imagen = new ImageIcon("imagenes/Eliminar.png");
         Icon icono;
         icono = new ImageIcon(imagen.getImage().getScaledInstance(btnEliminar.getWidth(), btnEliminar.getHeight(), Image.SCALE_DEFAULT));
         btnEliminar.setIcon(icono);
-        ImageIcon imagen2 = new ImageIcon("src/imagenes/LogoSIGERAControlEscolar.png");
+        ImageIcon imagen2 = new ImageIcon("imagenes/LogoSIGERAControlEscolar.png");
         Icon icono2;
         icono2 = new ImageIcon(imagen2.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_DEFAULT));
         lblLogo.setIcon(icono2);
-        ImageIcon imagen3 = new ImageIcon("src/imagenes/Agregar.png");
+        ImageIcon imagen3 = new ImageIcon("imagenes/Agregar.png");
         Icon icono3;
         icono3 = new ImageIcon(imagen3.getImage().getScaledInstance(btnRegistroUsuarios.getWidth(), btnRegistroUsuarios.getHeight(), Image.SCALE_DEFAULT));
         btnRegistroUsuarios.setIcon(icono3);
-        ImageIcon imagen6 = new ImageIcon("src/imagenes/Refresh.png");
+        ImageIcon imagen6 = new ImageIcon("imagenes/Refresh.png");
         Icon icono6;
         icono6 = new ImageIcon(imagen6.getImage().getScaledInstance(this.btnActualizar.getWidth(), btnActualizar.getHeight(), Image.SCALE_DEFAULT));
         this.btnActualizar.setIcon(icono6);
@@ -194,6 +194,11 @@ public class FrmAdminAdministradores extends javax.swing.JFrame {
                 btnActualizarActionPerformed(evt);
             }
         });
+        btnActualizar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnActualizarKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -303,7 +308,7 @@ public class FrmAdminAdministradores extends javax.swing.JFrame {
                 Logger.getLogger(FrmAdminAdministradores.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Seleccione un registro por favor");
+            JOptionPane.showMessageDialog(null, "Favor de seleccionar un registro");
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -340,7 +345,7 @@ public class FrmAdminAdministradores extends javax.swing.JFrame {
                 Logger.getLogger(FrmAdminAdministradores.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Seleccione un registro por favor");
+            JOptionPane.showMessageDialog(null, "Favor de seleccionar un registro");
         }
     }//GEN-LAST:event_btnEliminarKeyPressed
 
@@ -353,6 +358,11 @@ public class FrmAdminAdministradores extends javax.swing.JFrame {
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         this.LlenarTablaUsuarios();
     }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnActualizarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnActualizarKeyPressed
+        // TODO add your handling code here:
+        this.LlenarTablaUsuarios();
+    }//GEN-LAST:event_btnActualizarKeyPressed
 
     /**
      * @param args the command line arguments

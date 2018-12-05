@@ -51,27 +51,27 @@ public class FrmCatalogo extends javax.swing.JFrame {
         initComponents();
         AutoCompleteDecorator.decorate(cmbNumControl);
         AutoCompleteDecorator.decorate(cmbBuscarCarrera);
-        ImageIcon imagen = new ImageIcon("src/imagenes/Agregar.png");
+        ImageIcon imagen = new ImageIcon("imagenes/Agregar.png");
         Icon icono;
         icono = new ImageIcon(imagen.getImage().getScaledInstance(btnAgregar.getWidth(), btnAgregar.getHeight(), Image.SCALE_DEFAULT));
         btnAgregar.setIcon(icono);
-        ImageIcon imagen2 = new ImageIcon("src/imagenes/LogoSIGERAControlEscolar.png");
+        ImageIcon imagen2 = new ImageIcon("imagenes/LogoSIGERAControlEscolar.png");
         Icon icono2;
         icono2 = new ImageIcon(imagen2.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_DEFAULT));
         lblLogo.setIcon(icono2);
-        ImageIcon imagen3 = new ImageIcon("src/imagenes/Eliminar.png");
+        ImageIcon imagen3 = new ImageIcon("imagenes/Eliminar.png");
         Icon icono3;
         icono3 = new ImageIcon(imagen3.getImage().getScaledInstance(btnEliminar.getWidth(), btnEliminar.getHeight(), Image.SCALE_DEFAULT));
         btnEliminar.setIcon(icono3);
-        ImageIcon imagen4 = new ImageIcon("src/imagenes/Modificar.png");
+        ImageIcon imagen4 = new ImageIcon("imagenes/Modificar.png");
         Icon icono4;
         icono4 = new ImageIcon(imagen4.getImage().getScaledInstance(btnModificar.getWidth(), btnModificar.getHeight(), Image.SCALE_DEFAULT));
         btnModificar.setIcon(icono4);
-        ImageIcon imagen5 = new ImageIcon("src/imagenes/Administrador.png");
+        ImageIcon imagen5 = new ImageIcon("imagenes/Administrador.png");
         Icon icono5;
         icono5 = new ImageIcon(imagen5.getImage().getScaledInstance(btnRegistro.getWidth(), btnRegistro.getHeight(), Image.SCALE_DEFAULT));
         btnRegistro.setIcon(icono5);
-        ImageIcon imagen6 = new ImageIcon("src/imagenes/Refresh.png");
+        ImageIcon imagen6 = new ImageIcon("imagenes/Refresh.png");
         Icon icono6;
         icono6 = new ImageIcon(imagen6.getImage().getScaledInstance(this.btnActualizar.getWidth(), btnActualizar.getHeight(), Image.SCALE_DEFAULT));
         this.btnActualizar.setIcon(icono6);
@@ -125,7 +125,7 @@ public class FrmCatalogo extends javax.swing.JFrame {
             ResultSet ListaAlumnos = mBD.ConsultarAlumnoG();
             if (ListaAlumnos != null) {
                 Object[] Encabezado = {"No.Control", "Carrera", "Nombre", "Apellido Paterno",
-                    "Apellido Materno", "CURP", "Semestre", "Estado", "Direccion"};
+                    "Apellido Materno", "CURP", "Semestre", "Estado", "Dirección"};
                 Modelo = new DefaultTableModel(null, Encabezado) {
                     @Override
                     public boolean isCellEditable(int fila, int columna) {
@@ -248,7 +248,7 @@ public class FrmCatalogo extends javax.swing.JFrame {
         jLabel2.setText("Busqueda Por Carrera");
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel3.setText("Busqueda por Numero Control");
+        jLabel3.setText("Búsqueda por Número Control");
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Alumnos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
@@ -348,6 +348,11 @@ public class FrmCatalogo extends javax.swing.JFrame {
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnActualizarActionPerformed(evt);
+            }
+        });
+        btnActualizar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnActualizarKeyPressed(evt);
             }
         });
 
@@ -498,7 +503,7 @@ public class FrmCatalogo extends javax.swing.JFrame {
                         DateFormat formato = new SimpleDateFormat("dd/MM/YYYY");
                         Date fechaactual = new Date();
                         String FechaActual = formato.format(fechaactual);
-                        String Msj = "El Alumno " + Nombre + " con NC: " + NC + " ha sido dado de baja el "
+                        String Msj = "El alumno " + Nombre + " con NC: " + NC + " ha sido dado de baja el "
                                 + FechaActual;
                         mBDU.GetConnection();
                         ResultSet Colas = mBDU.ConsultarCola(Carrera);
@@ -528,7 +533,7 @@ public class FrmCatalogo extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "El alumno ya esta dado de baja");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Seleccione un registro por favor");
+            JOptionPane.showMessageDialog(null, "Favor de seleccionar un registro");
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -606,7 +611,7 @@ public class FrmCatalogo extends javax.swing.JFrame {
                         DateFormat formato = new SimpleDateFormat("dd/MM/YYYY");
                         Date fechaactual = new Date();
                         String FechaActual = formato.format(fechaactual);
-                        String Msj = "El Alumno " + Nombre + " con NC: " + NC + " ha sido dado de baja el "
+                        String Msj = "El alumno " + Nombre + " con NC: " + NC + " ha sido dado de baja el "
                                 + FechaActual;
                         mBDU.GetConnection();
                         ResultSet Colas = mBDU.ConsultarCola(Carrera);
@@ -636,7 +641,7 @@ public class FrmCatalogo extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "El alumno ya esta dado de baja");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Seleccione un registro por favor");
+            JOptionPane.showMessageDialog(null, "Favor de seleccionar un registro");
         }
     }//GEN-LAST:event_btnEliminarKeyPressed
 
@@ -653,7 +658,7 @@ public class FrmCatalogo extends javax.swing.JFrame {
                 Logger.getLogger(FrmCatalogo.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Seleccione un registro por favor");
+            JOptionPane.showMessageDialog(null, "Favor de seleccionar un registro");
         }
     }//GEN-LAST:event_btnModificarKeyPressed
 
@@ -678,6 +683,21 @@ public class FrmCatalogo extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnActualizarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnActualizarKeyPressed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            mBD.Conectar();
+            this.LlenarTablaAlumnos();
+            this.cmbBuscarCarrera.removeAllItems();
+            this.cmbNumControl.removeAllItems();
+            this.LlenarComboboxCarreras();
+            this.LlenarComboboxNC();
+        } catch (Exception ex) {
+            Logger.getLogger(FrmCatalogo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnActualizarKeyPressed
 
     /**
      * @param args the command line arguments

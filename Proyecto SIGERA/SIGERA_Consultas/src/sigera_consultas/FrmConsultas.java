@@ -5,7 +5,6 @@
  */
 package sigera_consultas;
 
-import BD.BD;
 import BD.BD_Usuario;
 import java.awt.Image;
 import java.io.IOException;
@@ -48,16 +47,15 @@ public class FrmConsultas extends javax.swing.JFrame {
         //JOptionPane.showMessageDialog(null, id);
         Sc.RecibirMensaje(Usuario, id);
         this.LlenarTabla();
-        ImageIcon imagen = new ImageIcon("src/imagenes/Modificar.png");
+        ImageIcon imagen = new ImageIcon("imagenes/Modificar.png");
         Icon icono;
         icono = new ImageIcon(imagen.getImage().getScaledInstance(btnConfiguracion.getWidth(), btnConfiguracion.getHeight(), Image.SCALE_DEFAULT));
         this.btnConfiguracion.setIcon(icono);
-        ImageIcon imagen2 = new ImageIcon("src/imagenes/Refresh.png");
+        ImageIcon imagen2 = new ImageIcon("imagenes/Refresh.png");
         Icon icono2;
         icono2 = new ImageIcon(imagen2.getImage().getScaledInstance(this.btnActualizar.getWidth(), btnActualizar.getHeight(), Image.SCALE_DEFAULT));
         this.btnActualizar.setIcon(icono2);
         this.LlenarCombobox();
-        this.LlenarTabla();
     }
 
     public void LlenarCombobox() throws SQLException {
@@ -79,7 +77,7 @@ public class FrmConsultas extends javax.swing.JFrame {
             mBD.Conectar();
             ResultSet Mensajes = mBD.ConsultarMsj(id);
             if (Mensajes != null) {
-                Object[] Encabezado = {"Historial de Mensajes"};
+                Object[] Encabezado = {"Historial de mensajes"};
                 modelo = new DefaultTableModel(null, Encabezado);
                 try {
                     while (Mensajes.next()) {
@@ -256,6 +254,11 @@ public class FrmConsultas extends javax.swing.JFrame {
                 btnActualizarActionPerformed(evt);
             }
         });
+        btnActualizar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnActualizarKeyPressed(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Configuración", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
@@ -294,6 +297,11 @@ public class FrmConsultas extends javax.swing.JFrame {
         btnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCerrarSesionActionPerformed(evt);
+            }
+        });
+        btnCerrarSesion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnCerrarSesionKeyPressed(evt);
             }
         });
 
@@ -406,6 +414,24 @@ public class FrmConsultas extends javax.swing.JFrame {
         FrmLogin mFrmLogin = new FrmLogin();
         mFrmLogin.setVisible(true);
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
+
+    private void btnActualizarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnActualizarKeyPressed
+        // TODO add your handling code here:
+        try {
+            LlenarTabla();
+
+            this.LlenarCombobox();
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmConsultas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnActualizarKeyPressed
+
+    private void btnCerrarSesionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCerrarSesionKeyPressed
+        // TODO add your handling code here:
+        dispose();
+        FrmLogin mFrmLogin = new FrmLogin();
+        mFrmLogin.setVisible(true);
+    }//GEN-LAST:event_btnCerrarSesionKeyPressed
 
     /**
      * @param args the command line arguments

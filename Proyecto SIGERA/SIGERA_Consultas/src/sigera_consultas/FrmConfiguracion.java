@@ -28,7 +28,7 @@ public class FrmConfiguracion extends javax.swing.JFrame {
 
     public FrmConfiguracion(String NombUsuario) {
         initComponents();
-        ImageIcon imagen = new ImageIcon("src/imagenes/Guardar.png");
+        ImageIcon imagen = new ImageIcon("imagenes/Guardar.png");
         Icon icono;
         icono = new ImageIcon(imagen.getImage().getScaledInstance(btnOk.getWidth(), btnOk.getHeight(), Image.SCALE_DEFAULT));
         btnOk.setIcon(icono);
@@ -84,6 +84,11 @@ public class FrmConfiguracion extends javax.swing.JFrame {
         btnOk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOkActionPerformed(evt);
+            }
+        });
+        btnOk.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnOkKeyPressed(evt);
             }
         });
 
@@ -175,18 +180,38 @@ public class FrmConfiguracion extends javax.swing.JFrame {
             mUsuario.setContraseña(Contrasena);
             try {
                 mConfiguracion.CambiarContrasena(Contrasena, mUsuario);
-                JOptionPane.showMessageDialog(null, "Se Modifico Correctamente la contraseña");
+                JOptionPane.showMessageDialog(null, "Se modificó correctamente la contraseña");
                 this.txtNuevaContrasena.setText("");
             } catch (Exception ex) {
                 Logger.getLogger(FrmConfiguracion.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             JOptionPane.showMessageDialog(null,
-                    "La contraseña no puede estar vacia"
-                    + "\n Proporcionar toda la información "
-                    + "\n Solicitada");
+                    "La contraseña no puede estar vacía");
         }
     }//GEN-LAST:event_btnOkActionPerformed
+
+    private void btnOkKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnOkKeyPressed
+        // TODO add your handling code here:
+        Configuracion mConfiguracion = new Configuracion();
+        Usuario mUsuario = new Usuario();
+        String Contrasena = this.txtNuevaContrasena.getText();
+
+        if (!"".equals(Contrasena)) {
+            mUsuario.setNombre_Usuario(Usuario);
+            mUsuario.setContraseña(Contrasena);
+            try {
+                mConfiguracion.CambiarContrasena(Contrasena, mUsuario);
+                JOptionPane.showMessageDialog(null, "Se modificó correctamente la contraseña");
+                this.txtNuevaContrasena.setText("");
+            } catch (Exception ex) {
+                Logger.getLogger(FrmConfiguracion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "La contraseña no puede estar vacía");
+        }
+    }//GEN-LAST:event_btnOkKeyPressed
 
     /**
      * @param args the command line arguments

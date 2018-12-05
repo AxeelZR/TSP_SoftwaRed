@@ -47,7 +47,8 @@ public class BD_Usuario {
                 Conect = true;
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "                   No hay internet \n Verifique la conexión y vuelva a ejecutar.");
+            System.exit(0);
             Conect = false;
         }
         return Conect;
@@ -127,7 +128,7 @@ public class BD_Usuario {
             hecho = true;
             
         } catch (SQLException ex) {
-            Logger.getLogger(BD.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BD_Usuario.class.getName()).log(Level.SEVERE, null, ex);
         }
         return hecho;
     }

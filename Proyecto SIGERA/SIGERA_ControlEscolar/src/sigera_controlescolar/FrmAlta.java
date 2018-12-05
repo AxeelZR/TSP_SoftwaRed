@@ -70,11 +70,11 @@ public class FrmAlta extends javax.swing.JFrame {
             this.cmbSemestre.addItem("10");
         }
 
-        ImageIcon imagen = new ImageIcon("src/imagenes/Guardar.png");
+        ImageIcon imagen = new ImageIcon("imagenes/Guardar.png");
         Icon icono;
         icono = new ImageIcon(imagen.getImage().getScaledInstance(btnGuardarAlumno.getWidth(), btnGuardarAlumno.getHeight(), Image.SCALE_DEFAULT));
         btnGuardarAlumno.setIcon(icono);
-        ImageIcon imagen2 = new ImageIcon("src/imagenes/LogoSIGERAControlEscolar.png");
+        ImageIcon imagen2 = new ImageIcon("imagenes/LogoSIGERAControlEscolar.png");
         Icon icono2;
         icono2 = new ImageIcon(imagen2.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_DEFAULT));
         lblLogo.setIcon(icono2);
@@ -233,7 +233,7 @@ public class FrmAlta extends javax.swing.JFrame {
         });
 
         jLabel9.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel9.setText("Direccion:");
+        jLabel9.setText("Dirección:");
 
         txtDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -479,9 +479,9 @@ public class FrmAlta extends javax.swing.JFrame {
                         sc.enviarmsj(NomCola, Msj);
                     }
                     JOptionPane.showMessageDialog(null, "El Alumno " + Nombre + " " + ApellidoPaterno + " ha sido inscrito a la carrera "
-                            + " " + Carrera + " en el semestre " + Semestre + " Satisfactoriamentre");
+                            + " " + Carrera + " en el semestre " + Semestre + " satisfactoriamentre");
                 } else {
-                    JOptionPane.showMessageDialog(null, "Error al guardar alumno verifique la informacion \n "
+                    JOptionPane.showMessageDialog(null, "Error al guardar alumno verifique la información \n "
                             + " el alumno ya ha sido inscrito");
                 }
 
@@ -509,7 +509,7 @@ public class FrmAlta extends javax.swing.JFrame {
             }
         } else {
             JOptionPane.showMessageDialog(null, "No dejar cajas de texto en blanco"
-                    + "\n Favor de proporcionar toda \n la informacion Solicitada");
+                    + "\n Favor de proporcionar toda \n la información solicitada");
         }
     }//GEN-LAST:event_btnGuardarAlumnoActionPerformed
 
@@ -546,7 +546,7 @@ public class FrmAlta extends javax.swing.JFrame {
 
         } else {
             evt.consume();  // ignorar el evento de teclado
-            JOptionPane.showMessageDialog(null, "Solo numeros");
+            JOptionPane.showMessageDialog(null, "Solo números");
         }
     }//GEN-LAST:event_txtNumControlKeyTyped
 
@@ -565,7 +565,7 @@ public class FrmAlta extends javax.swing.JFrame {
     private void txtApellidoPaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoPaternoKeyTyped
         // TODO add your handling code here:
         char c = evt.getKeyChar();
-        if (Character.isLetter(c) || c == (char) 8) {
+        if (Character.isLetter(c) || c == (char) 8 || c == (char) 32) {
 
         } else {
             getToolkit().beep();
@@ -577,7 +577,7 @@ public class FrmAlta extends javax.swing.JFrame {
     private void txtApellidoMaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoMaternoKeyTyped
         // TODO add your handling code here:
         char c = evt.getKeyChar();
-        if (Character.isLetter(c) || c == (char) 8) {
+        if (Character.isLetter(c) || c == (char) 8 || c == (char) 32) {
 
         } else {
             getToolkit().beep();
@@ -591,13 +591,13 @@ public class FrmAlta extends javax.swing.JFrame {
         int limite = 18;
         if (this.txtCURP.getText().length() == limite) {
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Solo " + limite + " Caracteres");
+            JOptionPane.showMessageDialog(null, "Solo " + limite + " caracteres");
         }
         char c = evt.getKeyChar();
         if (Character.isDigit(c) || Character.isLetter(c) || c == (char) 8) {
 
         } else {
-            JOptionPane.showMessageDialog(null, "Solo numeros y letras");
+            JOptionPane.showMessageDialog(null, "Solo números y letras");
             evt.consume();
         }
     }//GEN-LAST:event_txtCURPKeyTyped
@@ -673,7 +673,7 @@ public class FrmAlta extends javax.swing.JFrame {
                 if (mBD.AltaAlumno(mAlumno)) {
                     DateFormat Formato = new SimpleDateFormat("dd/MM/YYYY");
                     FechaActual = Formato.format(fechaactual);
-                    String Msj = "El Alumno " + Nombre + " " + ApellidoPaterno + " ha sido inscrito a la carrera "
+                    String Msj = "El alumno " + Nombre + " " + ApellidoPaterno + " ha sido inscrito a la carrera "
                             + " " + Carrera + " en el semestre " + Semestre + " el " + FechaActual;
                     mBDU.GetConnection();
                     SC_Escritura sc = new SC_Escritura();
@@ -682,10 +682,10 @@ public class FrmAlta extends javax.swing.JFrame {
                         String NomCola = Colas.getString(1);
                         sc.enviarmsj(NomCola, Msj);
                     }
-                    JOptionPane.showMessageDialog(null, "El Alumno " + Nombre + " " + ApellidoPaterno + " ha sido inscrito a la carrera "
-                            + " " + Carrera + " en el semestre " + Semestre + " Satisfactoriamentre");
+                    JOptionPane.showMessageDialog(null, "El alumno " + Nombre + " " + ApellidoPaterno + " ha sido inscrito a la carrera "
+                            + " " + Carrera + " en el semestre " + Semestre + " satisfactoriamentre");
                 } else {
-                    JOptionPane.showMessageDialog(null, "Error al guardar alumno verifique la informacion \n "
+                    JOptionPane.showMessageDialog(null, "Error al guardar alumno verifique la información \n "
                             + " el alumno ya ha sido inscrito");
                 }
                 txtNumControl.setText("");
@@ -712,7 +712,7 @@ public class FrmAlta extends javax.swing.JFrame {
             }
         } else {
             JOptionPane.showMessageDialog(null, "No dejar cajas de texto en blanco"
-                    + "\n  Favor de proporcionar toda \n la informacion Solicitada");
+                    + "\n  Favor de proporcionar toda \n la información solicitada");
         }
     }//GEN-LAST:event_btnGuardarAlumnoKeyPressed
 

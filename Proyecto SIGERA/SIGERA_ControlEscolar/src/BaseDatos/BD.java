@@ -59,14 +59,16 @@ public class BD {
     public boolean Conectar() throws Exception {
         Host = "localhost";
         BD = "SIGERA";
-        User = "root";
-        Password = "";
+        User = "Admin";
+        Password = "sigera";
         try {
             this.Conexion = DriverManager.getConnection("jdbc:mysql://" + Host + "/" + BD +"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC" , User, Password);
             this.Comando = Conexion.createStatement();
             return true;
         } catch (SQLException exc) {
-            System.out.println("Error" + exc.toString());
+            JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos, "
+                    + "verifique su conexión y vuelva a ejecutar");
+            System.exit(0);
             Conexion.close();
             return false;
         }

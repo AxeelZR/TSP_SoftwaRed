@@ -5,7 +5,7 @@
  */
 package sigera_consultas;
 
-import BD.BD;
+
 import BD.BD_Usuario;
 import com.rabbitmq.client.*;
 import java.io.IOException;

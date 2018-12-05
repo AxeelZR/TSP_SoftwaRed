@@ -27,7 +27,7 @@ public class FrmLogin extends javax.swing.JFrame {
      */
     public FrmLogin() {
         initComponents();
-        ImageIcon imagen = new ImageIcon("src/Imagenes/ingresar.png");
+        ImageIcon imagen = new ImageIcon("Imagenes/ingresar.png");
         Icon icono;
         icono = new ImageIcon(imagen.getImage().getScaledInstance(BtnIngresar.getWidth(), BtnIngresar.getHeight(), Image.SCALE_DEFAULT));
         BtnIngresar.setIcon(icono);
@@ -209,7 +209,7 @@ public class FrmLogin extends javax.swing.JFrame {
                     mFrmConsultas.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(null, "Acceso denegado:\n"
-                            + "Por favor ingrese un usuario y/o contraseña correctos");
+                            + "Favor de ingresar un usuario y/o contraseña correctos");
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Favor de llenar todos los campos");
@@ -241,7 +241,7 @@ public class FrmLogin extends javax.swing.JFrame {
                     mFrmConsultas.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(null, "Acceso denegado:\n"
-                            + "Por favor ingrese un usuario y/o contraseña correctos");
+                            + "Favor de ingresar un usuario y/o contraseña correctos");
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Favor de llenar todos los campos");

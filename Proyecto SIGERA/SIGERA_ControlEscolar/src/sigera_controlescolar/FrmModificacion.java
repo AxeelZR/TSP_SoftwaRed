@@ -66,11 +66,11 @@ public class FrmModificacion extends javax.swing.JFrame {
             this.cmbSemestre.addItem("10");
 
         }
-        ImageIcon imagen = new ImageIcon("src/imagenes/Guardar.png");
+        ImageIcon imagen = new ImageIcon("imagenes/Guardar.png");
         Icon icono;
         icono = new ImageIcon(imagen.getImage().getScaledInstance(btnGuardarAlumno.getWidth(), btnGuardarAlumno.getHeight(), Image.SCALE_DEFAULT));
         btnGuardarAlumno.setIcon(icono);
-        ImageIcon imagen2 = new ImageIcon("src/imagenes/LogoSIGERAControlEscolar.png");
+        ImageIcon imagen2 = new ImageIcon("imagenes/LogoSIGERAControlEscolar.png");
         Icon icono2;
         icono2 = new ImageIcon(imagen2.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_DEFAULT));
         lblLogo.setIcon(icono2);
@@ -262,7 +262,7 @@ public class FrmModificacion extends javax.swing.JFrame {
         });
 
         jLabel9.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel9.setText("Direccion:");
+        jLabel9.setText("Dirección:");
 
         jLabel10.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel10.setText("Estado:");
@@ -517,7 +517,7 @@ public class FrmModificacion extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "No dejar cajas de texto en blanco"
                     + "\n Favor de proporcionar toda la "
-                    + "\n informacion solicitada");
+                    + "\n información solicitada");
         }
 
     }//GEN-LAST:event_btnGuardarAlumnoActionPerformed
@@ -545,7 +545,7 @@ public class FrmModificacion extends javax.swing.JFrame {
     private void txtApellidoPaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoPaternoKeyTyped
         // TODO add your handling code here:
         char c = evt.getKeyChar();
-        if (Character.isLetter(c) || c == (char) 8) {
+        if (Character.isLetter(c) || c == (char) 8|| c == (char) 32) {
 
         } else {
             getToolkit().beep();
@@ -557,7 +557,7 @@ public class FrmModificacion extends javax.swing.JFrame {
     private void txtApellidoMaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoMaternoKeyTyped
         // TODO add your handling code here:
         char c = evt.getKeyChar();
-        if (Character.isLetter(c) || c == (char) 8) {
+        if (Character.isLetter(c) || c == (char) 8|| c == (char) 32) {
 
         } else {
             getToolkit().beep();
@@ -571,13 +571,13 @@ public class FrmModificacion extends javax.swing.JFrame {
         int limite = 18;
         if (this.txtCURP.getText().length() == limite) {
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Solo " + limite + " Caracteres");
+            JOptionPane.showMessageDialog(null, "Solo " + limite + " caracteres");
         }
         char c = evt.getKeyChar();
         if (Character.isDigit(c) || Character.isLetter(c) || c == (char) 8) {
 
         } else {
-            JOptionPane.showMessageDialog(null, "Solo numeros y letras");
+            JOptionPane.showMessageDialog(null, "Solo números y letras");
             evt.consume();
         }
     }//GEN-LAST:event_txtCURPKeyTyped
@@ -629,7 +629,7 @@ public class FrmModificacion extends javax.swing.JFrame {
 
                 try {
                     if (mBD.ModificacionAlumno(NC, mAlumno)) {
-                        JOptionPane.showMessageDialog(null, "Se Modifico Correctamente el alumno Con Numero de Control "
+                        JOptionPane.showMessageDialog(null, "Se modificó correctamente el alumno Con número de control "
                                 + this.lblNumeroControl.getText());
                         //Escribir en la cola
                         SC_Escritura sc = new SC_Escritura();
@@ -654,7 +654,7 @@ public class FrmModificacion extends javax.swing.JFrame {
                             }
                         } else {
                             String Msj1 = "El alumno: " + Nombre + " con NC: " + NC
-                                    + " ha sido modificado en alguno de sus datos personales el " + FechaActuali;
+                                    + " fue modificado en alguno de sus datos personales el " + FechaActuali;
                             ResultSet Colas = mBDU.ConsultarCola(Carrera);
                             while (Colas.next()) {
                                 String NomCola = Colas.getString(1);
@@ -682,7 +682,7 @@ public class FrmModificacion extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "No dejar cajas de texto en blanco"
                     + "\n Favor de proporcionar toda la "
-                    + "\n informacion solicitada");
+                    + "\n información solicitada");
         }
     }//GEN-LAST:event_btnGuardarAlumnoKeyPressed
 

@@ -28,11 +28,11 @@ public class FRM_Registro extends javax.swing.JFrame {
     //BD mBD = new BD();
     public FRM_Registro() {
         initComponents();
-        ImageIcon Imagen2 = new ImageIcon("src/imagenes/LogoSIGERAControlEscolar.png");
+        ImageIcon Imagen2 = new ImageIcon("imagenes/LogoSIGERAControlEscolar.png");
         Icon Icono2;
         Icono2 = new ImageIcon(Imagen2.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_DEFAULT));
         lblLogo.setIcon(Icono2);
-        ImageIcon Imagen = new ImageIcon("src/imagenes/Guardar.png");
+        ImageIcon Imagen = new ImageIcon("imagenes/Guardar.png");
         Icon Icono;
         Icono = new ImageIcon(Imagen.getImage().getScaledInstance(btnGuardar.getWidth(), btnGuardar.getHeight(), Image.SCALE_DEFAULT));
         btnGuardar.setIcon(Icono);
@@ -221,7 +221,7 @@ public class FRM_Registro extends javax.swing.JFrame {
                     Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Proporcionar toda la información Solicitada");
+                JOptionPane.showMessageDialog(null, "Proporcionar toda la información solicitada");
             }
         } catch (URISyntaxException ex) {
             Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
@@ -268,7 +268,7 @@ public class FRM_Registro extends javax.swing.JFrame {
                     Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Proporcionar toda la información Solicitada");
+                JOptionPane.showMessageDialog(null, "Proporcionar toda la información solicitada");
             }
         } catch (URISyntaxException ex) {
             Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
