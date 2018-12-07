@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author juanj
+ * @author TaniaEsparza
  */
 public class SC_Lectura {
 
