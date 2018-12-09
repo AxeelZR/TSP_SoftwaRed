@@ -314,7 +314,7 @@ public class FrmAdminAdministradores extends javax.swing.JFrame {
 
     private void btnRegistroUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroUsuariosActionPerformed
         // TODO add your handling code here:
-        FRM_Registro mFrmRegistro = new FRM_Registro();
+        FrmRegistro mFrmRegistro = new FrmRegistro();
         mFrmRegistro.setVisible(true);
 
     }//GEN-LAST:event_btnRegistroUsuariosActionPerformed
@@ -351,7 +351,7 @@ public class FrmAdminAdministradores extends javax.swing.JFrame {
 
     private void btnRegistroUsuariosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnRegistroUsuariosKeyPressed
         // TODO add your handling code here:
-        FRM_Registro mFrmRegistro = new FRM_Registro();
+        FrmRegistro mFrmRegistro = new FrmRegistro();
         mFrmRegistro.setVisible(true);
     }//GEN-LAST:event_btnRegistroUsuariosKeyPressed
 

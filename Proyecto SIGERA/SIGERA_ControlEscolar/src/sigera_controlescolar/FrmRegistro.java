@@ -21,12 +21,12 @@ import sigera_controlescolar.*;
  *
  * @author Alejandro
  */
-public class FRM_Registro extends javax.swing.JFrame {
+public class FrmRegistro extends javax.swing.JFrame {
 
     ResultSet ListaCarreras;
 
     //BD mBD = new BD();
-    public FRM_Registro() {
+    public FrmRegistro() {
         initComponents();
         ImageIcon Imagen2 = new ImageIcon("imagenes/LogoSIGERAControlEscolar.png");
         Icon Icono2;
@@ -38,7 +38,7 @@ public class FRM_Registro extends javax.swing.JFrame {
         btnGuardar.setIcon(Icono);
         try {
         } catch (Exception ex) {
-            Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmRegistro.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         BD mBD = new BD();
@@ -218,21 +218,21 @@ public class FRM_Registro extends javax.swing.JFrame {
                     txtUsuario.setText("");
                     txtPassword.setText("");
                 } catch (Exception ex) {
-                    Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FrmRegistro.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Proporcionar toda la información solicitada");
             }
         } catch (URISyntaxException ex) {
-            Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmRegistro.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmRegistro.class.getName()).log(Level.SEVERE, null, ex);
         } catch (KeyManagementException ex) {
-            Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmRegistro.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmRegistro.class.getName()).log(Level.SEVERE, null, ex);
         } catch (TimeoutException ex) {
-            Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmRegistro.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -265,21 +265,21 @@ public class FRM_Registro extends javax.swing.JFrame {
                     txtUsuario.setText("");
                     txtPassword.setText("");
                 } catch (Exception ex) {
-                    Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FrmRegistro.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Proporcionar toda la información solicitada");
             }
         } catch (URISyntaxException ex) {
-            Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmRegistro.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmRegistro.class.getName()).log(Level.SEVERE, null, ex);
         } catch (KeyManagementException ex) {
-            Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmRegistro.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmRegistro.class.getName()).log(Level.SEVERE, null, ex);
         } catch (TimeoutException ex) {
-            Logger.getLogger(FRM_Registro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmRegistro.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnGuardarKeyPressed
 
@@ -300,20 +300,21 @@ public class FRM_Registro extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FRM_Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmRegistro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FRM_Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmRegistro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FRM_Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmRegistro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FRM_Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmRegistro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FRM_Registro().setVisible(true);
+                new FrmRegistro().setVisible(true);
             }
         });
     }
