@@ -1,6 +1,6 @@
 CREATE TABLE Carrera (
   Clave VARCHAR(25) NOT NULL,
-  Nombre VARCHAR(50) NULL,
+  Nombre VARCHAR(100) NULL,
   PRIMARY KEY(Clave)
 );
 
@@ -23,4 +23,10 @@ CREATE TABLE Alumno (
       ON UPDATE NO ACTION
 );
 
-
+INSERT INTO `carrera` (`Clave`, `Nombre`) VALUES ('IGE', 'Ingenieria en Gestion Empresarial');
+INSERT INTO `carrera` (`Clave`, `Nombre`) VALUES ('IA', 'Ingenieria en Administracion');
+INSERT INTO `carrera` (`Clave`, `Nombre`) VALUES ('IIA', 'Ingenieria en Industrias Alimentarias');
+INSERT INTO `carrera` (`Clave`, `Nombre`) VALUES ('CP', 'Contador Publico');
+INSERT INTO `carrera` (`Clave`, `Nombre`) VALUES ('ISC', 'Ingenieria en Sistemas Computacionales');
+INSERT INTO `carrera` (`Clave`, `Nombre`) VALUES ('IEM', 'Ingenieria en Electro Mecanica');
+INSERT INTO `carrera` (`Clave`, `Nombre`) VALUES ('ITIC', 'Ingenieria en Tecnologias de la Informacion y Comunicacion');
