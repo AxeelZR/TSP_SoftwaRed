@@ -29,4 +29,4 @@ INSERT INTO `carrera` (`Clave`, `Nombre`) VALUES ('IIA', 'Ingenieria en Industri
 INSERT INTO `carrera` (`Clave`, `Nombre`) VALUES ('CP', 'Contador Publico');
 INSERT INTO `carrera` (`Clave`, `Nombre`) VALUES ('ISC', 'Ingenieria en Sistemas Computacionales');
 INSERT INTO `carrera` (`Clave`, `Nombre`) VALUES ('IEM', 'Ingenieria en Electro Mecanica');
-INSERT INTO `carrera` (`Clave`, `Nombre`) VALUES ('ITIC', 'Ingenieria en Tecnologias de la Informacion y Comunicacion');
+INSERT INTO `carrera` (`Clave`, `Nombre`) VALUES ('ITICS', 'Ingenieria en Tecnologias de la Informacion y Comunicacion');
